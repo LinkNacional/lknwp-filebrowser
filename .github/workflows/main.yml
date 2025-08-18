@@ -40,7 +40,7 @@ jobs:
     # Move vendor directory separately (can be slow)
     - name: Move vendor directory
       run: |
-        mv ./vendor ./build/${{ env.PLUGIN_NAME }}/vendor
+        cp -r ./vendor ./build/${{ env.PLUGIN_NAME }}/vendor
 
     # Compact plugin as .zip
     - name: Archive Release
