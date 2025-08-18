@@ -1,0 +1,25 @@
+{
+    "name": "lkn/wp-filebrowser",
+    "description": "Link Nacional File Browser - WordPress Plugin",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Link Nacional",
+            "email": "contato@linknacional.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lkn\\WPFilebrowser\\": "includes/",
+            "Lkn\\WPFilebrowser\\Admin\\": "admin/",
+            "Lkn\\WPFilebrowser\\Public\\": "public/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

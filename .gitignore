@@ -1,0 +1,46 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Composer
+composer.phar
+
+# IDE files
+.vscode/
+.vscode/mcp.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup-db/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+
+# Logs
+*.log
+error_log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Development files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
