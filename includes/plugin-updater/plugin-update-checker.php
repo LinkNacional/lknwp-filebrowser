@@ -6,5 +6,4 @@
  * Copyright 2021 Janis Elsts
  * Released under the MIT license. See license.txt for details.
  */
-
-require dirname(__FILE__) . '/load-puc.php';
+require __DIR__ . '/load-puc.php';

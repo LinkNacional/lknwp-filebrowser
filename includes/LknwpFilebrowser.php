@@ -125,7 +125,7 @@ class LknwpFilebrowser {
 		$this->loader->add_action( 'wp_ajax_lknwp_get_all_folders_admin_frontend', $plugin_admin, 'get_all_folders_admin_frontend' );
 		$this->loader->add_action( 'wp_ajax_nopriv_lknwp_get_admin_nonce', $plugin_admin, 'lknwp_get_admin_nonce');
 		$this->loader->add_action( 'wp_ajax_lknwp_get_admin_nonce', $plugin_admin, 'lknwp_get_admin_nonce');
-		$this->loader->add_action( 'admin_init', $this, 'updater_init' );
+		$this->loader->add_action( 'init', $this, 'updater_init' );
 	}
 
 	public function updater_init()

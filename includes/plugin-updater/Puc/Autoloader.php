@@ -1,57 +1,54 @@
 <?php
 
-if ( !class_exists('Lkn_Puc_Autoloader', false) ):
+if ( ! class_exists('Lkn_Puc_Autoloader', false) ) {
+    final class Lkn_Puc_Autoloader {
+        private $prefix = '';
+        private $rootDir = '';
+        private $libraryDir = '';
+        private $staticMap;
 
-	class Lkn_Puc_Autoloader {
-	    private $prefix = '';
-	    private $rootDir = '';
-	    private $libraryDir = '';
+        public function __construct() {
+            $this->rootDir = __DIR__ . '/';
+            $nameParts = explode('_', __CLASS__, 3);
+            $this->prefix = $nameParts[0] . '_' . $nameParts[1] . '_';
 
-	    private $staticMap;
+            $this->libraryDir = $this->rootDir . '../..';
+            if ( ! self::isPhar() ) {
+                $this->libraryDir = realpath($this->libraryDir);
+            }
+            $this->libraryDir = $this->libraryDir . '/';
 
-	    public function __construct() {
-	        $this->rootDir = dirname(__FILE__) . '/';
-	        $nameParts = explode('_', __CLASS__, 3);
-	        $this->prefix = $nameParts[0] . '_' . $nameParts[1] . '_';
+            spl_autoload_register(array($this, 'autoload'));
+        }
 
-	        $this->libraryDir = $this->rootDir . '../..';
-	        if ( !self::isPhar() ) {
-	            $this->libraryDir = realpath($this->libraryDir);
-	        }
-	        $this->libraryDir = $this->libraryDir . '/';
+        /**
+         * Determine if this file is running as part of a Phar archive.
+         *
+         * @return bool
+         */
+        private static function isPhar() {
+            //Check if the current file path starts with "phar://".
+            static $pharProtocol = 'phar://';
+            return (substr(__FILE__, 0, strlen($pharProtocol)) === $pharProtocol);
+        }
 
-	        spl_autoload_register([$this, 'autoload']);
-	    }
+        public function autoload($className): void {
+            if ( isset($this->staticMap[$className]) && file_exists($this->libraryDir . $this->staticMap[$className]) ) {
+                /** @noinspection PhpIncludeInspection */
+                include $this->libraryDir . $this->staticMap[$className];
+                return;
+            }
 
-	    /**
-	     * Determine if this file is running as part of a Phar archive.
-	     *
-	     * @return bool
-	     */
-	    private static function isPhar() {
-	        //Check if the current file path starts with "phar://".
-	        static $pharProtocol = 'phar://';
-	        return (substr(__FILE__, 0, strlen($pharProtocol)) === $pharProtocol);
-	    }
+            if (strpos($className, $this->prefix) === 0) {
+                $path = substr($className, strlen($this->prefix));
+                $path = str_replace('_', '/', $path);
+                $path = $this->rootDir . $path . '.php';
 
-	    public function autoload($className) {
-	        if ( isset($this->staticMap[$className]) && file_exists($this->libraryDir . $this->staticMap[$className]) ) {
-	            /** @noinspection PhpIncludeInspection */
-	            include $this->libraryDir . $this->staticMap[$className];
-	            return;
-	        }
-
-	        if (strpos($className, $this->prefix) === 0) {
-	            $path = substr($className, strlen($this->prefix));
-	            $path = str_replace('_', '/', $path);
-	            $path = $this->rootDir . $path . '.php';
-
-	            if (file_exists($path)) {
-	                /** @noinspection PhpIncludeInspection */
-	                include $path;
-	            }
-	        }
-	    }
-	}
-
-endif;
+                if (file_exists($path)) {
+                    /** @noinspection PhpIncludeInspection */
+                    include $path;
+                }
+            }
+        }
+    }
+}
