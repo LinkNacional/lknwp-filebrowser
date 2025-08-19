@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\WPFilebrowser;
+namespace Lkn\WPFilebrowser\Includes;
 
 /**
  * Register all actions and filters for the plugin.

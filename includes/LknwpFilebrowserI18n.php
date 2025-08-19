@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\WPFilebrowser;
+namespace Lkn\WPFilebrowser\Includes;
 
 /**
  * Define the internationalization functionality.

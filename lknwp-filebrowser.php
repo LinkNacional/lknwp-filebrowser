@@ -37,6 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'LKNWP_FILEBROWSER_VERSION', '1.0.0' );
 define( 'PLUGIN_FILE', __FILE__ );
+define( 'LINK_PLUGIN_NAME', 'lknwp-filebrowser' );
 
 /**
  * Plugin constants
@@ -55,7 +56,7 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' ) ) {
 		$namespaces = [
 			'Lkn\\WPFilebrowser\\Admin\\' => plugin_dir_path( __FILE__ ) . 'admin/',
 			'Lkn\\WPFilebrowser\\Public\\' => plugin_dir_path( __FILE__ ) . 'public/',
-			'Lkn\\WPFilebrowser\\' => plugin_dir_path( __FILE__ ) . 'includes/'
+			'Lkn\\WPFilebrowser\\Includes\\' => plugin_dir_path( __FILE__ ) . 'includes/'
 		];
 
 		foreach ($namespaces as $prefix => $base_dir) {
@@ -75,9 +76,9 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' ) ) {
 	});
 }
 
-use Lkn\WPFilebrowser\LknwpFilebrowser;
-use Lkn\WPFilebrowser\LknwpFilebrowserActivator;
-use Lkn\WPFilebrowser\LknwpFilebrowserDeactivator;
+use Lkn\WPFilebrowser\Includes\LknwpFilebrowser;
+use Lkn\WPFilebrowser\Includes\LknwpFilebrowserActivator;
+use Lkn\WPFilebrowser\Includes\LknwpFilebrowserDeactivator;
 
 // Include backward compatibility aliases
 require_once plugin_dir_path( __FILE__ ) . 'includes/Aliases.php';
