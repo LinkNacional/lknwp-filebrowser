@@ -5,11 +5,11 @@
  * Maps old class names to new PSR-4 namespaced classes
  */
 
-use Lkn\WPFilebrowser\LknwpFilebrowser;
-use Lkn\WPFilebrowser\LknwpFilebrowserLoader;
-use Lkn\WPFilebrowser\LknwpFilebrowserI18n;
-use Lkn\WPFilebrowser\LknwpFilebrowserActivator;
-use Lkn\WPFilebrowser\LknwpFilebrowserDeactivator;
+use Lkn\WPFilebrowser\Includes\LknwpFilebrowser;
+use Lkn\WPFilebrowser\Includes\LknwpFilebrowserLoader;
+use Lkn\WPFilebrowser\Includes\LknwpFilebrowserI18n;
+use Lkn\WPFilebrowser\Includes\LknwpFilebrowserActivator;
+use Lkn\WPFilebrowser\Includes\LknwpFilebrowserDeactivator;
 use Lkn\WPFilebrowser\Admin\LknwpFilebrowserAdmin;
 use Lkn\WPFilebrowser\Public\LknwpFilebrowserPublic;
 

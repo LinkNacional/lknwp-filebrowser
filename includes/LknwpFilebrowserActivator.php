@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\WPFilebrowser;
+namespace Lkn\WPFilebrowser\Includes;
 
 /**
  * Fired during plugin activation.

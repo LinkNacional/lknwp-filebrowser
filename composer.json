@@ -14,9 +14,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Lkn\\WPFilebrowser\\": "includes/",
+            "Lkn\\WPFilebrowser\\Includes\\": "includes/",
             "Lkn\\WPFilebrowser\\Admin\\": "admin/",
-            "Lkn\\WPFilebrowser\\Public\\": "public/"
+            "Lkn\\WPFilebrowser\\Public\\": "public/",
+            "Includes\\PluginUpdater\\": "includes/plugin-updater"
         }
     },
     "config": {
