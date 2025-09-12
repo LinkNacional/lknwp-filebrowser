@@ -1,6 +1,6 @@
 # Link Nacional File Browser
 
-Um plugin WordPress moderno para gerenciamento de arquivos com interface intuitiva e funcionalidades avançadas.
+Um plugin [WordPress](https://www.linknacional.com.br/wordpress/) moderno para gerenciamento de arquivos com interface intuitiva e funcionalidades avançadas.
 
 ## 🚀 Características
 
