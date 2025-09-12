@@ -13,30 +13,33 @@ Um plugin WordPress moderno para gerenciamento de arquivos com interface intuiti
 - **PSR-4 Autoloader**: Estrutura moderna de código
 - **Responsivo**: Funciona em todos os dispositivos
 
-## 📁 Estrutura do Plugin
+## 📸 Capturas de Tela
 
-```
-lknwp-filebrowser/
-├── admin/                    # Funcionalidades administrativas
-│   ├── css/                 # Estilos do admin
-│   ├── js/                  # Scripts do admin
-│   ├── partials/            # Templates do admin
-│   └── LknwpFilebrowserAdmin.php
-├── public/                  # Funcionalidades públicas
-│   ├── css/                 # Estilos do frontend
-│   ├── js/                  # Scripts do frontend
-│   ├── partials/            # Templates do frontend
-│   └── LknwpFilebrowserPublic.php
-├── includes/                # Classes principais
-│   ├── LknwpFilebrowser.php
-│   ├── LknwpFilebrowserLoader.php
-│   ├── LknwpFilebrowserI18n.php
-│   ├── LknwpFilebrowserActivator.php
-│   ├── LknwpFilebrowserDeactivator.php
-│   └── Aliases.php
-├── languages/               # Arquivos de tradução
-└── lknwp-filebrowser.php   # Arquivo principal
-```
+### Painel Administrativo
+
+- Página inicial de configuração  
+  ![Página inicial de configuração](includes/assets/screenshots/pagina-inicial-de-configuração.png)
+
+- Como usar  
+  ![Como usar](includes/assets/screenshots/como-usar.png)
+
+- Selecionando arquivos  
+  ![Selecionando arquivos](includes/assets/screenshots/selecionando-arquivos.png)
+
+### Frontend
+
+- Componente frontend  
+  ![Componente frontend](includes/assets/screenshots/componenete-frontend.png)
+
+- Selecionando arquivos (grid)  
+  ![Selecionando arquivos frontend](includes/assets/screenshots/selecionando-arquivos-frontend.png)
+  
+- Selecionando arquivos (lista)  
+  ![Selecionando arquivos modo lista frontend](includes/assets/screenshots/selecionando-arquivos-modo-lista-frontend.png)
+
+### Mobile
+- Modo mobile  
+  ![Modo mobile](includes/assets/screenshots/modo-mobile.png)
 
 ## 🛠️ Instalação
 
@@ -104,9 +107,9 @@ GPL v2 ou posterior - veja [LICENSE.txt](LICENSE.txt) para detalhes.
 
 ## 🔗 Links
 
-- [Site Oficial](https://www.linknacional.com.br/)
-- [Documentação](https://www.linknacional.com.br/docs/)
-- [Suporte](https://www.linknacional.com.br/contato/)
+- [Download do plugin](https://github.com/LinkNacional/lknwp-filebrowser/releases/)
+- [Documentação](https://www.linknacional.com.br/wordpress/plugins/)
+- [Suporte](https://www.linknacional.com.br/wordpress/suporte/)
 
 ---
 
