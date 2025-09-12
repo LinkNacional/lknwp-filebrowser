@@ -1,6 +1,6 @@
 # WordPress Plugin Navegador de Arquivos
 
-O plugin grátis para [WordPress](https://www.linknacional.com.br/wordpress/) Navegador de Arquivos é moderno e utilizado para organizaçãode de arquivos com interface intuitiva e funcionalidades avançadas. Muito útil para listar documentos de PDFs, Planilhas, arquivos para download direto no seu site WordPress.
+O [plugin](https://www.linknacional.com.br/wordpress/plugins/) grátis para [WordPress](https://www.linknacional.com.br/wordpress/) Navegador de Arquivos é moderno e utilizado para organizaçãode de arquivos com interface intuitiva e funcionalidades avançadas. Muito útil para listar documentos de PDFs, Planilhas, arquivos para download direto no seu site WordPress.
 
 ## 🚀 Características
 
