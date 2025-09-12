@@ -1,6 +1,6 @@
-# Link Nacional File Browser
+# WordPress Plugin Navegador de Arquivos
 
-Um plugin [WordPress](https://www.linknacional.com.br/wordpress/) moderno para gerenciamento de arquivos com interface intuitiva e funcionalidades avançadas.
+O plugin grátis para [WordPress](https://www.linknacional.com.br/wordpress/) Navegador de Arquivos é moderno e utilizado para organizaçãode de arquivos com interface intuitiva e funcionalidades avançadas. Muito útil para listar documentos de PDFs, Planilhas, arquivos para download direto no seu site WordPress.
 
 ## 🚀 Características
 
@@ -43,7 +43,7 @@ Um plugin [WordPress](https://www.linknacional.com.br/wordpress/) moderno para g
 
 ## 🛠️ Instalação
 
-1. Faça upload do plugin para `/wp-content/plugins/`
+1. Adicione o plugin pelo admin do WP ou faça upload do plugin para `/wp-content/plugins/`
 2. Ative o plugin no painel administrativo
 3. Configure as permissões necessárias
 4. Use o shortcode `[lknwp_filebrowser]` para exibir no frontend
@@ -99,7 +99,7 @@ Use qualquer um dos shortcodes acima em páginas ou posts para exibir o navegado
 
 ## 🤝 Contribuição
 
-Desenvolvido pela [Link Nacional](https://www.linknacional.com.br/)
+Mais um plugin desenvolvido pela [Link Nacional](https://www.linknacional.com.br/)
 
 ## 📄 Licença
 
