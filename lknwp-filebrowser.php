@@ -16,7 +16,7 @@
  * Plugin Name:       Link Nacional File Browser
  * Plugin URI:        https://www.linknacional.com.br
  * Description:       Create your folder structure and display it on the frontend.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-2.0+
