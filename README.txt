@@ -91,6 +91,9 @@ Sim! O plugin foi desenvolvido com design responsivo, adaptando-se automaticamen
 
 == Changelog ==
 
+= 1.0.0 - 12/09/2025 =
+* Ajuste na documentação. 
+
 = 1.0.0 =
 * Versão inicial
 * Sistema completo de pastas hierárquicas
