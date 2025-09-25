@@ -3,7 +3,7 @@ Contributors: linknacional
 Tags: file-browser, file-manager, documents, upload, folders
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -91,7 +91,7 @@ Sim! O plugin foi desenvolvido com design responsivo, adaptando-se automaticamen
 
 == Changelog ==
 
-= 1.0.0 - 12/09/2025 =
+= 1.0.1 - 12/09/2025 =
 * Ajuste na documentação. 
 
 = 1.0.0 =

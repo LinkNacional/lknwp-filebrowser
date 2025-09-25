@@ -64,7 +64,7 @@ class LknwpFilebrowser {
 		if ( defined( 'LKNWP_FILEBROWSER_VERSION' ) ) {
 			$this->version = LKNWP_FILEBROWSER_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.0.1';
 		}
 		$this->plugin_name = 'lknwp-filebrowser';
 
