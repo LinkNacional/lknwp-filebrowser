@@ -1,38 +1,37 @@
 <?php
 
 /**
- * Class aliases for backward compatibility
- * Maps old class names to new PSR-4 namespaced classes
+ * Class aliases for backward compatibility.
+ * Maps old class names to new PSR-4 namespaced classes.
  */
 
-use Lkn\WPFilebrowser\Includes\LknwpFilebrowser;
-use Lkn\WPFilebrowser\Includes\LknwpFilebrowserLoader;
-use Lkn\WPFilebrowser\Includes\LknwpFilebrowserActivator;
-use Lkn\WPFilebrowser\Includes\LknwpFilebrowserDeactivator;
-use Lkn\WPFilebrowser\Admin\LknwpFilebrowserAdmin;
-use Lkn\WPFilebrowser\Public\LknwpFilebrowserPublic;
+use LinkNacional\Filebrowser\Includes\LinkNacionalFilebrowser;
+use LinkNacional\Filebrowser\Includes\LinkNacionalFilebrowserLoader;
+use LinkNacional\Filebrowser\Includes\LinkNacionalFilebrowserActivator;
+use LinkNacional\Filebrowser\Includes\LinkNacionalFilebrowserDeactivator;
+use LinkNacional\Filebrowser\Admin\LinkNacionalFilebrowserAdmin;
+use LinkNacional\Filebrowser\Public\LinkNacionalFilebrowserPublic;
 
-// Backward compatibility aliases
-if (!class_exists('Lknwp_Filebrowser')) {
-    class_alias(LknwpFilebrowser::class, 'Lknwp_Filebrowser');
+if ( ! class_exists( 'Lkn_Filebrowser' ) ) {
+	class_alias( LinkNacionalFilebrowser::class, 'Lkn_Filebrowser' );
 }
 
-if (!class_exists('Lknwp_Filebrowser_Loader')) {
-    class_alias(LknwpFilebrowserLoader::class, 'Lknwp_Filebrowser_Loader');
+if ( ! class_exists( 'Lkn_Filebrowser_Loader' ) ) {
+	class_alias( LinkNacionalFilebrowserLoader::class, 'Lkn_Filebrowser_Loader' );
 }
 
-if (!class_exists('Lknwp_Filebrowser_Activator')) {
-    class_alias(LknwpFilebrowserActivator::class, 'Lknwp_Filebrowser_Activator');
+if ( ! class_exists( 'Lkn_Filebrowser_Activator' ) ) {
+	class_alias( LinkNacionalFilebrowserActivator::class, 'Lkn_Filebrowser_Activator' );
 }
 
-if (!class_exists('Lknwp_Filebrowser_Deactivator')) {
-    class_alias(LknwpFilebrowserDeactivator::class, 'Lknwp_Filebrowser_Deactivator');
+if ( ! class_exists( 'Lkn_Filebrowser_Deactivator' ) ) {
+	class_alias( LinkNacionalFilebrowserDeactivator::class, 'Lkn_Filebrowser_Deactivator' );
 }
 
-if (!class_exists('Lknwp_Filebrowser_Admin')) {
-    class_alias(LknwpFilebrowserAdmin::class, 'Lknwp_Filebrowser_Admin');
+if ( ! class_exists( 'Lkn_Filebrowser_Admin' ) ) {
+	class_alias( LinkNacionalFilebrowserAdmin::class, 'Lkn_Filebrowser_Admin' );
 }
 
-if (!class_exists('Lknwp_Filebrowser_Public')) {
-    class_alias(LknwpFilebrowserPublic::class, 'Lknwp_Filebrowser_Public');
+if ( ! class_exists( 'Lkn_Filebrowser_Public' ) ) {
+	class_alias( LinkNacionalFilebrowserPublic::class, 'Lkn_Filebrowser_Public' );
 }

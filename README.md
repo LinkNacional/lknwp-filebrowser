@@ -18,7 +18,7 @@ O [plugin](https://www.linknacional.com.br/wordpress/plugins/) grátis para [Wor
 ### Painel Administrativo
 
 - Página inicial de configuração  
-  ![Página inicial de configuração](includes/assets/screenshots/pagina-inicial-de-configuração.png)
+  ![Página inicial de configuração](includes/assets/screenshots/pagina-inicial-de-configuracao.png)
 
 - Como usar  
   ![Como usar](includes/assets/screenshots/como-usar.png)
@@ -46,7 +46,7 @@ O [plugin](https://www.linknacional.com.br/wordpress/plugins/) grátis para [Wor
 1. Adicione o plugin pelo admin do WP ou faça upload do plugin para `/wp-content/plugins/`
 2. Ative o plugin no painel administrativo
 3. Configure as permissões necessárias
-4. Use o shortcode `[lknwp_filebrowser]` para exibir no frontend
+4. Use o shortcode `[lkn_filebrowser]` para exibir no frontend
 
 ## 📋 Requisitos
 
@@ -78,19 +78,19 @@ O plugin inclui um painel de instruções no admin que mostra como usar o shortc
 
 #### Uso Básico:
 ```
-[lknwp_filebrowser]
+[lkn_filebrowser]
 ```
 Exibe todos os arquivos e pastas da raiz.
 
 #### Pasta Específica:
 ```
-[lknwp_filebrowser folder_id="1"]
+[lkn_filebrowser folder_id="1"]
 ```
 Exibe arquivos de uma pasta específica. Substitua "1" pelo ID da pasta desejada.
 
 #### Layout Diferente:
 ```
-[lknwp_filebrowser layout="list"]
+[lkn_filebrowser layout="list"]
 ```
 Layouts disponíveis: "grid" (padrão) ou "list".
 
@@ -107,7 +107,7 @@ GPL v2 ou posterior - veja [LICENSE.txt](LICENSE.txt) para detalhes.
 
 ## 🔗 Links
 
-- [Download do plugin](https://github.com/LinkNacional/lknwp-filebrowser/releases/)
+- [Download do plugin](https://github.com/LinkNacional/linknacional-file-browser/releases/)
 - [Documentação](https://www.linknacional.com.br/wordpress/plugins/)
 - [Suporte](https://www.linknacional.com.br/wordpress/suporte/)
 

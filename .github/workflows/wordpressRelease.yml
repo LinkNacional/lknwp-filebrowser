@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PLUGIN_NAME: lknwp-filebrowser
+  PLUGIN_NAME: linknacional-file-browser
   PHP_VERSION: "8.2"
   DEPLOY_TAG: "1.0.0"
 
@@ -48,7 +48,7 @@ jobs:
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
           VERSION: ${{ env.DEPLOY_TAG }}
-          SLUG: lknwp-filebrowser
+          SLUG: linknacional-file-browser
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           ASSETS_DIR: build/${{ env.PLUGIN_NAME }}/includes/assets/wordpressAssets

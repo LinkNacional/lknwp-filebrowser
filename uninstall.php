@@ -22,7 +22,7 @@
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    Lknwp_Filebrowser
+ * @package    LinkNacional_Filebrowser
  */
 
 // If uninstall not called from WordPress, then exit.
