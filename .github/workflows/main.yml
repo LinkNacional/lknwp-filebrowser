@@ -18,6 +18,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    # Install npm dependencies and build webpack assets
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: npm install and build
+      run: |
+        npm ci
+        npm run build
+
     # Run composer install and generate vendor
     - name: Run composer install
       uses: php-actions/composer@v6
@@ -33,7 +44,7 @@ jobs:
       run: |
         mkdir -p dist
         mkdir -p build/${{ env.PLUGIN_NAME }}
-        mv ./admin ./includes ./public ./languages *.php LICENSE.txt composer.json composer.lock ./build/${{ env.PLUGIN_NAME }}
+        mv ./admin ./assets ./includes ./public ./languages *.php LICENSE.txt *.txt composer.json composer.lock ./build/${{ env.PLUGIN_NAME }}
         find ./build -type f -exec chmod 0644 {} +
         find ./build -type d -exec chmod 0755 {} +
     
