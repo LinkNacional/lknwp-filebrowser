@@ -64,7 +64,7 @@ LKNWP_FILEBROWSER_PLUGIN_URL    // plugin_dir_url(__FILE__)
 LKNWP_FILEBROWSER_PLUGIN_PATH   // plugin_dir_path(__FILE__)
 ```
 - Sempre usar `LKNWP_FILEBROWSER_PLUGIN_URL` e `LKNWP_FILEBROWSER_PLUGIN_PATH`. Nunca `plugin_dir_path( __FILE__ )` direto.
-- `LKNWP_FILEBROWSER_VERSION` como cache-buster em `wp_enqueue_style`/`wp_enqueue_script`.
+- `LKNWP_FILEBROWSER_PLUGIN_URL` + `LKNWP_FILEBROWSER_VERSION` como cache-buster em `wp_enqueue_style`/`wp_enqueue_script`.
 
 ### Prefixos
 - Options/DB: `lknwp_filebrowser_*` (ex: `lknwp_filebrowser_db_version`)
@@ -98,6 +98,7 @@ LKNWP_FILEBROWSER_PLUGIN_PATH   // plugin_dir_path(__FILE__)
 ### Arquivos
 | Arquivo | Contexto | Handle |
 |---|---|---|
+| `assets/js/compiled/fontawesome.compiled.js` | Admin + Public (compartilhado) | `lknwp-filebrowser-fontawesome` |
 | `admin/js/lknwp-filebrowser-admin.js` | Admin | `lknwp-filebrowser` |
 | `admin/css/lknwp-filebrowser-admin.css` | Admin | `lknwp-filebrowser` |
 | `public/js/lknwp-filebrowser-public.js` | Public | `lknwp-filebrowser` |
@@ -108,9 +109,20 @@ LKNWP_FILEBROWSER_PLUGIN_PATH   // plugin_dir_path(__FILE__)
 - **Nunca `<script>` ou `<style>` inline no PHP.** Usar `wp_enqueue_script`/`wp_enqueue_style`.
 - Dependência: `jquery` (única).
 - Localize com `wp_localize_script()` — admin usa `lknwp_ajax`, public usa `lknwp_public_ajax`.
-- Font Awesome 6.0.0 via CDN (`cdnjs.cloudflare.com`).
+- **Font Awesome 6** → instalado via npm (`@fortawesome/fontawesome-free`), compilado com webpack (`style-loader` + `css-loader`) em `assets/js/compiled/fontawesome.compiled.js`. CSS injetado no runtime — zero CDN.
 - `console.log` proibido em production. Só `console.error` para erros reais.
-- Admin enfileira em todas as páginas admin (sem restrição de `$hook_suffix`).
+- Admin enfileira **somente** na página do plugin (`toplevel_page_lknwp-filebrowser`), via `$hook_suffix`.
+- Public enfileira **somente** quando `[lknwp_filebrowser]` está no post atual, via `has_shortcode()`.
+
+### Build
+```bash
+npm install
+npm run build    # webpack --mode production → assets/js/compiled/fontawesome.compiled.js
+npm run dev      # webpack --mode development --watch
+```
+- Entry: `assets/js/fontawesome-entry.js` importa `@fortawesome/fontawesome-free/css/all.min.css`.
+- Pasta `assets/js/compiled/` está em `.gitignore` (build output).
+- Webpack 5, sem React/Babel — apenas `style-loader` + `css-loader`.
 
 ---
 
@@ -157,7 +169,7 @@ echo esc_url( $url );
 - **jQuery** — dependência de script no front-end.
 
 ### Externas
-- **Font Awesome 6.0.0** — CDN `cdnjs.cloudflare.com`
+- **api.linknacional.com** — Update checker (já removido, plugin será distribuído via WordPress.org).
 
 ### Build
 - `composer.json`: autoload PSR-4, sem dependências de produção além do PHP ≥ 7.4.

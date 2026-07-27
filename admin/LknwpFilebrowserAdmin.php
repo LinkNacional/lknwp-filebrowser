@@ -50,9 +50,12 @@ class LknwpFilebrowserAdmin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
-		wp_enqueue_style( 'lknwp-filebrowser-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0', 'all' );
-		wp_enqueue_style( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'admin/css/lknwp-filebrowser-admin.css', array( 'lknwp-filebrowser-fontawesome' ), LKNWP_FILEBROWSER_VERSION, 'all' );
+	public function enqueue_styles( $hook_suffix ) {
+		if ( 'toplevel_page_lknwp-filebrowser' !== $hook_suffix ) {
+			return;
+		}
+		wp_enqueue_script( 'lknwp-filebrowser-fontawesome', LKNWP_FILEBROWSER_PLUGIN_URL . 'assets/js/compiled/fontawesome.compiled.js', array(), LKNWP_FILEBROWSER_VERSION, false );
+		wp_enqueue_style( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'admin/css/lknwp-filebrowser-admin.css', array(), LKNWP_FILEBROWSER_VERSION, 'all' );
 	}
 
 	/**
@@ -60,7 +63,10 @@ class LknwpFilebrowserAdmin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook_suffix ) {
+		if ( 'toplevel_page_lknwp-filebrowser' !== $hook_suffix ) {
+			return;
+		}
 		wp_enqueue_script( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'admin/js/lknwp-filebrowser-admin.js', array( 'jquery' ), LKNWP_FILEBROWSER_VERSION, false );
 		wp_localize_script( $this->plugin_name, 'lknwp_ajax', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
