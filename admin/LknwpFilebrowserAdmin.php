@@ -184,12 +184,16 @@ class LknwpFilebrowserAdmin {
 	 * Create a nonce
 	 */
 	public function lknwp_get_admin_nonce() {
-		$action_name = isset($_POST['action_name']) ? sanitize_text_field(wp_unslash($_POST['action_name'])) : '';
-		if (!$action_name) {
-			wp_send_json_error('Action name required');
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This endpoint generates the nonce that subsequent AJAX calls verify. Nonce verification is not possible here.
+		if ( ! wp_doing_ajax() ) {
+			wp_die( esc_html__( 'Invalid request method.', 'lknwp-filebrowser' ) );
 		}
-		$nonce = wp_create_nonce($action_name);
-		wp_send_json_success(array('nonce' => $nonce));
+		$action_name = isset( $_POST['action_name'] ) ? sanitize_text_field( wp_unslash( $_POST['action_name'] ) ) : '';
+		if ( ! $action_name ) {
+			wp_send_json_error( esc_html__( 'Action name required', 'lknwp-filebrowser' ) );
+		}
+		$nonce = wp_create_nonce( $action_name );
+		wp_send_json_success( array( 'nonce' => $nonce ) );
 	}
 
 	/**
