@@ -50,8 +50,8 @@ O [plugin](https://www.linknacional.com.br/wordpress/plugins/) grátis para [Wor
 
 ## 📋 Requisitos
 
-- WordPress 5.0+
-- PHP 7.4+
+- WordPress 6.0+
+- PHP 8.2+
 - MySQL 5.6+
 
 ## 🔧 Tecnologias
