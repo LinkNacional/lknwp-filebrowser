@@ -307,7 +307,7 @@
 			const $element = $(`
 				<div class="content-item file ${file.file_type}" data-file-id="${file.id}" data-file-url="${file.file_url}" data-file-type="${file.file_type}" data-folder-id="${file.folder_id}">
 					<i class="${fileIcon}"></i>
-					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="Open file">
+					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="${lknwp_public_ajax.open_file || 'Open file'}">
 						<i class="fas fa-external-link-alt"></i>
 					</button>
 					<div class="content-item-name">${file.original_name}</div>
@@ -323,7 +323,7 @@
 			const $element = $(`
 				<div class="content-item file ${file.file_type}" data-file-id="${file.id}" data-file-url="${file.file_url}" data-file-type="${file.file_type}" data-folder-id="${file.folder_id}">
 					<i class="${fileIcon}"></i>
-					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="Open file">
+					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="${lknwp_public_ajax.open_file || 'Open file'}">
 						<i class="fas fa-external-link-alt"></i>
 					</button>
 					<div class="content-item-name">${file.original_name}</div>
@@ -741,7 +741,7 @@
 					<div class="folder-item-content-public">
 						<i class="fas fa-folder"></i> ${folder.name}
 					</div>
-					<button class="folder-toggle-btn-public" data-folder-id="${folder.id}" title="Show Subfolders">
+					<button class="folder-toggle-btn-public" data-folder-id="${folder.id}" title="${lknwp_public_ajax.show_subfolders || 'Show Subfolders'}">
 						<i class="fas fa-caret-right"></i>
 					</button>
 				`;

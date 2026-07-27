@@ -174,23 +174,35 @@
     color: #fff;
     border: none;
     border-radius: 4px;
-    padding: 6px 12px;
+    padding: 16px;
+    min-width: 80px;
+    min-height: 32px;
+    max-height: 32px;
+    height: 32px;
     margin-top: 8px;
     font-size: 11px;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.2s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    box-sizing: border-box;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .file-download-btn:hover {
-    background: #218838;
+    background: #28a745;
+    color: #fff;
     transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .file-download-btn:active {
     transform: translateY(0);
+    box-shadow: none;
 }
 
 /* File locate button */
@@ -200,7 +212,11 @@
     border: none;
     border-radius: 4px;
     width: 24px;
+    min-width: 24px;
+    max-width: 24px;
     height: 24px;
+    min-height: 24px;
+    max-height: 24px;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -212,6 +228,8 @@
     z-index: 5;
     opacity: 0.8;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    padding: 16px;
 }
 
 .file-locate-btn:hover {
@@ -266,8 +284,12 @@
 .lknwp-filebrowser-content.list .file-download-btn {
     margin-left: 10px;
     margin-top: 0;
-    padding: 4px 8px;
+    padding: 4px 10px;
     font-size: 10px;
+    min-height: 26px;
+    max-height: 26px;
+    height: 26px;
+    min-width: 60px;
 }
 
 /* File locate button in list layout */
@@ -276,9 +298,15 @@
     margin-right: 10px;
     margin-top: 0;
     width: 22px;
+    min-width: 22px;
+    max-width: 22px;
     height: 22px;
+    min-height: 22px;
+    max-height: 22px;
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    padding: 0;
 }
 
 /* File type colors */
@@ -592,6 +620,10 @@
         padding: 4px 8px;
         font-size: 9px;
         margin-top: 6px;
+        min-height: 24px;
+        max-height: 24px;
+        height: 24px;
+        min-width: 50px;
     }
 
     .lknwp-file-manager-public {
@@ -659,6 +691,10 @@
     justify-content: space-between;
     border-radius: 4px;
     margin-bottom: 2px;
+    min-height: 36px;
+    max-height: 36px;
+    height: 36px;
+    box-sizing: border-box;
 }
 
 .folder-item-public:hover {
@@ -690,12 +726,21 @@
     color: #0073aa;
     font-size: 14px;
     cursor: pointer;
-    padding: 4px;
+    padding: 0;
     border-radius: 2px;
     transition: all 0.2s ease;
+    width: 20px;
     min-width: 20px;
+    max-width: 20px;
+    height: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    box-sizing: border-box;
     text-align: center;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .folder-toggle-btn-public:hover {
@@ -880,7 +925,11 @@
 
 .file-item-tree .file-locate-btn {
     width: 24px;
+    min-width: 24px;
+    max-width: 24px;
     height: 24px;
+    min-height: 24px;
+    max-height: 24px;
     border: none;
     background: #007cba;
     color: white;
@@ -892,6 +941,8 @@
     font-size: 10px;
     transition: all 0.2s ease;
     opacity: 0.7;
+    box-sizing: border-box;
+    padding: 0;
 }
 
 .file-item-tree:hover .file-locate-btn {

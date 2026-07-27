@@ -99,6 +99,7 @@ class LknwpFilebrowserPublic {
 			'items_text' => __( 'items', 'lknwp-filebrowser' ),
 			'hide_subfolders' => __( 'Hide Subfolders', 'lknwp-filebrowser' ),
 			'show_subfolders' => __( 'Show Subfolders', 'lknwp-filebrowser' ),
+			'open_file' => __( 'Open file', 'lknwp-filebrowser' ),
 		));
 
 		$atts = shortcode_atts( array(

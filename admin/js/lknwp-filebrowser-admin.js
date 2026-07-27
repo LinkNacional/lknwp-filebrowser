@@ -224,10 +224,10 @@
 				<div class="edit-container">
 					<input type="text" class="edit-name-input" value="${inputValue}" data-extension="${extension}">
 					<div class="edit-controls">
-						<button class="edit-confirm-btn" title="Confirmar">
+						<button class="edit-confirm-btn" title="${lknwp_ajax.confirm_edit || 'Confirm'}">
 							<i class="fas fa-check"></i>
 						</button>
-						<button class="edit-cancel-btn" title="Cancel">
+						<button class="edit-cancel-btn" title="${lknwp_ajax.cancel || 'Cancel'}">
 							<i class="fas fa-times"></i>
 						</button>
 					</div>
@@ -383,7 +383,7 @@
 					<div class="folder-item-content">
 						<i class="fas fa-folder"></i> ${folder.name}
 					</div>
-					<button class="folder-toggle-btn" data-folder-id="${folder.id}" title="' + (lknwp_ajax.expand_collapse || 'Expand/Collapse') + '">
+					<button class="folder-toggle-btn" data-folder-id="${folder.id}" title="${lknwp_ajax.expand_collapse || 'Expand/Collapse'}">
 						<i class="fas fa-caret-right"></i>
 					</button>
 				`;
@@ -487,10 +487,10 @@
 			const folderElement = $(`
 				<div class="content-item folder" data-folder-id="${folder.id}" data-folder-name="${folder.name}">
 					<div class="content-item-actions">
-						<button class="edit-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="Edit name">
+						<button class="edit-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="${lknwp_ajax.edit_name || 'Edit name'}">
 							<i class="fas fa-edit"></i>
 						</button>
-						<button class="delete-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="Delete folder">
+						<button class="delete-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="${lknwp_ajax.delete_folder || 'Delete folder'}">
 							<i class="fas fa-trash"></i>
 						</button>
 					</div>
@@ -510,10 +510,10 @@
 			const fileElement = $(`
 				<div class="content-item file ${file.file_type}" data-file-id="${file.id}" data-folder-id="${file.folder_id}">
 					<div class="content-item-actions">
-						<button class="edit-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="Edit name">
+						<button class="edit-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="${lknwp_ajax.edit_name || 'Edit name'}">
 							<i class="fas fa-edit"></i>
 						</button>
-						<button class="delete-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="Delete file">
+						<button class="delete-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="${lknwp_ajax.delete_file || 'Delete file'}">
 							<i class="fas fa-trash"></i>
 						</button>
 					</div>
@@ -522,7 +522,7 @@
 						<div class="content-item-name">${file.original_name}</div>
 						<div class="content-item-info">${fileSize}</div>
 					</div>
-					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="Open file">
+					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="${lknwp_ajax.open_file || 'Open file'}">
 						<i class="fas fa-external-link-alt"></i>
 					</button>
 				</div>
@@ -812,7 +812,7 @@
 					}
 
 					// Show success message briefly
-					const $success = $('<span style="color: #0073aa; font-size: 10px;">✓ ' + (lknwp_ajax.saved_text || 'Salvo') + '</span>');
+					const $success = $('<span style="color: #0073aa; font-size: 10px;">✓ ' + (lknwp_ajax.saved_text || 'Saved') + '</span>');
 					$nameElement.after($success);
 					setTimeout(() => $success.remove(), 2000);
 				} else {

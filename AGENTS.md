@@ -110,7 +110,8 @@ LKNWP_FILEBROWSER_PLUGIN_PATH   // plugin_dir_path(__FILE__)
 - **Nunca `<script>` ou `<style>` inline no PHP.** Usar `wp_enqueue_script`/`wp_enqueue_style`.
 - Dependência: `jquery` (única).
 - Localize com `wp_localize_script()` — admin usa `lknwp_ajax`, public usa `lknwp_public_ajax`.
-- **Qualquer string visível no JS deve vir via `wp_localize_script()`** com text domain. Nunca hardcoded no JS (nem em inglês). Fallback: `lknwp_ajax.key || 'Default English'`.
+- **Qualquer string visível no JS deve vir via `wp_localize_script()`** com text domain. Nunca hardcoded no JS (nem em inglês). Fallback: `${lknwp_ajax.key || 'Default English'}`.
+- **Dentro de template literals (backticks), usar `${...}`, nunca `' + ... + '`.**
 - **Font Awesome 6** → instalado via npm (`@fortawesome/fontawesome-free`), compilado com webpack (`style-loader` + `css-loader`) em `assets/js/compiled/fontawesome.compiled.js`. CSS injetado no runtime — zero CDN.
 - `console.log` proibido em production. Só `console.error` para erros reais.
 - Admin enfileira **somente** na página do plugin (`toplevel_page_lknwp-filebrowser`), via `$hook_suffix`.

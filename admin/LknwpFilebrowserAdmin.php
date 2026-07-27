@@ -89,6 +89,12 @@ class LknwpFilebrowserAdmin {
 			'show_subfolders' => esc_html__( 'Show Subfolders', 'lknwp-filebrowser' ),
 			'expand_collapse' => esc_html__( 'Expand/Collapse', 'lknwp-filebrowser' ),
 			'collapse' => esc_html__( 'Collapse', 'lknwp-filebrowser' ),
+			'confirm_edit' => esc_html__( 'Confirm', 'lknwp-filebrowser' ),
+			'cancel' => esc_html__( 'Cancel', 'lknwp-filebrowser' ),
+			'edit_name' => esc_html__( 'Edit name', 'lknwp-filebrowser' ),
+			'delete_folder' => esc_html__( 'Delete folder', 'lknwp-filebrowser' ),
+			'delete_file' => esc_html__( 'Delete file', 'lknwp-filebrowser' ),
+			'open_file' => esc_html__( 'Open file', 'lknwp-filebrowser' ),
 		));
 	}
 

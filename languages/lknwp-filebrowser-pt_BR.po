@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lknwp-filebrowser\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2026-07-27 11:39-0300\n"
+"POT-Creation-Date: 2026-07-27 12:22-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: www.linknacional.com\n"
@@ -29,7 +29,7 @@ msgid "Copied!"
 msgstr "Copiado!"
 
 #: admin/LknwpFilebrowserAdmin.php:77 public/LknwpFilebrowserPublic.php:86
-#: public/LknwpFilebrowserPublic.php:164
+#: public/LknwpFilebrowserPublic.php:165
 msgid "Loading..."
 msgstr "Carregando..."
 
@@ -89,48 +89,72 @@ msgstr "Expandir/Recolher"
 msgid "Collapse"
 msgstr "Recolher"
 
-#: admin/LknwpFilebrowserAdmin.php:100 admin/LknwpFilebrowserAdmin.php:101
+#: admin/LknwpFilebrowserAdmin.php:92
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: admin/LknwpFilebrowserAdmin.php:93 admin/LknwpFilebrowserAdmin.php:193
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: admin/LknwpFilebrowserAdmin.php:94
+msgid "Edit name"
+msgstr "Editar nome"
+
+#: admin/LknwpFilebrowserAdmin.php:95
+msgid "Delete folder"
+msgstr "Excluir pasta"
+
+#: admin/LknwpFilebrowserAdmin.php:96
+msgid "Delete file"
+msgstr "Excluir arquivo"
+
+#: admin/LknwpFilebrowserAdmin.php:97 public/LknwpFilebrowserPublic.php:102
+msgid "Open file"
+msgstr "Abrir arquivo"
+
+#: admin/LknwpFilebrowserAdmin.php:106 admin/LknwpFilebrowserAdmin.php:107
 msgid "File Browser"
 msgstr "Navegador de Arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:116
+#: admin/LknwpFilebrowserAdmin.php:122
 msgid "File Browser Manager"
 msgstr "Gerenciador de Arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:121
+#: admin/LknwpFilebrowserAdmin.php:127
 msgid "How to Use"
 msgstr "Como Usar"
 
-#: admin/LknwpFilebrowserAdmin.php:124
+#: admin/LknwpFilebrowserAdmin.php:130
 msgid "To display the file browser on your website, follow these simple steps:"
 msgstr ""
 "Para exibir o navegador de arquivos no seu site, siga estes passos simples:"
 
-#: admin/LknwpFilebrowserAdmin.php:126
+#: admin/LknwpFilebrowserAdmin.php:132
 msgid "Copy the shortcode below"
 msgstr "Copie o shortcode abaixo"
 
-#: admin/LknwpFilebrowserAdmin.php:127
+#: admin/LknwpFilebrowserAdmin.php:133
 msgid "Go to the page or post where you want to display the file browser"
 msgstr "Vá para a página ou post onde deseja exibir o navegador de arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:128
+#: admin/LknwpFilebrowserAdmin.php:134
 msgid "Add a shortcode component/element in your editor"
 msgstr "Adicione um componente/elemento de shortcode no seu editor"
 
-#: admin/LknwpFilebrowserAdmin.php:129
+#: admin/LknwpFilebrowserAdmin.php:135
 msgid "Paste the shortcode into the component"
 msgstr "Cole o shortcode no componente"
 
-#: admin/LknwpFilebrowserAdmin.php:130
+#: admin/LknwpFilebrowserAdmin.php:136
 msgid "Save and publish your page"
 msgstr "Salve e publique sua página"
 
-#: admin/LknwpFilebrowserAdmin.php:135
+#: admin/LknwpFilebrowserAdmin.php:141
 msgid "Copy Shortcode"
 msgstr "Copiar Shortcode"
 
-#: admin/LknwpFilebrowserAdmin.php:139
+#: admin/LknwpFilebrowserAdmin.php:145
 msgid ""
 "The file browser will display all folders and files you create here. Users "
 "can navigate through folders, search for files, and download them directly "
@@ -140,126 +164,122 @@ msgstr ""
 "aqui. Os usuários podem navegar pelas pastas, pesquisar arquivos e baixá-los "
 "diretamente do frontend."
 
-#: admin/LknwpFilebrowserAdmin.php:147
+#: admin/LknwpFilebrowserAdmin.php:153
 msgid "Create Folder"
 msgstr "Criar Pasta"
 
-#: admin/LknwpFilebrowserAdmin.php:150
+#: admin/LknwpFilebrowserAdmin.php:156
 msgid "Upload Files"
 msgstr "Enviar Arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:156 public/LknwpFilebrowserPublic.php:149
-#: public/LknwpFilebrowserPublic.php:312 public/LknwpFilebrowserPublic.php:374
+#: admin/LknwpFilebrowserAdmin.php:162 public/LknwpFilebrowserPublic.php:150
+#: public/LknwpFilebrowserPublic.php:313 public/LknwpFilebrowserPublic.php:375
 msgid "Home"
 msgstr "Início"
 
-#: admin/LknwpFilebrowserAdmin.php:161 public/LknwpFilebrowserPublic.php:139
+#: admin/LknwpFilebrowserAdmin.php:167 public/LknwpFilebrowserPublic.php:140
 msgid "Folders"
 msgstr "Pastas"
 
-#: admin/LknwpFilebrowserAdmin.php:180
+#: admin/LknwpFilebrowserAdmin.php:186
 msgid "Create New Folder"
 msgstr "Criar Nova Pasta"
 
-#: admin/LknwpFilebrowserAdmin.php:182
+#: admin/LknwpFilebrowserAdmin.php:188
 msgid "Folder Name:"
 msgstr "Nome da Pasta:"
 
-#: admin/LknwpFilebrowserAdmin.php:186
+#: admin/LknwpFilebrowserAdmin.php:192
 msgid "Create"
 msgstr "Criar"
 
-#: admin/LknwpFilebrowserAdmin.php:187
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: admin/LknwpFilebrowserAdmin.php:201 public/LknwpFilebrowserPublic.php:56
+#: admin/LknwpFilebrowserAdmin.php:207 public/LknwpFilebrowserPublic.php:56
 msgid "Invalid request method."
 msgstr "Método de requisição inválido."
 
-#: admin/LknwpFilebrowserAdmin.php:207 public/LknwpFilebrowserPublic.php:62
+#: admin/LknwpFilebrowserAdmin.php:213 public/LknwpFilebrowserPublic.php:62
 msgid "Action name required"
 msgstr "Nome da ação é obrigatório"
 
-#: admin/LknwpFilebrowserAdmin.php:220 admin/LknwpFilebrowserAdmin.php:262
-#: admin/LknwpFilebrowserAdmin.php:338 admin/LknwpFilebrowserAdmin.php:358
-#: admin/LknwpFilebrowserAdmin.php:503 admin/LknwpFilebrowserAdmin.php:558
+#: admin/LknwpFilebrowserAdmin.php:226 admin/LknwpFilebrowserAdmin.php:268
+#: admin/LknwpFilebrowserAdmin.php:344 admin/LknwpFilebrowserAdmin.php:364
+#: admin/LknwpFilebrowserAdmin.php:509 admin/LknwpFilebrowserAdmin.php:564
 msgid "Insufficient permissions"
 msgstr "Permissões insuficientes"
 
-#: admin/LknwpFilebrowserAdmin.php:227
+#: admin/LknwpFilebrowserAdmin.php:233
 msgid "Folder name is required"
 msgstr "Nome da pasta é obrigatório"
 
-#: admin/LknwpFilebrowserAdmin.php:246
+#: admin/LknwpFilebrowserAdmin.php:252
 msgid "Failed to create folder"
 msgstr "Falha ao criar pasta"
 
-#: admin/LknwpFilebrowserAdmin.php:250
+#: admin/LknwpFilebrowserAdmin.php:256
 msgid "Folder created successfully"
 msgstr "Pasta criada com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:268
+#: admin/LknwpFilebrowserAdmin.php:274
 msgid "No files uploaded"
 msgstr "Nenhum arquivo enviado"
 
-#: admin/LknwpFilebrowserAdmin.php:322
+#: admin/LknwpFilebrowserAdmin.php:328
 msgid "Failed to upload files"
 msgstr "Falha ao enviar arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:326
+#: admin/LknwpFilebrowserAdmin.php:332
 msgid "Files uploaded successfully"
 msgstr "Arquivos enviados com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:348
+#: admin/LknwpFilebrowserAdmin.php:354
 msgid "Folder deleted successfully"
 msgstr "Pasta excluída com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:379
+#: admin/LknwpFilebrowserAdmin.php:385
 msgid "File deleted successfully"
 msgstr "Arquivo excluído com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:510
+#: admin/LknwpFilebrowserAdmin.php:516
 msgid "Folder name cannot be empty"
 msgstr "Nome da pasta não pode estar vazio"
 
-#: admin/LknwpFilebrowserAdmin.php:519
+#: admin/LknwpFilebrowserAdmin.php:525
 msgid "Folder not found"
 msgstr "Pasta não encontrada"
 
-#: admin/LknwpFilebrowserAdmin.php:532
+#: admin/LknwpFilebrowserAdmin.php:538
 msgid "A folder with this name already exists"
 msgstr "Já existe uma pasta com este nome"
 
-#: admin/LknwpFilebrowserAdmin.php:545
+#: admin/LknwpFilebrowserAdmin.php:551
 msgid "Folder name updated successfully"
 msgstr "Nome da pasta atualizado com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:547
+#: admin/LknwpFilebrowserAdmin.php:553
 msgid "Error updating folder name"
 msgstr "Erro ao atualizar nome da pasta"
 
-#: admin/LknwpFilebrowserAdmin.php:565
+#: admin/LknwpFilebrowserAdmin.php:571
 msgid "File name cannot be empty"
 msgstr "Nome do arquivo não pode estar vazio"
 
-#: admin/LknwpFilebrowserAdmin.php:574
+#: admin/LknwpFilebrowserAdmin.php:580
 msgid "File not found"
 msgstr "Arquivo não encontrado"
 
-#: admin/LknwpFilebrowserAdmin.php:587
+#: admin/LknwpFilebrowserAdmin.php:593
 msgid "A file with this name already exists"
 msgstr "Já existe um arquivo com este nome"
 
-#: admin/LknwpFilebrowserAdmin.php:596
+#: admin/LknwpFilebrowserAdmin.php:602
 msgid "Cannot change the file extension"
 msgstr "Não é possível alterar a extensão do arquivo"
 
-#: admin/LknwpFilebrowserAdmin.php:610
+#: admin/LknwpFilebrowserAdmin.php:616
 msgid "File name updated successfully"
 msgstr "Nome do arquivo atualizado com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:612
+#: admin/LknwpFilebrowserAdmin.php:618
 msgid "Error updating file name"
 msgstr "Erro ao atualizar nome do arquivo"
 
@@ -303,15 +323,15 @@ msgstr "Encontrado"
 msgid "items"
 msgstr "itens"
 
-#: public/LknwpFilebrowserPublic.php:125
+#: public/LknwpFilebrowserPublic.php:126
 msgid "Search files and folders..."
 msgstr "Pesquisar arquivos e pastas..."
 
-#: public/LknwpFilebrowserPublic.php:141
+#: public/LknwpFilebrowserPublic.php:142
 msgid "Loading folders..."
 msgstr "Carregando pastas..."
 
-#: public/LknwpFilebrowserPublic.php:224
+#: public/LknwpFilebrowserPublic.php:225
 msgid "Search term is required"
 msgstr "Termo de busca é obrigatório"
 
