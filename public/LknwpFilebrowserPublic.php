@@ -207,7 +207,7 @@ class LknwpFilebrowserPublic {
 	public function get_folder_contents_frontend() {
 		check_ajax_referer( 'lknwp_filebrowser_public_nonce', 'nonce' );
 		
-		$folder_id = intval( $_POST['folder_id'] );
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		$contents = $this->get_folder_contents( $folder_id );
 		
@@ -220,8 +220,8 @@ class LknwpFilebrowserPublic {
 	public function search_files_frontend() {
 		check_ajax_referer( 'lknwp_filebrowser_public_nonce', 'nonce' );
 		
-		$search_term = sanitize_text_field( $_POST['search_term'] );
-		$folder_id = intval( $_POST['folder_id'] );
+		$search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		if ( empty( $search_term ) ) {
 			wp_send_json_error( __( 'Search term is required', 'lknwp-filebrowser' ) );
@@ -413,7 +413,7 @@ class LknwpFilebrowserPublic {
 	public function get_folder_files_frontend() {
 		check_ajax_referer( 'lknwp_filebrowser_public_nonce', 'nonce' );
 		
-		$folder_id = intval( $_POST['folder_id'] );
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		global $wpdb;
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';

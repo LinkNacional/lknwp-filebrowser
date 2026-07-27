@@ -202,8 +202,8 @@ class LknwpFilebrowserAdmin {
 			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$folder_name = sanitize_text_field($_POST['folder_name']);
-		$parent_id = intval($_POST['parent_id']);
+		$folder_name = isset( $_POST['folder_name'] ) ? sanitize_text_field( wp_unslash( $_POST['folder_name'] ) ) : '';
+		$parent_id = isset( $_POST['parent_id'] ) ? intval( wp_unslash( $_POST['parent_id'] ) ) : 0;
 
 		if (empty($folder_name)) {
 			wp_send_json_error(esc_html__('Folder name is required', 'lknwp-filebrowser'));
@@ -245,7 +245,7 @@ class LknwpFilebrowserAdmin {
 			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$folder_id = intval($_POST['folder_id']);
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 
 		if (empty($_FILES['files'])) {
 			wp_send_json_error(esc_html__('No files uploaded', 'lknwp-filebrowser'));
@@ -269,7 +269,8 @@ class LknwpFilebrowserAdmin {
 				$file_path = $filebrowser_dir . '/' . $filename;
 				$file_url = $filebrowser_url . '/' . $filename;
 
-				if (\move_uploaded_file($files['tmp_name'][$i], $file_path)) {
+				// phpcs:ignore Generic.PHP.ForbiddenFunctions.Found -- move_uploaded_file is the correct function for HTTP uploads; WP core uses it in wp_handle_upload().
+			if ( move_uploaded_file( $files['tmp_name'][$i], $file_path ) ) {
 					// Save to database
 					global $wpdb;
 					$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
@@ -320,7 +321,7 @@ class LknwpFilebrowserAdmin {
 			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$folder_id = intval($_POST['folder_id']);
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		global $wpdb;
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
@@ -342,7 +343,7 @@ class LknwpFilebrowserAdmin {
 			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$file_id = intval($_POST['file_id']);
+		$file_id = isset( $_POST['file_id'] ) ? intval( wp_unslash( $_POST['file_id'] ) ) : 0;
 		
 		global $wpdb;
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
@@ -352,8 +353,8 @@ class LknwpFilebrowserAdmin {
 		
 		if ($file) {
 			// Delete physical file
-			if (file_exists($file->file_path)) {
-				unlink($file->file_path);
+			if ( file_exists( $file->file_path ) ) {
+				wp_delete_file( $file->file_path );
 			}
 
 			// Delete from database
@@ -369,7 +370,7 @@ class LknwpFilebrowserAdmin {
 	public function get_folder_contents_ajax() {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
-		$folder_id = intval($_POST['folder_id']);
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		$contents = $this->get_folder_contents($folder_id);
 		
@@ -464,8 +465,8 @@ class LknwpFilebrowserAdmin {
 		));
 
 		foreach ($files as $file) {
-			if (file_exists($file->file_path)) {
-				unlink($file->file_path);
+			if ( file_exists( $file->file_path ) ) {
+				wp_delete_file( $file->file_path );
 			}
 		}
 
@@ -486,8 +487,8 @@ class LknwpFilebrowserAdmin {
 			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$folder_id = intval($_POST['id']);
-		$new_name = sanitize_text_field($_POST['new_name']);
+		$folder_id = isset( $_POST['id'] ) ? intval( wp_unslash( $_POST['id'] ) ) : 0;
+		$new_name = isset( $_POST['new_name'] ) ? sanitize_text_field( wp_unslash( $_POST['new_name'] ) ) : '';
 
 		if (empty($new_name)) {
 			wp_send_json_error(esc_html__('Nome da pasta não pode estar vazio', 'lknwp-filebrowser'));
@@ -540,8 +541,8 @@ class LknwpFilebrowserAdmin {
 			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$file_id = intval($_POST['id']);
-		$new_name = sanitize_file_name($_POST['new_name']);
+		$file_id = isset( $_POST['id'] ) ? intval( wp_unslash( $_POST['id'] ) ) : 0;
+		$new_name = isset( $_POST['new_name'] ) ? sanitize_file_name( wp_unslash( $_POST['new_name'] ) ) : '';
 
 		if (empty($new_name)) {
 			wp_send_json_error(esc_html__('Nome do arquivo não pode estar vazio', 'lknwp-filebrowser'));
@@ -600,7 +601,7 @@ class LknwpFilebrowserAdmin {
 	public function get_folder_files_ajax() {
 		check_ajax_referer( 'lknwp_filebrowser_admin_nonce', 'nonce' );
 		
-		$folder_id = intval( $_POST['folder_id'] );
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		global $wpdb;
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
