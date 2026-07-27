@@ -366,12 +366,9 @@
 			const rootItem = $('<div class="folder-item active" data-folder-id="0" data-folder-name="Home">')
 				.html('<div class="folder-item-content"><i class="fas fa-home"></i> Home</div>');
 			container.append(rootItem);
-
-			// Render files for root folder (folder_id = 0)
-			renderFilesInFolderTree(allFiles, container, 0, 1);
 		}
 
-		// Render folders
+		// Render folders (level 0 folders go before root files)
 		const folders = allFolders.filter(f => f.parent_id == parentId);
 		folders.forEach(function (folder) {
 			const hasChildren = allFolders.some(f => f.parent_id == folder.id);
@@ -407,6 +404,11 @@
 			// Render children folders
 			renderFolderTreeRecursive(allFolders, allFiles, container, folder.id, level + 1);
 		});
+
+		// Render root files after all folders (padrão: pastas primeiro, arquivos depois)
+		if (level === 0) {
+			renderFilesInFolderTree(allFiles, container, 0, 0);
+		}
 	} function renderFilesInFolderTree(allFiles, container, folderId, level) {
 		const files = allFiles.filter(f => f.folder_id == folderId);
 
@@ -435,7 +437,7 @@
 				</div>
 			`;
 
-			const $fileItem = $('<div class="file-item-tree child-file-tree" data-file-id="' + file.id + '" data-parent-folder-id="' + folderId + '" data-file-name="' + file.original_name + '">')
+			const $fileItem = $('<div class="file-item-tree child-file-tree' + (folderId === 0 ? ' show' : '') + '" data-file-id="' + file.id + '" data-parent-folder-id="' + folderId + '" data-file-name="' + file.original_name + '">')
 				.html(fileItemHtml)
 				.css('padding-left', (20 * level + 10) + 'px');
 
