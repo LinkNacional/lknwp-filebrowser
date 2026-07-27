@@ -125,7 +125,7 @@ class LknwpFilebrowserPublic {
 			<?php if ( $show_search ): ?>
 			<div class="lknwp-search-container">
 				<div class="lknwp-search-box">
-					<input type="text" id="lknwp-search-input" placeholder="<?php \_e( 'Search files and folders...', 'lknwp-filebrowser' ); ?>">
+					<input type="text" id="lknwp-search-input" placeholder="<?php esc_attr_e( 'Search files and folders...', 'lknwp-filebrowser' ); ?>">
 					<button type="button" id="lknwp-search-btn">
 						<i class="fas fa-search"></i>
 					</button>
@@ -139,9 +139,9 @@ class LknwpFilebrowserPublic {
 			<div class="lknwp-file-manager-public">
 				<?php if ( $show_folder_tree ): ?>
 				<div class="lknwp-sidebar-public">
-					<h4><?php \_e( 'Folders', 'lknwp-filebrowser' ); ?></h4>
+					<h4><?php esc_html_e( 'Folders', 'lknwp-filebrowser' ); ?></h4>
 					<div id="lknwp-folder-tree-public">
-						<div class="loading"><i class="fas fa-spinner"></i> <?php \_e( 'Loading folders...', 'lknwp-filebrowser' ); ?></div>
+						<div class="loading"><i class="fas fa-spinner"></i> <?php esc_html_e( 'Loading folders...', 'lknwp-filebrowser' ); ?></div>
 					</div>
 				</div>
 				<?php endif; ?>
@@ -149,7 +149,7 @@ class LknwpFilebrowserPublic {
 				<div class="lknwp-content-public <?php echo !$show_folder_tree ? 'full-width' : ''; ?>">
 					<?php if ( $show_breadcrumb ): ?>
 					<div class="lknwp-breadcrumb-public">
-						<span id="lknwp-current-path"><?php \_e( 'Home', 'lknwp-filebrowser' ); ?></span>
+						<span id="lknwp-current-path"><?php esc_html_e( 'Home', 'lknwp-filebrowser' ); ?></span>
 					</div>
 					<?php endif; ?>
 
@@ -164,7 +164,7 @@ class LknwpFilebrowserPublic {
 
 					<div class="lknwp-filebrowser-content <?php echo esc_attr( $layout ); ?>">
 						<div id="lknwp-loading" class="loading">
-							<i class="fas fa-spinner"></i> <?php \_e( 'Loading...', 'lknwp-filebrowser' ); ?>
+							<i class="fas fa-spinner"></i> <?php esc_html_e( 'Loading...', 'lknwp-filebrowser' ); ?>
 						</div>
 					</div>
 				</div>

@@ -64,18 +64,18 @@ class LknwpFilebrowserAdmin {
 		wp_enqueue_script( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'admin/js/lknwp-filebrowser-admin.js', array( 'jquery' ), LKNWP_FILEBROWSER_VERSION, false );
 		wp_localize_script( $this->plugin_name, 'lknwp_ajax', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'copied_text' => __( 'Copied!', 'lknwp-filebrowser' ),
-			'loading_text' => __( 'Loading...', 'lknwp-filebrowser' ),
-			'uploading_text' => __( 'Uploading files...', 'lknwp-filebrowser' ),
-			'error_loading_text' => __( 'Error loading contents', 'lknwp-filebrowser' ),
-			'empty_folder_text' => __( 'This folder is empty', 'lknwp-filebrowser' ),
-			'folder_text' => __( 'Folder', 'lknwp-filebrowser' ),
-			'saved_text' => __( 'Saved', 'lknwp-filebrowser' ),
-			'name_empty_error' => __( 'Name cannot be empty', 'lknwp-filebrowser' ),
-			'update_error' => __( 'Error updating name', 'lknwp-filebrowser' ),
-			'unknown_error' => __( 'Unknown error', 'lknwp-filebrowser' ),
-			'create_folder_error' => __( 'Error creating folder', 'lknwp-filebrowser' ),
-			'upload_error' => __( 'Error uploading files', 'lknwp-filebrowser' )
+			'copied_text' => esc_html__( 'Copied!', 'lknwp-filebrowser' ),
+			'loading_text' => esc_html__( 'Loading...', 'lknwp-filebrowser' ),
+			'uploading_text' => esc_html__( 'Uploading files...', 'lknwp-filebrowser' ),
+			'error_loading_text' => esc_html__( 'Error loading contents', 'lknwp-filebrowser' ),
+			'empty_folder_text' => esc_html__( 'This folder is empty', 'lknwp-filebrowser' ),
+			'folder_text' => esc_html__( 'Folder', 'lknwp-filebrowser' ),
+			'saved_text' => esc_html__( 'Saved', 'lknwp-filebrowser' ),
+			'name_empty_error' => esc_html__( 'Name cannot be empty', 'lknwp-filebrowser' ),
+			'update_error' => esc_html__( 'Error updating name', 'lknwp-filebrowser' ),
+			'unknown_error' => esc_html__( 'Unknown error', 'lknwp-filebrowser' ),
+			'create_folder_error' => esc_html__( 'Error creating folder', 'lknwp-filebrowser' ),
+			'upload_error' => esc_html__( 'Error uploading files', 'lknwp-filebrowser' )
 		));
 	}
 
@@ -84,8 +84,8 @@ class LknwpFilebrowserAdmin {
 	 */
 	public function add_admin_menu() {
 		add_menu_page(
-			__('File Browser', 'lknwp-filebrowser'),
-			__('File Browser', 'lknwp-filebrowser'),
+			esc_html__('File Browser', 'lknwp-filebrowser'),
+			esc_html__('File Browser', 'lknwp-filebrowser'),
 			'manage_options',
 			'lknwp-filebrowser',
 			array($this, 'admin_page'),
@@ -100,30 +100,30 @@ class LknwpFilebrowserAdmin {
 	public function admin_page() {
 		?>
 		<div class="wrap">
-			<h1><?php _e('File Browser Manager', 'lknwp-filebrowser'); ?></h1>
+			<h1><?php esc_html_e('File Browser Manager', 'lknwp-filebrowser'); ?></h1>
 			
 			<!-- Shortcode Instructions -->
 			<div class="lknwp-instructions-panel">
 				<div class="lknwp-instructions-header">
-					<h2><i class="fas fa-info-circle"></i> <?php _e('How to Use', 'lknwp-filebrowser'); ?></h2>
+					<h2><i class="fas fa-info-circle"></i> <?php esc_html_e('How to Use', 'lknwp-filebrowser'); ?></h2>
 				</div>
 				<div class="lknwp-instructions-content">
-					<p><?php _e('To display the file browser on your website, follow these simple steps:', 'lknwp-filebrowser'); ?></p>
+					<p><?php esc_html_e('To display the file browser on your website, follow these simple steps:', 'lknwp-filebrowser'); ?></p>
 					<ol style="margin: 15px 0; padding-left: 20px;">
-						<li><?php _e('Copy the shortcode below', 'lknwp-filebrowser'); ?></li>
-						<li><?php _e('Go to the page or post where you want to display the file browser', 'lknwp-filebrowser'); ?></li>
-						<li><?php _e('Add a shortcode component/element in your editor', 'lknwp-filebrowser'); ?></li>
-						<li><?php _e('Paste the shortcode into the component', 'lknwp-filebrowser'); ?></li>
-						<li><?php _e('Save and publish your page', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Copy the shortcode below', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Go to the page or post where you want to display the file browser', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Add a shortcode component/element in your editor', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Paste the shortcode into the component', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Save and publish your page', 'lknwp-filebrowser'); ?></li>
 					</ol>
 					<div class="lknwp-shortcode-box">
 						<code>[lknwp_filebrowser]</code>
 						<button type="button" class="button button-primary copy-shortcode" data-shortcode="[lknwp_filebrowser]">
-							<i class="fas fa-copy"></i> <?php _e('Copy Shortcode', 'lknwp-filebrowser'); ?>
+							<i class="fas fa-copy"></i> <?php esc_html_e('Copy Shortcode', 'lknwp-filebrowser'); ?>
 						</button>
 					</div>
 					<p style="margin-top: 15px; font-size: 13px; color: #666;">
-						<?php _e('The file browser will display all folders and files you create here. Users can navigate through folders, search for files, and download them directly from the frontend.', 'lknwp-filebrowser'); ?>
+						<?php esc_html_e('The file browser will display all folders and files you create here. Users can navigate through folders, search for files, and download them directly from the frontend.', 'lknwp-filebrowser'); ?>
 					</p>
 				</div>
 			</div>
@@ -131,21 +131,21 @@ class LknwpFilebrowserAdmin {
 			<div id="lknwp-filebrowser-admin">
 				<div class="lknwp-toolbar">
 					<button type="button" class="button button-primary" id="create-folder-btn">
-						<i class="fas fa-folder-plus"></i> <?php _e('Create Folder', 'lknwp-filebrowser'); ?>
+						<i class="fas fa-folder-plus"></i> <?php esc_html_e('Create Folder', 'lknwp-filebrowser'); ?>
 					</button>
 					<button type="button" class="button button-secondary" id="upload-file-btn">
-						<i class="fas fa-upload"></i> <?php _e('Upload Files', 'lknwp-filebrowser'); ?>
+						<i class="fas fa-upload"></i> <?php esc_html_e('Upload Files', 'lknwp-filebrowser'); ?>
 					</button>
 					<input type="file" id="file-upload-input" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.gif" style="display: none;">
 				</div>
 
 				<div class="lknwp-breadcrumb">
-					<span id="current-path"><?php _e('Home', 'lknwp-filebrowser'); ?></span>
+					<span id="current-path"><?php esc_html_e('Home', 'lknwp-filebrowser'); ?></span>
 				</div>
 
 				<div class="lknwp-file-manager">
 					<div class="lknwp-sidebar">
-						<h3><?php _e('Folders', 'lknwp-filebrowser'); ?></h3>
+						<h3><?php esc_html_e('Folders', 'lknwp-filebrowser'); ?></h3>
 						<div id="folder-tree">
 							<!-- Folder tree will be loaded here -->
 						</div>
@@ -164,14 +164,14 @@ class LknwpFilebrowserAdmin {
 		<div id="create-folder-modal" class="lknwp-modal" style="display: none;">
 			<div class="lknwp-modal-content">
 				<span class="lknwp-close">&times;</span>
-				<h2><?php \_e('Create New Folder', 'lknwp-filebrowser'); ?></h2>
+				<h2><?php esc_html_e('Create New Folder', 'lknwp-filebrowser'); ?></h2>
 				<form id="create-folder-form">
-					<label for="folder-name"><?php \_e('Folder Name:', 'lknwp-filebrowser'); ?></label>
+					<label for="folder-name"><?php esc_html_e('Folder Name:', 'lknwp-filebrowser'); ?></label>
 					<input type="text" id="folder-name" name="folder_name" required>
 					<input type="hidden" id="parent-folder-id" name="parent_id" value="0">
 					<div class="form-actions">
-						<button type="submit" class="button button-primary"><?php \_e('Create', 'lknwp-filebrowser'); ?></button>
-						<button type="button" class="button" onclick="closeModal('create-folder-modal')"><?php \_e('Cancel', 'lknwp-filebrowser'); ?></button>
+						<button type="submit" class="button button-primary"><?php esc_html_e('Create', 'lknwp-filebrowser'); ?></button>
+						<button type="button" class="button" onclick="closeModal('create-folder-modal')"><?php esc_html_e('Cancel', 'lknwp-filebrowser'); ?></button>
 					</div>
 				</form>
 			</div>
@@ -199,14 +199,14 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
 		$folder_name = sanitize_text_field($_POST['folder_name']);
 		$parent_id = intval($_POST['parent_id']);
 
 		if (empty($folder_name)) {
-			wp_send_json_error(__('Folder name is required', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Folder name is required', 'lknwp-filebrowser'));
 		}
 
 		global $wpdb;
@@ -226,11 +226,11 @@ class LknwpFilebrowserAdmin {
 		);
 
 		if ($result === false) {
-			wp_send_json_error(__('Failed to create folder', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Failed to create folder', 'lknwp-filebrowser'));
 		}
 
 		wp_send_json_success(array(
-			'message' => __('Folder created successfully', 'lknwp-filebrowser'),
+			'message' => esc_html__('Folder created successfully', 'lknwp-filebrowser'),
 			'folder_id' => $wpdb->insert_id
 		));
 	}
@@ -242,13 +242,13 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
 		$folder_id = intval($_POST['folder_id']);
 
 		if (empty($_FILES['files'])) {
-			wp_send_json_error(__('No files uploaded', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('No files uploaded', 'lknwp-filebrowser'));
 		}
 
 		$upload_dir = wp_upload_dir();
@@ -301,11 +301,11 @@ class LknwpFilebrowserAdmin {
 		}
 
 		if (empty($uploaded_files)) {
-			wp_send_json_error(__('Failed to upload files', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Failed to upload files', 'lknwp-filebrowser'));
 		}
 
 		wp_send_json_success(array(
-			'message' => __('Files uploaded successfully', 'lknwp-filebrowser'),
+			'message' => esc_html__('Files uploaded successfully', 'lknwp-filebrowser'),
 			'files' => $uploaded_files
 		));
 	}
@@ -317,7 +317,7 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
 		$folder_id = intval($_POST['folder_id']);
@@ -329,7 +329,7 @@ class LknwpFilebrowserAdmin {
 		// Delete all files in this folder and subfolders
 		$this->delete_folder_recursive($folder_id);
 
-		wp_send_json_success(__('Folder deleted successfully', 'lknwp-filebrowser'));
+		wp_send_json_success(esc_html__('Folder deleted successfully', 'lknwp-filebrowser'));
 	}
 
 	/**
@@ -339,7 +339,7 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
 		$file_id = intval($_POST['file_id']);
@@ -360,7 +360,7 @@ class LknwpFilebrowserAdmin {
 			$wpdb->delete($files_table, array('id' => $file_id), array('%d'));
 		}
 
-		wp_send_json_success(__('File deleted successfully', 'lknwp-filebrowser'));
+		wp_send_json_success(esc_html__('File deleted successfully', 'lknwp-filebrowser'));
 	}
 
 	/**
@@ -483,14 +483,14 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
 		$folder_id = intval($_POST['id']);
 		$new_name = sanitize_text_field($_POST['new_name']);
 
 		if (empty($new_name)) {
-			wp_send_json_error(__('Nome da pasta não pode estar vazio', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Nome da pasta não pode estar vazio', 'lknwp-filebrowser'));
 		}
 
 		global $wpdb;
@@ -499,7 +499,7 @@ class LknwpFilebrowserAdmin {
 		// Check if folder exists
 		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM $folders_table WHERE id = %d", $folder_id));
 		if (!$folder) {
-			wp_send_json_error(__('Pasta não encontrada', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Pasta não encontrada', 'lknwp-filebrowser'));
 		}
 
 		// Check if name already exists in the same parent folder
@@ -511,7 +511,7 @@ class LknwpFilebrowserAdmin {
 		));
 
 		if ($existing) {
-			wp_send_json_error(__('Já existe uma pasta com este nome', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Já existe uma pasta com este nome', 'lknwp-filebrowser'));
 		}
 
 		// Update folder name
@@ -524,9 +524,9 @@ class LknwpFilebrowserAdmin {
 		);
 
 		if ($result !== false) {
-			wp_send_json_success(__('Nome da pasta atualizado com sucesso', 'lknwp-filebrowser'));
+			wp_send_json_success(esc_html__('Nome da pasta atualizado com sucesso', 'lknwp-filebrowser'));
 		} else {
-			wp_send_json_error(__('Erro ao atualizar nome da pasta', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Erro ao atualizar nome da pasta', 'lknwp-filebrowser'));
 		}
 	}
 
@@ -537,14 +537,14 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
 		$file_id = intval($_POST['id']);
 		$new_name = sanitize_file_name($_POST['new_name']);
 
 		if (empty($new_name)) {
-			wp_send_json_error(__('Nome do arquivo não pode estar vazio', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Nome do arquivo não pode estar vazio', 'lknwp-filebrowser'));
 		}
 
 		global $wpdb;
@@ -553,7 +553,7 @@ class LknwpFilebrowserAdmin {
 		// Check if file exists
 		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM $files_table WHERE id = %d", $file_id));
 		if (!$file) {
-			wp_send_json_error(__('Arquivo não encontrado', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Arquivo não encontrado', 'lknwp-filebrowser'));
 		}
 
 		// Check if name already exists in the same folder
@@ -565,7 +565,7 @@ class LknwpFilebrowserAdmin {
 		));
 
 		if ($existing) {
-			wp_send_json_error(__('Já existe um arquivo com este nome', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Já existe um arquivo com este nome', 'lknwp-filebrowser'));
 		}
 
 		// Get file extension to validate
@@ -574,7 +574,7 @@ class LknwpFilebrowserAdmin {
 		
 		if (isset($file_info['extension']) && isset($old_file_info['extension'])) {
 			if (\strtolower($file_info['extension']) !== \strtolower($old_file_info['extension'])) {
-				wp_send_json_error(__('Não é possível alterar a extensão do arquivo', 'lknwp-filebrowser'));
+				wp_send_json_error(esc_html__('Não é possível alterar a extensão do arquivo', 'lknwp-filebrowser'));
 			}
 		}
 
@@ -588,9 +588,9 @@ class LknwpFilebrowserAdmin {
 		);
 
 		if ($result !== false) {
-			wp_send_json_success(__('Nome do arquivo atualizado com sucesso', 'lknwp-filebrowser'));
+			wp_send_json_success(esc_html__('Nome do arquivo atualizado com sucesso', 'lknwp-filebrowser'));
 		} else {
-			wp_send_json_error(__('Erro ao atualizar nome do arquivo', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Erro ao atualizar nome do arquivo', 'lknwp-filebrowser'));
 		}
 	}
 
