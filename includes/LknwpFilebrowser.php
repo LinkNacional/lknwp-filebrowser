@@ -3,7 +3,6 @@
 namespace Lkn\WPFilebrowser\Includes;
 
 use Lkn\WPFilebrowser\Includes\LknwpFilebrowserLoader;
-use Lkn\WPFilebrowser\Includes\LknwpFilebrowserI18n;
 use Lkn\WPFilebrowser\Admin\LknwpFilebrowserAdmin;
 use Lkn\WPFilebrowser\Public\LknwpFilebrowserPublic;
 
@@ -68,7 +67,6 @@ class LknwpFilebrowser {
 		$this->plugin_name = 'lknwp-filebrowser';
 
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 	}
@@ -84,20 +82,6 @@ class LknwpFilebrowser {
 	 */
 	private function load_dependencies() {
 		$this->loader = new LknwpFilebrowserLoader();
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the LknwpFilebrowserI18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
-		$plugin_i18n = new LknwpFilebrowserI18n();
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 	}
 
 	/**

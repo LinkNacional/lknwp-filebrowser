@@ -26,7 +26,7 @@
 ### Namespace base
 ```
 Lkn\WPFilebrowser\
-  ├── Includes\  → LknwpFilebrowser, LknwpFilebrowserLoader, LknwpFilebrowserActivator, LknwpFilebrowserDeactivator, LknwpFilebrowserI18n
+  ├── Includes\  → LknwpFilebrowser, LknwpFilebrowserLoader, LknwpFilebrowserActivator, LknwpFilebrowserDeactivator
   ├── Admin\     → LknwpFilebrowserAdmin (menu page + AJAX handlers)
   └── Public\    → LknwpFilebrowserPublic (shortcode + frontend AJAX)
 ```

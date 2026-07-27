@@ -7,7 +7,6 @@
 
 use Lkn\WPFilebrowser\Includes\LknwpFilebrowser;
 use Lkn\WPFilebrowser\Includes\LknwpFilebrowserLoader;
-use Lkn\WPFilebrowser\Includes\LknwpFilebrowserI18n;
 use Lkn\WPFilebrowser\Includes\LknwpFilebrowserActivator;
 use Lkn\WPFilebrowser\Includes\LknwpFilebrowserDeactivator;
 use Lkn\WPFilebrowser\Admin\LknwpFilebrowserAdmin;
@@ -20,10 +19,6 @@ if (!class_exists('Lknwp_Filebrowser')) {
 
 if (!class_exists('Lknwp_Filebrowser_Loader')) {
     class_alias(LknwpFilebrowserLoader::class, 'Lknwp_Filebrowser_Loader');
-}
-
-if (!class_exists('Lknwp_Filebrowser_i18n')) {
-    class_alias(LknwpFilebrowserI18n::class, 'Lknwp_Filebrowser_i18n');
 }
 
 if (!class_exists('Lknwp_Filebrowser_Activator')) {
