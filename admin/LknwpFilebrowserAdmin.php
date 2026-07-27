@@ -221,13 +221,12 @@ class LknwpFilebrowserAdmin {
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 
 		// Build path
 		$path = $this->build_folder_path($parent_id) . '/' . $folder_name;
 
 		$result = $wpdb->insert(
-			$folders_table,
+			$this->table_folders(),
 			array(
 				'name' => $folder_name,
 				'parent_id' => $parent_id,
@@ -285,10 +284,9 @@ class LknwpFilebrowserAdmin {
 			if ( move_uploaded_file( $files['tmp_name'][$i], $file_path ) ) {
 					// Save to database
 					global $wpdb;
-					$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 					$result = $wpdb->insert(
-						$files_table,
+						$this->table_files(),
 						array(
 							'name' => $filename,
 							'original_name' => $original_name,
@@ -336,8 +334,6 @@ class LknwpFilebrowserAdmin {
 		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 		// Delete all files in this folder and subfolders
 		$this->delete_folder_recursive($folder_id);
@@ -358,11 +354,10 @@ class LknwpFilebrowserAdmin {
 		$file_id = isset( $_POST['file_id'] ) ? intval( wp_unslash( $_POST['file_id'] ) ) : 0;
 		
 		global $wpdb;
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 		// Get file info
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $files_table is a hardcoded table name from $wpdb->prefix.
-		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM $files_table WHERE id = %d", $file_id));
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
+		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_files()} WHERE id = %d", $file_id));
 		
 		if ($file) {
 			// Delete physical file
@@ -371,7 +366,7 @@ class LknwpFilebrowserAdmin {
 			}
 
 			// Delete from database
-			$wpdb->delete($files_table, array('id' => $file_id), array('%d'));
+			$wpdb->delete($this->table_files(), array('id' => $file_id), array('%d'));
 		}
 
 		wp_send_json_success(esc_html__('File deleted successfully', 'lknwp-filebrowser'));
@@ -397,10 +392,9 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $folders_table is a hardcoded table name from $wpdb->prefix.
-		$folders = $wpdb->get_results("SELECT * FROM $folders_table ORDER BY parent_id ASC, name ASC");
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
+		$folders = $wpdb->get_results("SELECT * FROM {$this->table_folders()} ORDER BY parent_id ASC, name ASC");
 		
 		wp_send_json_success($folders);
 	}
@@ -410,19 +404,17 @@ class LknwpFilebrowserAdmin {
 	 */
 	private function get_folder_contents($folder_id) {
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get subfolders
 		$folders = $wpdb->get_results($wpdb->prepare(
-			"SELECT * FROM $folders_table WHERE parent_id = %d ORDER BY name ASC",
+			"SELECT * FROM {$this->table_folders()} WHERE parent_id = %d ORDER BY name ASC",
 			$folder_id
 		));
 
 		// Get files
 		$files = $wpdb->get_results($wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -442,10 +434,9 @@ class LknwpFilebrowserAdmin {
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $folders_table is a hardcoded table name from $wpdb->prefix.
-		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM $folders_table WHERE id = %d", $folder_id));
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
+		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_folders()} WHERE id = %d", $folder_id));
 		
 		if ($folder && $folder->parent_id > 0) {
 			return $this->build_folder_path($folder->parent_id) . '/' . $folder->name;
@@ -461,13 +452,11 @@ class LknwpFilebrowserAdmin {
 	 */
 	private function delete_folder_recursive($folder_id) {
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get all subfolders
 		$subfolders = $wpdb->get_results($wpdb->prepare(
-			"SELECT id FROM $folders_table WHERE parent_id = %d",
+			"SELECT id FROM {$this->table_folders()} WHERE parent_id = %d",
 			$folder_id
 		));
 
@@ -478,7 +467,7 @@ class LknwpFilebrowserAdmin {
 
 		// Delete all files in this folder
 		$files = $wpdb->get_results($wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d",
 			$folder_id
 		));
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -490,10 +479,10 @@ class LknwpFilebrowserAdmin {
 		}
 
 		// Delete files from database
-		$wpdb->delete($files_table, array('folder_id' => $folder_id), array('%d'));
+		$wpdb->delete($this->table_files(), array('folder_id' => $folder_id), array('%d'));
 
 		// Delete the folder itself
-		$wpdb->delete($folders_table, array('id' => $folder_id), array('%d'));
+		$wpdb->delete($this->table_folders(), array('id' => $folder_id), array('%d'));
 	}
 
 	/**
@@ -514,18 +503,17 @@ class LknwpFilebrowserAdmin {
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Check if folder exists
-		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM $folders_table WHERE id = %d", $folder_id));
+		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_folders()} WHERE id = %d", $folder_id));
 		if (!$folder) {
 			wp_send_json_error(esc_html__('Pasta não encontrada', 'lknwp-filebrowser'));
 		}
 
 		// Check if name already exists in the same parent folder
 		$existing = $wpdb->get_var($wpdb->prepare(
-			"SELECT id FROM $folders_table WHERE name = %s AND parent_id = %d AND id != %d",
+			"SELECT id FROM {$this->table_folders()} WHERE name = %s AND parent_id = %d AND id != %d",
 			$new_name,
 			$folder->parent_id,
 			$folder_id
@@ -538,7 +526,7 @@ class LknwpFilebrowserAdmin {
 
 		// Update folder name
 		$result = $wpdb->update(
-			$folders_table,
+			$this->table_folders(),
 			array('name' => $new_name),
 			array('id' => $folder_id),
 			array('%s'),
@@ -570,18 +558,17 @@ class LknwpFilebrowserAdmin {
 		}
 
 		global $wpdb;
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Check if file exists
-		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM $files_table WHERE id = %d", $file_id));
+		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_files()} WHERE id = %d", $file_id));
 		if (!$file) {
 			wp_send_json_error(esc_html__('Arquivo não encontrado', 'lknwp-filebrowser'));
 		}
 
 		// Check if name already exists in the same folder
 		$existing = $wpdb->get_var($wpdb->prepare(
-			"SELECT id FROM $files_table WHERE original_name = %s AND folder_id = %d AND id != %d",
+			"SELECT id FROM {$this->table_files()} WHERE original_name = %s AND folder_id = %d AND id != %d",
 			$new_name,
 			$file->folder_id,
 			$file_id
@@ -604,7 +591,7 @@ class LknwpFilebrowserAdmin {
 
 		// Update file name
 		$result = $wpdb->update(
-			$files_table,
+			$this->table_files(),
 			array('original_name' => $new_name),
 			array('id' => $file_id),
 			array('%s'),
@@ -627,12 +614,11 @@ class LknwpFilebrowserAdmin {
 		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		global $wpdb;
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 		
 		// Get files from folder
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		$files = $wpdb->get_results( $wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -647,15 +633,14 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer( 'lknwp_filebrowser_nonce', 'nonce' );
 		
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
+		global $wpdb;
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get all folders
-		$folders = $wpdb->get_results("SELECT * FROM $folders_table ORDER BY parent_id ASC, name ASC");
+		$folders = $wpdb->get_results("SELECT * FROM {$this->table_folders()} ORDER BY parent_id ASC, name ASC");
 		
 		// Get all files
-		$files = $wpdb->get_results("SELECT * FROM $files_table ORDER BY folder_id ASC, original_name ASC");
+		$files = $wpdb->get_results("SELECT * FROM {$this->table_files()} ORDER BY folder_id ASC, original_name ASC");
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		wp_send_json_success(array(
@@ -664,4 +649,25 @@ class LknwpFilebrowserAdmin {
 		));
 	}
 
+	/**
+	 * Get the folders table name.
+	 *
+	 * @since   1.0.1
+	 * @return  string
+	 */
+	private function table_folders() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_folders';
+	}
+
+	/**
+	 * Get the files table name.
+	 *
+	 * @since   1.0.1
+	 * @return  string
+	 */
+	private function table_files() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_files';
+	}
 }

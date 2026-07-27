@@ -193,18 +193,16 @@ class LknwpFilebrowserPublic {
 		check_ajax_referer( 'lknwp_filebrowser_public_nonce', 'nonce' );
 		
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 		
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get all folders
 		$folders = $wpdb->get_results(
-			"SELECT * FROM $folders_table ORDER BY parent_id ASC, name ASC"
+			"SELECT * FROM {$this->table_folders()} ORDER BY parent_id ASC, name ASC"
 		);
 		
 		// Get all files
 		$files = $wpdb->get_results(
-			"SELECT * FROM $files_table ORDER BY folder_id ASC, original_name ASC"
+			"SELECT * FROM {$this->table_files()} ORDER BY folder_id ASC, original_name ASC"
 		);
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
@@ -241,15 +239,13 @@ class LknwpFilebrowserPublic {
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
-
+		
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Search folders with parent info for path building
 		$folders = $wpdb->get_results( $wpdb->prepare(
 			"SELECT f.*, p.name as parent_name, p.path as parent_path 
-			 FROM $folders_table f 
-			 LEFT JOIN $folders_table p ON f.parent_id = p.id 
+			 FROM {$this->table_folders()} f 
+			 LEFT JOIN {$this->table_folders()} p ON f.parent_id = p.id 
 			 WHERE f.name LIKE %s 
 			 ORDER BY f.name ASC",
 			'%' . $wpdb->esc_like( $search_term ) . '%'
@@ -265,8 +261,8 @@ class LknwpFilebrowserPublic {
 		// Search files with folder info
 		$files = $wpdb->get_results( $wpdb->prepare(
 			"SELECT f.*, folder.name as folder_name, folder.path as folder_path 
-			 FROM $files_table f 
-			 LEFT JOIN $folders_table folder ON f.folder_id = folder.id 
+			 FROM {$this->table_files()} f 
+			 LEFT JOIN {$this->table_folders()} folder ON f.folder_id = folder.id 
 			 WHERE f.original_name LIKE %s 
 			 ORDER BY f.original_name ASC",
 			'%' . $wpdb->esc_like( $search_term ) . '%'
@@ -287,19 +283,17 @@ class LknwpFilebrowserPublic {
 	 */
 	private function get_folder_contents( $folder_id ) {
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get subfolders
 		$folders = $wpdb->get_results( $wpdb->prepare(
-			"SELECT * FROM $folders_table WHERE parent_id = %d ORDER BY name ASC",
+			"SELECT * FROM {$this->table_folders()} WHERE parent_id = %d ORDER BY name ASC",
 			$folder_id
 		));
 
 		// Get files
 		$files = $wpdb->get_results( $wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
 
@@ -307,7 +301,7 @@ class LknwpFilebrowserPublic {
 		$current_folder = null;
 		if ( $folder_id > 0 ) {
 			$current_folder = $wpdb->get_row( $wpdb->prepare(
-				"SELECT * FROM $folders_table WHERE id = %d",
+				"SELECT * FROM {$this->table_folders()} WHERE id = %d",
 				$folder_id
 			));
 		}
@@ -336,7 +330,6 @@ class LknwpFilebrowserPublic {
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		
 		$breadcrumb = array();
 		$current_id = $folder_id;
@@ -346,7 +339,7 @@ class LknwpFilebrowserPublic {
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		while ( $current_id > 0 ) {
 			$folder = $wpdb->get_row( $wpdb->prepare(
-				"SELECT * FROM $folders_table WHERE id = %d",
+				"SELECT * FROM {$this->table_folders()} WHERE id = %d",
 				$current_id
 			));
 
@@ -366,7 +359,7 @@ class LknwpFilebrowserPublic {
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		while ( $current_id > 0 ) {
 			$folder = $wpdb->get_row( $wpdb->prepare(
-				"SELECT * FROM $folders_table WHERE id = %d",
+				"SELECT * FROM {$this->table_folders()} WHERE id = %d",
 				$current_id
 			));
 
@@ -408,7 +401,6 @@ class LknwpFilebrowserPublic {
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		
 		$path_parts = array();
 		$current_id = $folder_id;
@@ -416,7 +408,7 @@ class LknwpFilebrowserPublic {
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		while ( $current_id != 0 ) {
 			$folder = $wpdb->get_row( $wpdb->prepare(
-				"SELECT id, name, parent_id FROM $folders_table WHERE id = %d",
+				"SELECT id, name, parent_id FROM {$this->table_folders()} WHERE id = %d",
 				$current_id
 			));
 
@@ -441,12 +433,11 @@ class LknwpFilebrowserPublic {
 		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		global $wpdb;
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 		
 		// Get files from folder
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		$files = $wpdb->get_results( $wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -466,5 +457,27 @@ class LknwpFilebrowserPublic {
 			return false;
 		}
 		return has_shortcode( $post->post_content, 'lknwp_filebrowser' );
+	}
+
+	/**
+	 * Get the folders table name.
+	 *
+	 * @since   1.0.1
+	 * @return  string
+	 */
+	private function table_folders() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_folders';
+	}
+
+	/**
+	 * Get the files table name.
+	 *
+	 * @since   1.0.1
+	 * @return  string
+	 */
+	private function table_files() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_files';
 	}
 }

@@ -85,19 +85,19 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/Aliases.php';
 /**
  * The code that runs during plugin activation.
  */
-function activate_lknwp_filebrowser() {
+function lknwp_filebrowser_activate() {
 	LknwpFilebrowserActivator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  */
-function deactivate_lknwp_filebrowser() {
+function lknwp_filebrowser_deactivate() {
 	LknwpFilebrowserDeactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_lknwp_filebrowser' );
-register_deactivation_hook( __FILE__, 'deactivate_lknwp_filebrowser' );
+register_activation_hook( __FILE__, 'lknwp_filebrowser_activate' );
+register_deactivation_hook( __FILE__, 'lknwp_filebrowser_deactivate' );
 
 /**
  * Begins execution of the plugin.
@@ -108,8 +108,8 @@ register_deactivation_hook( __FILE__, 'deactivate_lknwp_filebrowser' );
  *
  * @since    1.0.0
  */
-function run_lknwp_filebrowser() {
+function lknwp_filebrowser_run() {
 	$plugin = new LknwpFilebrowser();
 	$plugin->run();
 }
-run_lknwp_filebrowser();
+lknwp_filebrowser_run();

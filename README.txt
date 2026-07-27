@@ -1,6 +1,6 @@
 === Link Nacional File Browser ===
 Contributors: linknacional
-Tags: file browser, file manager, documents, upload, folders, download
+Tags: file browser, file manager, documents, upload, folders
 Requires at least: 5.0
 Tested up to: 7.0
 Stable tag: 1.0.1
