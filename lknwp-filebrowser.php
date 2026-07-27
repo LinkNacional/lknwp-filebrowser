@@ -36,7 +36,6 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'LKNWP_FILEBROWSER_VERSION', '1.0.1' );
-define( 'PLUGIN_FILE', __FILE__ );
 define( 'LINK_PLUGIN_NAME', 'lknwp-filebrowser' );
 
 /**

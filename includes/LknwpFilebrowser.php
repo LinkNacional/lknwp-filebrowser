@@ -6,7 +6,6 @@ use Lkn\WPFilebrowser\Includes\LknwpFilebrowserLoader;
 use Lkn\WPFilebrowser\Includes\LknwpFilebrowserI18n;
 use Lkn\WPFilebrowser\Admin\LknwpFilebrowserAdmin;
 use Lkn\WPFilebrowser\Public\LknwpFilebrowserPublic;
-use Includes\PluginUpdater\Puc\Plugin\Lkn_Puc_Plugin_UpdateChecker;
 
 /**
  * The core plugin class.
@@ -126,16 +125,6 @@ class LknwpFilebrowser {
 		$this->loader->add_action( 'wp_ajax_lknwp_get_all_folders_admin_frontend', $plugin_admin, 'get_all_folders_admin_frontend' );
 		$this->loader->add_action( 'wp_ajax_nopriv_lknwp_get_admin_nonce', $plugin_admin, 'lknwp_get_admin_nonce');
 		$this->loader->add_action( 'wp_ajax_lknwp_get_admin_nonce', $plugin_admin, 'lknwp_get_admin_nonce');
-		$this->loader->add_action( 'init', $this, 'updater_init' );
-	}
-
-	public function updater_init()
-	{
-		return new Lkn_Puc_Plugin_UpdateChecker(
-			'https://api.linknacional.com/v3/u/?slug=lknwp-filebrowser',
-			PLUGIN_FILE,
-			'lknwp-filebrowser'
-		);
 	}
 
 	/**

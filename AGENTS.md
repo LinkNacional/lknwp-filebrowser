@@ -29,8 +29,6 @@ Lkn\WPFilebrowser\
   ├── Includes\  → LknwpFilebrowser, LknwpFilebrowserLoader, LknwpFilebrowserActivator, LknwpFilebrowserDeactivator, LknwpFilebrowserI18n
   ├── Admin\     → LknwpFilebrowserAdmin (menu page + AJAX handlers)
   └── Public\    → LknwpFilebrowserPublic (shortcode + frontend AJAX)
-
-Includes\PluginUpdater\Puc\*  → Update Checker (forked PUC, namespace manual)
 ```
 
 ### Regras PSR-4
@@ -52,7 +50,6 @@ $this->loader->run(); // dispara todos na seq
 - Hooks definidos em `define_admin_hooks()` + `define_public_hooks()` na classe principal.
 - **Exceções ao Loader** (hooks registrados direto):
   - `register_activation_hook()` / `register_deactivation_hook()` — no arquivo raiz `lknwp-filebrowser.php`.
-  - Update checker no `init` — já está via Loader (`updater_init`).
 - **`wp_ajax_nopriv_*`** → sempre parear com `wp_ajax_*` correspondente para operações públicas.
 
 ---
@@ -62,7 +59,6 @@ $this->loader->run(); // dispara todos na seq
 ### Constantes (`lknwp-filebrowser.php`)
 ```php
 LKNWP_FILEBROWSER_VERSION       // '1.0.1'
-PLUGIN_FILE                     // __FILE__ (usado pelo update checker)
 LINK_PLUGIN_NAME                // 'lknwp-filebrowser'
 LKNWP_FILEBROWSER_PLUGIN_URL    // plugin_dir_url(__FILE__)
 LKNWP_FILEBROWSER_PLUGIN_PATH   // plugin_dir_path(__FILE__)
@@ -162,7 +158,6 @@ echo esc_url( $url );
 
 ### Externas
 - **Font Awesome 6.0.0** — CDN `cdnjs.cloudflare.com`
-- **api.linknacional.com** — Update checker (`https://api.linknacional.com/v3/u/?slug=lknwp-filebrowser`)
 
 ### Build
 - `composer.json`: autoload PSR-4, sem dependências de produção além do PHP ≥ 7.4.
