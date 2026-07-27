@@ -1,9 +1,9 @@
 === Link Nacional File Browser ===
 Contributors: linknacional
-Tags: file browser, file manager, documents, upload, folders
+Tags: file manager, documents, upload, folders, download
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 1.0.1
+Stable tag: 1.0.0
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,13 +93,6 @@ Yes! The plugin is built with responsive design and automatically adapts to tabl
 
 == Changelog ==
 
-= 1.0.1 =
-* Documentation update
-* Fixed Font Awesome loading — now bundled locally via webpack
-* Improved input sanitization and escaping
-* Admin assets now load only on the plugin's page
-* Public assets now load only when the shortcode is present
-
 = 1.0.0 =
 * Initial release
 * Complete hierarchical folder system
@@ -133,8 +126,7 @@ For technical support, contact us:
 
 This plugin is licensed under GPL v2 or later.
 
-== Requirements ==
+== Upgrade Notice ==
 
-* WordPress 5.0 or higher
-* PHP 7.4 or higher
-* MySQL 5.6 or higher
+= 1.0.0 =
+* Documentation update and WordPress coding standards compliance. No breaking changes.

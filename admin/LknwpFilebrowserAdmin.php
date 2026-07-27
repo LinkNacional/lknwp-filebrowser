@@ -660,7 +660,7 @@ class LknwpFilebrowserAdmin {
 	/**
 	 * Get the folders table name.
 	 *
-	 * @since   1.0.1
+	 * @since   1.0.0
 	 * @return  string
 	 */
 	private function table_folders() {
@@ -671,7 +671,7 @@ class LknwpFilebrowserAdmin {
 	/**
 	 * Get the files table name.
 	 *
-	 * @since   1.0.1
+	 * @since   1.0.0
 	 * @return  string
 	 */
 	private function table_files() {
