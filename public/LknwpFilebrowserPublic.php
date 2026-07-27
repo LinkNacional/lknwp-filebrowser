@@ -96,7 +96,9 @@ class LknwpFilebrowserPublic {
 			'download_text' => __( 'DOWNLOAD', 'lknwp-filebrowser' ),
 			'search_results_text' => __( 'Search results for', 'lknwp-filebrowser' ),
 			'found_items_text' => __( 'Found', 'lknwp-filebrowser' ),
-			'items_text' => __( 'items', 'lknwp-filebrowser' )
+			'items_text' => __( 'items', 'lknwp-filebrowser' ),
+			'hide_subfolders' => __( 'Hide Subfolders', 'lknwp-filebrowser' ),
+			'show_subfolders' => __( 'Show Subfolders', 'lknwp-filebrowser' ),
 		));
 
 		$atts = shortcode_atts( array(

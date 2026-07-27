@@ -491,7 +491,7 @@
     font-size: 14px !important;
 }
 
-/* Ícones ficam brancos quando o item está ativo/selecionado */
+/* Icons turn white when the item is active/selected */
 .folder-item-public.active .fa-folder,
 .folder-item-public.active .fa-home {
     color: #fff !important;

@@ -159,7 +159,7 @@
 				$subfolders.addClass('show');
 				$files.addClass('show');
 				$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-				$(this).attr('title', 'Recolher');
+				$(this).attr('title', 'Collapse');
 			} else {
 				// Collapse - hide subfolders and files recursively
 				hideSubfoldersRecursively(folderId);
@@ -180,7 +180,7 @@
 			const itemId = $(this).data('id');
 			const itemName = $(this).data('name');
 
-			if (confirm(`Deseja excluir este ${itemType}? "${itemName}"`)) {
+			if (confirm(`Delete this ${itemType}? "${itemName}"`)) {
 				if (itemType === 'pasta') {
 					deleteFolder(itemId);
 				} else {
@@ -227,7 +227,7 @@
 						<button class="edit-confirm-btn" title="Confirmar">
 							<i class="fas fa-check"></i>
 						</button>
-						<button class="edit-cancel-btn" title="Cancelar">
+						<button class="edit-cancel-btn" title="Cancel">
 							<i class="fas fa-times"></i>
 						</button>
 					</div>
@@ -284,7 +284,7 @@
 			const extension = $input.data('extension') || '';
 
 			if (!newName) {
-				alert(lknwp_ajax.name_empty_error || 'Nome não pode estar vazio');
+				alert(lknwp_ajax.name_empty_error || 'Name cannot be empty');
 				return;
 			}
 
@@ -307,7 +307,7 @@
 			$nameElement.show();
 		}
 
-		// Load initial content somente após buscar o nonce
+		// Load initial content only after fetching the nonce
 		fetchAndSetAdminNonce('lknwp_filebrowser_nonce', function () {
 			loadFolderTree();
 			loadFolderContents(0);
@@ -323,7 +323,7 @@
 				if (response.success && response.data.nonce) {
 					adminNonce = response.data.nonce;
 				} else {
-					console.error('Não foi possível obter o nonce admin.');
+					console.error('Failed to obtain admin nonce.');
 				}
 				if (typeof onReady === 'function') onReady();
 			},
@@ -383,7 +383,7 @@
 					<div class="folder-item-content">
 						<i class="fas fa-folder"></i> ${folder.name}
 					</div>
-					<button class="folder-toggle-btn" data-folder-id="${folder.id}" title="Expandir/Recolher">
+					<button class="folder-toggle-btn" data-folder-id="${folder.id}" title="' + (lknwp_ajax.expand_collapse || 'Expand/Collapse') + '">
 						<i class="fas fa-caret-right"></i>
 					</button>
 				`;
@@ -487,10 +487,10 @@
 			const folderElement = $(`
 				<div class="content-item folder" data-folder-id="${folder.id}" data-folder-name="${folder.name}">
 					<div class="content-item-actions">
-						<button class="edit-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="Editar nome">
+						<button class="edit-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="Edit name">
 							<i class="fas fa-edit"></i>
 						</button>
-						<button class="delete-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="Excluir pasta">
+						<button class="delete-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="Delete folder">
 							<i class="fas fa-trash"></i>
 						</button>
 					</div>
@@ -510,10 +510,10 @@
 			const fileElement = $(`
 				<div class="content-item file ${file.file_type}" data-file-id="${file.id}" data-folder-id="${file.folder_id}">
 					<div class="content-item-actions">
-						<button class="edit-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="Editar nome">
+						<button class="edit-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="Edit name">
 							<i class="fas fa-edit"></i>
 						</button>
-						<button class="delete-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="Excluir arquivo">
+						<button class="delete-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="Delete file">
 							<i class="fas fa-trash"></i>
 						</button>
 					</div>
@@ -522,7 +522,7 @@
 						<div class="content-item-name">${file.original_name}</div>
 						<div class="content-item-info">${fileSize}</div>
 					</div>
-					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="Abrir arquivo">
+					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="Open file">
 						<i class="fas fa-external-link-alt"></i>
 					</button>
 				</div>
@@ -766,7 +766,7 @@
 					if (!$subfolders.hasClass('show')) {
 						$subfolders.addClass('show');
 						$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-						$toggleBtn.attr('title', 'Esconder Subpastas');
+						$toggleBtn.attr('title', lknwp_ajax.hide_subfolders || 'Hide Subfolders');
 					}
 				}
 
@@ -816,14 +816,14 @@
 					$nameElement.after($success);
 					setTimeout(() => $success.remove(), 2000);
 				} else {
-					alert((lknwp_ajax.update_error || 'Erro ao atualizar nome') + ': ' + (response.data || (lknwp_ajax.unknown_error || 'Erro desconhecido')));
+					alert((lknwp_ajax.update_error || 'Error updating name') + ': ' + (response.data || (lknwp_ajax.unknown_error || 'Unknown error')));
 					$contentItem.removeClass('editing');
 					$editContainer.remove();
 					$nameElement.show();
 				}
 			},
 			error: function () {
-				alert(lknwp_ajax.update_error || 'Erro ao atualizar nome');
+				alert(lknwp_ajax.update_error || 'Error updating name');
 				$contentItem.removeClass('editing');
 				$editContainer.remove();
 				$nameElement.show();
@@ -926,7 +926,7 @@
 						$files.addClass('show');
 						$subfolders.addClass('show');
 						$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-						$toggleBtn.attr('title', 'Recolher');
+						$toggleBtn.attr('title', lknwp_ajax.collapse || 'Collapse');
 					}
 				}
 			}
@@ -997,7 +997,7 @@
 							$subfolders.addClass('show');
 							$files.addClass('show');
 							$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-							$toggleBtn.attr('title', 'Recolher');
+							$toggleBtn.attr('title', lknwp_ajax.collapse || 'Collapse');
 						}
 					}
 				}

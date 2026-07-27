@@ -84,7 +84,11 @@ class LknwpFilebrowserAdmin {
 			'update_error' => esc_html__( 'Error updating name', 'lknwp-filebrowser' ),
 			'unknown_error' => esc_html__( 'Unknown error', 'lknwp-filebrowser' ),
 			'create_folder_error' => esc_html__( 'Error creating folder', 'lknwp-filebrowser' ),
-			'upload_error' => esc_html__( 'Error uploading files', 'lknwp-filebrowser' )
+			'upload_error' => esc_html__( 'Error uploading files', 'lknwp-filebrowser' ),
+			'hide_subfolders' => esc_html__( 'Hide Subfolders', 'lknwp-filebrowser' ),
+			'show_subfolders' => esc_html__( 'Show Subfolders', 'lknwp-filebrowser' ),
+			'expand_collapse' => esc_html__( 'Expand/Collapse', 'lknwp-filebrowser' ),
+			'collapse' => esc_html__( 'Collapse', 'lknwp-filebrowser' ),
 		));
 	}
 
@@ -503,7 +507,7 @@ class LknwpFilebrowserAdmin {
 		$new_name = isset( $_POST['new_name'] ) ? sanitize_text_field( wp_unslash( $_POST['new_name'] ) ) : '';
 
 		if (empty($new_name)) {
-			wp_send_json_error(esc_html__('Nome da pasta não pode estar vazio', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Folder name cannot be empty', 'lknwp-filebrowser'));
 		}
 
 		global $wpdb;
@@ -512,7 +516,7 @@ class LknwpFilebrowserAdmin {
 		// Check if folder exists
 		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_folders()} WHERE id = %d", $folder_id));
 		if (!$folder) {
-			wp_send_json_error(esc_html__('Pasta não encontrada', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Folder not found', 'lknwp-filebrowser'));
 		}
 
 		// Check if name already exists in the same parent folder
@@ -525,7 +529,7 @@ class LknwpFilebrowserAdmin {
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		if ($existing) {
-			wp_send_json_error(esc_html__('Já existe uma pasta com este nome', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('A folder with this name already exists', 'lknwp-filebrowser'));
 		}
 
 		// Update folder name
@@ -538,9 +542,9 @@ class LknwpFilebrowserAdmin {
 		);
 
 		if ($result !== false) {
-			wp_send_json_success(esc_html__('Nome da pasta atualizado com sucesso', 'lknwp-filebrowser'));
+			wp_send_json_success(esc_html__('Folder name updated successfully', 'lknwp-filebrowser'));
 		} else {
-			wp_send_json_error(esc_html__('Erro ao atualizar nome da pasta', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Error updating folder name', 'lknwp-filebrowser'));
 		}
 	}
 
@@ -558,7 +562,7 @@ class LknwpFilebrowserAdmin {
 		$new_name = isset( $_POST['new_name'] ) ? sanitize_file_name( wp_unslash( $_POST['new_name'] ) ) : '';
 
 		if (empty($new_name)) {
-			wp_send_json_error(esc_html__('Nome do arquivo não pode estar vazio', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('File name cannot be empty', 'lknwp-filebrowser'));
 		}
 
 		global $wpdb;
@@ -567,7 +571,7 @@ class LknwpFilebrowserAdmin {
 		// Check if file exists
 		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_files()} WHERE id = %d", $file_id));
 		if (!$file) {
-			wp_send_json_error(esc_html__('Arquivo não encontrado', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('File not found', 'lknwp-filebrowser'));
 		}
 
 		// Check if name already exists in the same folder
@@ -580,7 +584,7 @@ class LknwpFilebrowserAdmin {
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		if ($existing) {
-			wp_send_json_error(esc_html__('Já existe um arquivo com este nome', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('A file with this name already exists', 'lknwp-filebrowser'));
 		}
 
 		// Get file extension to validate
@@ -589,7 +593,7 @@ class LknwpFilebrowserAdmin {
 		
 		if (isset($file_info['extension']) && isset($old_file_info['extension'])) {
 			if (\strtolower($file_info['extension']) !== \strtolower($old_file_info['extension'])) {
-				wp_send_json_error(esc_html__('Não é possível alterar a extensão do arquivo', 'lknwp-filebrowser'));
+				wp_send_json_error(esc_html__('Cannot change the file extension', 'lknwp-filebrowser'));
 			}
 		}
 
@@ -603,9 +607,9 @@ class LknwpFilebrowserAdmin {
 		);
 
 		if ($result !== false) {
-			wp_send_json_success(esc_html__('Nome do arquivo atualizado com sucesso', 'lknwp-filebrowser'));
+			wp_send_json_success(esc_html__('File name updated successfully', 'lknwp-filebrowser'));
 		} else {
-			wp_send_json_error(esc_html__('Erro ao atualizar nome do arquivo', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Error updating file name', 'lknwp-filebrowser'));
 		}
 	}
 
