@@ -5,7 +5,7 @@ on:
 
 env:
   PLUGIN_NAME: lknwp-filebrowser
-  PHP_VERSION: "7.4"
+  PHP_VERSION: "8.2"
   DEPLOY_TAG: "1.0.0"
 
 jobs:

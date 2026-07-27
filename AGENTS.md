@@ -167,7 +167,7 @@ echo esc_url( $url );
 ## 🔌 Dependências
 
 ### Hard
-- **PHP** ≥ 7.4
+- **PHP** ≥ 8.2
 - **WordPress** — sem versão mínima explícita, mas usa `dbDelta`, `wp_mkdir_p`, `wp_unique_filename`.
 - **jQuery** — dependência de script no front-end.
 
@@ -175,7 +175,7 @@ echo esc_url( $url );
 - **api.linknacional.com** — Update checker (já removido, plugin será distribuído via WordPress.org).
 
 ### Build
-- `composer.json`: autoload PSR-4, sem dependências de produção além do PHP ≥ 7.4.
+- `composer.json`: autoload PSR-4, sem dependências de produção além do PHP ≥ 8.2.
 - CI: GitHub Actions — zip release no merge para `main`.
 
 ---

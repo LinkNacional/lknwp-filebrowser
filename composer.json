@@ -10,14 +10,13 @@
         }
     ],
     "require": {
-        "php": ">=7.4"
+        "php": ">=8.2"
     },
     "autoload": {
         "psr-4": {
             "Lkn\\WPFilebrowser\\Includes\\": "includes/",
             "Lkn\\WPFilebrowser\\Admin\\": "admin/",
-            "Lkn\\WPFilebrowser\\Public\\": "public/",
-            "Includes\\PluginUpdater\\": "includes/plugin-updater"
+            "Lkn\\WPFilebrowser\\Public\\": "public/"
         }
     },
     "config": {
