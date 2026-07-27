@@ -1,134 +1,132 @@
 === Link Nacional File Browser ===
 Contributors: linknacional
-Tags: file-browser, file-manager, documents, upload, folders
-Requires at least: 5.0
-Tested up to: 6.4
-Stable tag: 1.0.1
-Requires PHP: 7.4
+Tags: file manager, documents, upload, folders, download
+Requires at least: 6.0
+Tested up to: 7.0
+Stable tag: 1.0.0
+Requires PHP: 8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Um plugin completo de navegador de arquivos com sistema de pastas hierárquicas e interface de pesquisa para WordPress.
+A complete file browser plugin with hierarchical folder system and search interface for WordPress.
 
 == Description ==
 
-O Link Nacional File Browser é um plugin WordPress que permite criar e gerenciar um sistema de arquivos hierárquico completo. Oferece uma interface administrativa para organizar arquivos em pastas e um shortcode para exibir o navegador de arquivos no frontend.
+Link Nacional File Browser lets you create and manage a complete hierarchical file system within WordPress. It provides an admin interface to organize files into folders and a shortcode to display the file browser on the frontend.
 
-**Principais Recursos:**
+**Key Features:**
 
-* **Sistema de Pastas Hierárquicas**: Crie pastas e subpastas organizadas como no Windows Explorer
-* **Upload de Múltiplos Arquivos**: Suporte para PDF, Word, Excel, PowerPoint, imagens e mais
-* **Interface de Pesquisa**: Busca rápida por arquivos e pastas no frontend
-* **Visualização Responsiva**: Layout em grade ou lista adaptável a dispositivos móveis
-* **Breadcrumb Navigation**: Navegação intuitiva entre pastas
-* **Shortcode Flexível**: Múltiplas opções de configuração via shortcode
+* **Hierarchical Folder System** — Create nested folders organized like a file explorer
+* **Multiple File Uploads** — Support for PDF, Word, Excel, PowerPoint, images, and more
+* **Search Interface** — Quick file and folder search on the frontend
+* **Responsive Design** — Grid or list layout, adaptable to mobile devices
+* **Breadcrumb Navigation** — Intuitive folder browsing
+* **Flexible Shortcode** — Multiple configuration options
 
-**Tipos de Arquivo Suportados:**
-* Documentos: PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT
-* Imagens: JPG, JPEG, PNG, GIF
+**Supported File Types:**
+* Documents: PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT
+* Images: JPG, JPEG, PNG, GIF
 
 == Installation ==
 
-1. Faça upload do plugin para o diretório `/wp-content/plugins/lknwp-filebrowser/`
-2. Ative o plugin através do menu 'Plugins' no WordPress
-3. O plugin criará automaticamente as tabelas necessárias no banco de dados
-4. Acesse 'File Browser' no menu administrativo para começar a organizar seus arquivos
+1. Upload the plugin to the `/wp-content/plugins/lknwp-filebrowser/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. The plugin will automatically create the required database tables
+4. Go to 'File Browser' in the admin menu to start organizing your files
 
 == Frequently Asked Questions ==
 
-= Como usar o shortcode? =
+= How do I use the shortcode? =
 
-O plugin inclui um painel de instruções no admin com exemplos práticos e botões para copiar shortcodes.
+The plugin includes an instructions panel in the admin area with practical examples and copy buttons.
 
-Acesse 'File Browser' no menu administrativo para ver as instruções completas de uso.
+Go to 'File Browser' in the admin menu for complete usage instructions.
 
-**Uso básico:**
+**Basic usage:**
 `[lknwp_filebrowser]`
 
-**Pasta específica:**
+**Specific folder:**
 `[lknwp_filebrowser folder_id="1"]`
 
-**Layout diferente:**
+**Different layout:**
 `[lknwp_filebrowser layout="list"]`
 
-**Layouts disponíveis:** grid (padrão) e list
+**Available layouts:** grid (default) and list
 
-= Onde encontro instruções de uso? =
+= Where do I find usage instructions? =
 
-No painel administrativo do plugin há um bloco de instruções com:
-* Exemplos de shortcodes
-* Botões para copiar shortcodes
-* Dicas de uso
-* Guia de funcionalidades
+The plugin admin panel includes an instructions block with:
+* Shortcode examples
+* Copy shortcode buttons
+* Usage tips
+* Feature guide
 
-= Como organizar arquivos em pastas? =
+= How do I organize files into folders? =
 
-1. Acesse 'File Browser' no menu administrativo
-2. Veja as instruções na parte superior da página
-3. Clique em 'Create Folder' para criar uma nova pasta
-4. Navegue até a pasta desejada e clique em 'Upload Files'
-5. Selecione múltiplos arquivos para upload simultâneo
+1. Go to 'File Browser' in the admin menu
+2. Read the instructions at the top of the page
+3. Click 'Create Folder' to create a new folder
+4. Navigate to the desired folder and click 'Upload Files'
+5. Select multiple files for simultaneous upload
 
-= Como os usuários podem acessar os arquivos? =
+= How can users access the files? =
 
-Os usuários podem:
-* Navegar pelas pastas clicando nelas
-* Usar a barra de pesquisa para encontrar arquivos específicos
-* Baixar arquivos clicando neles
-* Alternar entre visualização em grade e lista
+Users can:
+* Navigate through folders by clicking on them
+* Use the search bar to find specific files
+* Download files by clicking on them
+* Switch between grid and list views
 
-= O plugin é responsivo? =
+= Is the plugin responsive? =
 
-Sim! O plugin foi desenvolvido com design responsivo, adaptando-se automaticamente a tablets e smartphones.
+Yes! The plugin is built with responsive design and automatically adapts to tablets and smartphones.
 
 == Screenshots ==
 
-1. Interface administrativa - Gerenciamento de pastas e arquivos
-2. Visualização em grade no frontend
-3. Visualização em lista no frontend
-4. Funcionalidade de pesquisa
-5. Interface mobile responsiva
+1. Admin interface — Main configuration page with folder tree and file grid
+2. Admin interface — Selecting and managing files in a folder
+3. Frontend — File browser component displayed via shortcode
+4. Frontend — Navigating and previewing files in grid layout
+5. Frontend — File browser in list layout mode
+6. Frontend — Mobile responsive view
+7. Admin interface — How to use the shortcode instructions panel
 
 == Changelog ==
 
-= 1.0.1 - 12/09/2025 =
-* Ajuste na documentação. 
-
 = 1.0.0 =
-* Versão inicial
-* Sistema completo de pastas hierárquicas
-* Upload de múltiplos arquivos
-* Interface de pesquisa
-* Shortcode flexível com múltiplas opções
-* Design responsivo
-* Suporte para múltiplos tipos de arquivo
+* Initial release
+* Complete hierarchical folder system
+* Multiple file uploads
+* Search interface
+* Flexible shortcode with multiple options
+* Responsive design
+* Support for multiple file types
 
 == Technical Details ==
 
-**Estrutura do Banco de Dados:**
-* `wp_lknwp_filebrowser_folders`: Armazena informações das pastas
-* `wp_lknwp_filebrowser_files`: Armazena informações dos arquivos
+**Database Structure:**
+* `{prefix}lknwp_filebrowser_folders` — Stores folder information
+* `{prefix}lknwp_filebrowser_files` — Stores file information
 
-**Diretório de Upload:**
-Os arquivos são armazenados em `/wp-content/uploads/lknwp-filebrowser/`
+**Upload Directory:**
+Files are stored in `/wp-content/uploads/lknwp-filebrowser/`
 
-**Hooks Disponíveis:**
-* `lknwp_filebrowser_before_upload`: Executado antes do upload
-* `lknwp_filebrowser_after_upload`: Executado após o upload
-* `lknwp_filebrowser_before_delete`: Executado antes da exclusão
+**Available Hooks:**
+* `lknwp_filebrowser_before_upload` — Fires before a file upload
+* `lknwp_filebrowser_after_upload` — Fires after a file upload
+* `lknwp_filebrowser_before_delete` — Fires before a file deletion
 
 == Support ==
 
-Para suporte técnico, entre em contato:
+For technical support, contact us:
 * Email: contato@linknacional.com
 * Website: https://www.linknacional.com.br
 
 == License ==
 
-Este plugin é licenciado sob GPL v2 ou posterior.
+This plugin is licensed under GPL v2 or later.
 
-== Requirements ==
+== Upgrade Notice ==
 
-* WordPress 5.0 ou superior
-* PHP 7.4 ou superior
-* MySQL 5.6 ou superior
+= 1.0.0 =
+* Documentation update and WordPress coding standards compliance. No breaking changes.

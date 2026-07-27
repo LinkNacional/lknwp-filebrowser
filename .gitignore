@@ -2,6 +2,9 @@
 /vendor/
 /node_modules/
 
+# Compiled assets
+assets/js/compiled/
+
 # Composer
 composer.phar
 

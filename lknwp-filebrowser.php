@@ -16,7 +16,9 @@
  * Plugin Name:       Link Nacional File Browser
  * Plugin URI:        https://www.linknacional.com.br
  * Description:       Create your folder structure and display it on the frontend.
- * Version:           1.0.1
+ * Version:           1.0.0
+ * Requires at least: 6.0
+ * Requires PHP:      8.2
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-2.0+
@@ -35,8 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'LKNWP_FILEBROWSER_VERSION', '1.0.1' );
-define( 'PLUGIN_FILE', __FILE__ );
+define( 'LKNWP_FILEBROWSER_VERSION', '1.0.0' );
 define( 'LINK_PLUGIN_NAME', 'lknwp-filebrowser' );
 
 /**
@@ -86,19 +87,19 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/Aliases.php';
 /**
  * The code that runs during plugin activation.
  */
-function activate_lknwp_filebrowser() {
+function lknwp_filebrowser_activate() {
 	LknwpFilebrowserActivator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  */
-function deactivate_lknwp_filebrowser() {
+function lknwp_filebrowser_deactivate() {
 	LknwpFilebrowserDeactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_lknwp_filebrowser' );
-register_deactivation_hook( __FILE__, 'deactivate_lknwp_filebrowser' );
+register_activation_hook( __FILE__, 'lknwp_filebrowser_activate' );
+register_deactivation_hook( __FILE__, 'lknwp_filebrowser_deactivate' );
 
 /**
  * Begins execution of the plugin.
@@ -109,8 +110,8 @@ register_deactivation_hook( __FILE__, 'deactivate_lknwp_filebrowser' );
  *
  * @since    1.0.0
  */
-function run_lknwp_filebrowser() {
+function lknwp_filebrowser_run() {
 	$plugin = new LknwpFilebrowser();
 	$plugin->run();
 }
-run_lknwp_filebrowser();
+lknwp_filebrowser_run();

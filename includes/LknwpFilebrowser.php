@@ -3,10 +3,8 @@
 namespace Lkn\WPFilebrowser\Includes;
 
 use Lkn\WPFilebrowser\Includes\LknwpFilebrowserLoader;
-use Lkn\WPFilebrowser\Includes\LknwpFilebrowserI18n;
 use Lkn\WPFilebrowser\Admin\LknwpFilebrowserAdmin;
 use Lkn\WPFilebrowser\Public\LknwpFilebrowserPublic;
-use Includes\PluginUpdater\Puc\Plugin\Lkn_Puc_Plugin_UpdateChecker;
 
 /**
  * The core plugin class.
@@ -64,12 +62,11 @@ class LknwpFilebrowser {
 		if ( defined( 'LKNWP_FILEBROWSER_VERSION' ) ) {
 			$this->version = LKNWP_FILEBROWSER_VERSION;
 		} else {
-			$this->version = '1.0.1';
+			$this->version = '1.0.0';
 		}
 		$this->plugin_name = 'lknwp-filebrowser';
 
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 	}
@@ -85,20 +82,6 @@ class LknwpFilebrowser {
 	 */
 	private function load_dependencies() {
 		$this->loader = new LknwpFilebrowserLoader();
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the LknwpFilebrowserI18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
-		$plugin_i18n = new LknwpFilebrowserI18n();
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 	}
 
 	/**
@@ -126,16 +109,6 @@ class LknwpFilebrowser {
 		$this->loader->add_action( 'wp_ajax_lknwp_get_all_folders_admin_frontend', $plugin_admin, 'get_all_folders_admin_frontend' );
 		$this->loader->add_action( 'wp_ajax_nopriv_lknwp_get_admin_nonce', $plugin_admin, 'lknwp_get_admin_nonce');
 		$this->loader->add_action( 'wp_ajax_lknwp_get_admin_nonce', $plugin_admin, 'lknwp_get_admin_nonce');
-		$this->loader->add_action( 'init', $this, 'updater_init' );
-	}
-
-	public function updater_init()
-	{
-		return new Lkn_Puc_Plugin_UpdateChecker(
-			'https://api.linknacional.com/v3/u/?slug=lknwp-filebrowser',
-			PLUGIN_FILE,
-			'lknwp-filebrowser'
-		);
 	}
 
 	/**
@@ -148,8 +121,6 @@ class LknwpFilebrowser {
 	private function define_public_hooks() {
 		$plugin_public = new LknwpFilebrowserPublic( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode' );
 		$this->loader->add_action( 'wp_ajax_lknwp_frontend_get_contents', $plugin_public, 'get_folder_contents_frontend' );
 		$this->loader->add_action( 'wp_ajax_nopriv_lknwp_frontend_get_contents', $plugin_public, 'get_folder_contents_frontend' );

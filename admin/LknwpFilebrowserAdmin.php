@@ -1,5 +1,8 @@
 <?php
 
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+// Custom tables — no WP core API exists. $wpdb is the only correct approach.
+
 namespace Lkn\WPFilebrowser\Admin;
 
 /**
@@ -50,9 +53,12 @@ class LknwpFilebrowserAdmin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $hook_suffix ) {
+		if ( 'toplevel_page_lknwp-filebrowser' !== $hook_suffix ) {
+			return;
+		}
+		wp_enqueue_script( 'lknwp-filebrowser-fontawesome', LKNWP_FILEBROWSER_PLUGIN_URL . 'assets/js/compiled/fontawesome.compiled.js', array(), LKNWP_FILEBROWSER_VERSION, false );
 		wp_enqueue_style( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'admin/css/lknwp-filebrowser-admin.css', array(), LKNWP_FILEBROWSER_VERSION, 'all' );
-		wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0' );
 	}
 
 	/**
@@ -60,22 +66,35 @@ class LknwpFilebrowserAdmin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook_suffix ) {
+		if ( 'toplevel_page_lknwp-filebrowser' !== $hook_suffix ) {
+			return;
+		}
 		wp_enqueue_script( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'admin/js/lknwp-filebrowser-admin.js', array( 'jquery' ), LKNWP_FILEBROWSER_VERSION, false );
 		wp_localize_script( $this->plugin_name, 'lknwp_ajax', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'copied_text' => __( 'Copied!', 'lknwp-filebrowser' ),
-			'loading_text' => __( 'Loading...', 'lknwp-filebrowser' ),
-			'uploading_text' => __( 'Uploading files...', 'lknwp-filebrowser' ),
-			'error_loading_text' => __( 'Error loading contents', 'lknwp-filebrowser' ),
-			'empty_folder_text' => __( 'This folder is empty', 'lknwp-filebrowser' ),
-			'folder_text' => __( 'Folder', 'lknwp-filebrowser' ),
-			'saved_text' => __( 'Saved', 'lknwp-filebrowser' ),
-			'name_empty_error' => __( 'Name cannot be empty', 'lknwp-filebrowser' ),
-			'update_error' => __( 'Error updating name', 'lknwp-filebrowser' ),
-			'unknown_error' => __( 'Unknown error', 'lknwp-filebrowser' ),
-			'create_folder_error' => __( 'Error creating folder', 'lknwp-filebrowser' ),
-			'upload_error' => __( 'Error uploading files', 'lknwp-filebrowser' )
+			'copied_text' => esc_html__( 'Copied!', 'lknwp-filebrowser' ),
+			'loading_text' => esc_html__( 'Loading...', 'lknwp-filebrowser' ),
+			'uploading_text' => esc_html__( 'Uploading files...', 'lknwp-filebrowser' ),
+			'error_loading_text' => esc_html__( 'Error loading contents', 'lknwp-filebrowser' ),
+			'empty_folder_text' => esc_html__( 'This folder is empty', 'lknwp-filebrowser' ),
+			'folder_text' => esc_html__( 'Folder', 'lknwp-filebrowser' ),
+			'saved_text' => esc_html__( 'Saved', 'lknwp-filebrowser' ),
+			'name_empty_error' => esc_html__( 'Name cannot be empty', 'lknwp-filebrowser' ),
+			'update_error' => esc_html__( 'Error updating name', 'lknwp-filebrowser' ),
+			'unknown_error' => esc_html__( 'Unknown error', 'lknwp-filebrowser' ),
+			'create_folder_error' => esc_html__( 'Error creating folder', 'lknwp-filebrowser' ),
+			'upload_error' => esc_html__( 'Error uploading files', 'lknwp-filebrowser' ),
+			'hide_subfolders' => esc_html__( 'Hide Subfolders', 'lknwp-filebrowser' ),
+			'show_subfolders' => esc_html__( 'Show Subfolders', 'lknwp-filebrowser' ),
+			'expand_collapse' => esc_html__( 'Expand/Collapse', 'lknwp-filebrowser' ),
+			'collapse' => esc_html__( 'Collapse', 'lknwp-filebrowser' ),
+			'confirm_edit' => esc_html__( 'Confirm', 'lknwp-filebrowser' ),
+			'cancel' => esc_html__( 'Cancel', 'lknwp-filebrowser' ),
+			'edit_name' => esc_html__( 'Edit name', 'lknwp-filebrowser' ),
+			'delete_folder' => esc_html__( 'Delete folder', 'lknwp-filebrowser' ),
+			'delete_file' => esc_html__( 'Delete file', 'lknwp-filebrowser' ),
+			'open_file' => esc_html__( 'Open file', 'lknwp-filebrowser' ),
 		));
 	}
 
@@ -84,8 +103,8 @@ class LknwpFilebrowserAdmin {
 	 */
 	public function add_admin_menu() {
 		add_menu_page(
-			__('File Browser', 'lknwp-filebrowser'),
-			__('File Browser', 'lknwp-filebrowser'),
+			esc_html__('File Browser', 'lknwp-filebrowser'),
+			esc_html__('File Browser', 'lknwp-filebrowser'),
 			'manage_options',
 			'lknwp-filebrowser',
 			array($this, 'admin_page'),
@@ -100,30 +119,30 @@ class LknwpFilebrowserAdmin {
 	public function admin_page() {
 		?>
 		<div class="wrap">
-			<h1><?php _e('File Browser Manager', 'lknwp-filebrowser'); ?></h1>
+			<h1><?php esc_html_e('File Browser Manager', 'lknwp-filebrowser'); ?></h1>
 			
 			<!-- Shortcode Instructions -->
 			<div class="lknwp-instructions-panel">
 				<div class="lknwp-instructions-header">
-					<h2><i class="fas fa-info-circle"></i> <?php _e('How to Use', 'lknwp-filebrowser'); ?></h2>
+					<h2><i class="fas fa-info-circle"></i> <?php esc_html_e('How to Use', 'lknwp-filebrowser'); ?></h2>
 				</div>
 				<div class="lknwp-instructions-content">
-					<p><?php _e('To display the file browser on your website, follow these simple steps:', 'lknwp-filebrowser'); ?></p>
+					<p><?php esc_html_e('To display the file browser on your website, follow these simple steps:', 'lknwp-filebrowser'); ?></p>
 					<ol style="margin: 15px 0; padding-left: 20px;">
-						<li><?php _e('Copy the shortcode below', 'lknwp-filebrowser'); ?></li>
-						<li><?php _e('Go to the page or post where you want to display the file browser', 'lknwp-filebrowser'); ?></li>
-						<li><?php _e('Add a shortcode component/element in your editor', 'lknwp-filebrowser'); ?></li>
-						<li><?php _e('Paste the shortcode into the component', 'lknwp-filebrowser'); ?></li>
-						<li><?php _e('Save and publish your page', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Copy the shortcode below', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Go to the page or post where you want to display the file browser', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Add a shortcode component/element in your editor', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Paste the shortcode into the component', 'lknwp-filebrowser'); ?></li>
+						<li><?php esc_html_e('Save and publish your page', 'lknwp-filebrowser'); ?></li>
 					</ol>
 					<div class="lknwp-shortcode-box">
 						<code>[lknwp_filebrowser]</code>
 						<button type="button" class="button button-primary copy-shortcode" data-shortcode="[lknwp_filebrowser]">
-							<i class="fas fa-copy"></i> <?php _e('Copy Shortcode', 'lknwp-filebrowser'); ?>
+							<i class="fas fa-copy"></i> <?php esc_html_e('Copy Shortcode', 'lknwp-filebrowser'); ?>
 						</button>
 					</div>
 					<p style="margin-top: 15px; font-size: 13px; color: #666;">
-						<?php _e('The file browser will display all folders and files you create here. Users can navigate through folders, search for files, and download them directly from the frontend.', 'lknwp-filebrowser'); ?>
+						<?php esc_html_e('The file browser will display all folders and files you create here. Users can navigate through folders, search for files, and download them directly from the frontend.', 'lknwp-filebrowser'); ?>
 					</p>
 				</div>
 			</div>
@@ -131,21 +150,21 @@ class LknwpFilebrowserAdmin {
 			<div id="lknwp-filebrowser-admin">
 				<div class="lknwp-toolbar">
 					<button type="button" class="button button-primary" id="create-folder-btn">
-						<i class="fas fa-folder-plus"></i> <?php _e('Create Folder', 'lknwp-filebrowser'); ?>
+						<i class="fas fa-folder-plus"></i> <?php esc_html_e('Create Folder', 'lknwp-filebrowser'); ?>
 					</button>
 					<button type="button" class="button button-secondary" id="upload-file-btn">
-						<i class="fas fa-upload"></i> <?php _e('Upload Files', 'lknwp-filebrowser'); ?>
+						<i class="fas fa-upload"></i> <?php esc_html_e('Upload Files', 'lknwp-filebrowser'); ?>
 					</button>
 					<input type="file" id="file-upload-input" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.gif" style="display: none;">
 				</div>
 
 				<div class="lknwp-breadcrumb">
-					<span id="current-path"><?php _e('Home', 'lknwp-filebrowser'); ?></span>
+					<span id="current-path"><?php esc_html_e('Home', 'lknwp-filebrowser'); ?></span>
 				</div>
 
 				<div class="lknwp-file-manager">
 					<div class="lknwp-sidebar">
-						<h3><?php _e('Folders', 'lknwp-filebrowser'); ?></h3>
+						<h3><?php esc_html_e('Folders', 'lknwp-filebrowser'); ?></h3>
 						<div id="folder-tree">
 							<!-- Folder tree will be loaded here -->
 						</div>
@@ -164,14 +183,14 @@ class LknwpFilebrowserAdmin {
 		<div id="create-folder-modal" class="lknwp-modal" style="display: none;">
 			<div class="lknwp-modal-content">
 				<span class="lknwp-close">&times;</span>
-				<h2><?php \_e('Create New Folder', 'lknwp-filebrowser'); ?></h2>
+				<h2><?php esc_html_e('Create New Folder', 'lknwp-filebrowser'); ?></h2>
 				<form id="create-folder-form">
-					<label for="folder-name"><?php \_e('Folder Name:', 'lknwp-filebrowser'); ?></label>
+					<label for="folder-name"><?php esc_html_e('Folder Name:', 'lknwp-filebrowser'); ?></label>
 					<input type="text" id="folder-name" name="folder_name" required>
 					<input type="hidden" id="parent-folder-id" name="parent_id" value="0">
 					<div class="form-actions">
-						<button type="submit" class="button button-primary"><?php \_e('Create', 'lknwp-filebrowser'); ?></button>
-						<button type="button" class="button" onclick="closeModal('create-folder-modal')"><?php \_e('Cancel', 'lknwp-filebrowser'); ?></button>
+						<button type="submit" class="button button-primary"><?php esc_html_e('Create', 'lknwp-filebrowser'); ?></button>
+						<button type="button" class="button" onclick="closeModal('create-folder-modal')"><?php esc_html_e('Cancel', 'lknwp-filebrowser'); ?></button>
 					</div>
 				</form>
 			</div>
@@ -184,12 +203,17 @@ class LknwpFilebrowserAdmin {
 	 * Create a nonce
 	 */
 	public function lknwp_get_admin_nonce() {
-		$action_name = isset($_POST['action_name']) ? sanitize_text_field(wp_unslash($_POST['action_name'])) : '';
-		if (!$action_name) {
-			wp_send_json_error('Action name required');
+		if ( ! wp_doing_ajax() ) {
+			wp_die( esc_html__( 'Invalid request method.', 'lknwp-filebrowser' ) );
 		}
-		$nonce = wp_create_nonce($action_name);
-		wp_send_json_success(array('nonce' => $nonce));
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- This endpoint generates the nonce that subsequent AJAX calls verify.
+		$action_name = isset( $_POST['action_name'] ) ? sanitize_text_field( wp_unslash( $_POST['action_name'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		if ( ! $action_name ) {
+			wp_send_json_error( esc_html__( 'Action name required', 'lknwp-filebrowser' ) );
+		}
+		$nonce = wp_create_nonce( $action_name );
+		wp_send_json_success( array( 'nonce' => $nonce ) );
 	}
 
 	/**
@@ -199,24 +223,23 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$folder_name = sanitize_text_field($_POST['folder_name']);
-		$parent_id = intval($_POST['parent_id']);
+		$folder_name = isset( $_POST['folder_name'] ) ? sanitize_text_field( wp_unslash( $_POST['folder_name'] ) ) : '';
+		$parent_id = isset( $_POST['parent_id'] ) ? intval( wp_unslash( $_POST['parent_id'] ) ) : 0;
 
 		if (empty($folder_name)) {
-			wp_send_json_error(__('Folder name is required', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Folder name is required', 'lknwp-filebrowser'));
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 
 		// Build path
 		$path = $this->build_folder_path($parent_id) . '/' . $folder_name;
 
 		$result = $wpdb->insert(
-			$folders_table,
+			$this->table_folders(),
 			array(
 				'name' => $folder_name,
 				'parent_id' => $parent_id,
@@ -226,11 +249,11 @@ class LknwpFilebrowserAdmin {
 		);
 
 		if ($result === false) {
-			wp_send_json_error(__('Failed to create folder', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Failed to create folder', 'lknwp-filebrowser'));
 		}
 
 		wp_send_json_success(array(
-			'message' => __('Folder created successfully', 'lknwp-filebrowser'),
+			'message' => esc_html__('Folder created successfully', 'lknwp-filebrowser'),
 			'folder_id' => $wpdb->insert_id
 		));
 	}
@@ -242,13 +265,13 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$folder_id = intval($_POST['folder_id']);
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 
 		if (empty($_FILES['files'])) {
-			wp_send_json_error(__('No files uploaded', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('No files uploaded', 'lknwp-filebrowser'));
 		}
 
 		$upload_dir = wp_upload_dir();
@@ -256,6 +279,7 @@ class LknwpFilebrowserAdmin {
 		$filebrowser_url = $upload_dir['baseurl'] . '/lknwp-filebrowser';
 
 		$uploaded_files = array();
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- $_FILES data is not user-input text; individual fields sanitized below with sanitize_file_name() and wp_check_filetype().
 		$files = $_FILES['files'];
 
 		for ($i = 0; $i < count($files['name']); $i++) {
@@ -264,18 +288,26 @@ class LknwpFilebrowserAdmin {
 				$file_size = $files['size'][$i];
 				$file_type = wp_check_filetype($original_name);
 				
+				// Allowlist safe extensions — block everything else server-side.
+				$allowed_types = array(
+					'pdf', 'doc', 'docx', 'xls', 'xlsx',
+					'ppt', 'pptx', 'txt', 'jpg', 'jpeg', 'png', 'gif',
+				);
+				if ( empty( $file_type['ext'] ) || ! in_array( strtolower( $file_type['ext'] ), $allowed_types, true ) ) {
+					continue;
+				}
 				// Generate unique filename
 				$filename = wp_unique_filename($filebrowser_dir, $original_name);
 				$file_path = $filebrowser_dir . '/' . $filename;
 				$file_url = $filebrowser_url . '/' . $filename;
 
-				if (\move_uploaded_file($files['tmp_name'][$i], $file_path)) {
+				// phpcs:ignore Generic.PHP.ForbiddenFunctions.Found -- move_uploaded_file is the correct function for HTTP uploads; WP core uses it in wp_handle_upload().
+			if ( move_uploaded_file( $files['tmp_name'][$i], $file_path ) ) {
 					// Save to database
 					global $wpdb;
-					$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 					$result = $wpdb->insert(
-						$files_table,
+						$this->table_files(),
 						array(
 							'name' => $filename,
 							'original_name' => $original_name,
@@ -301,11 +333,11 @@ class LknwpFilebrowserAdmin {
 		}
 
 		if (empty($uploaded_files)) {
-			wp_send_json_error(__('Failed to upload files', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Failed to upload files', 'lknwp-filebrowser'));
 		}
 
 		wp_send_json_success(array(
-			'message' => __('Files uploaded successfully', 'lknwp-filebrowser'),
+			'message' => esc_html__('Files uploaded successfully', 'lknwp-filebrowser'),
 			'files' => $uploaded_files
 		));
 	}
@@ -317,19 +349,17 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$folder_id = intval($_POST['folder_id']);
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 		// Delete all files in this folder and subfolders
 		$this->delete_folder_recursive($folder_id);
 
-		wp_send_json_success(__('Folder deleted successfully', 'lknwp-filebrowser'));
+		wp_send_json_success(esc_html__('Folder deleted successfully', 'lknwp-filebrowser'));
 	}
 
 	/**
@@ -339,28 +369,28 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$file_id = intval($_POST['file_id']);
+		$file_id = isset( $_POST['file_id'] ) ? intval( wp_unslash( $_POST['file_id'] ) ) : 0;
 		
 		global $wpdb;
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 		// Get file info
-		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM $files_table WHERE id = %d", $file_id));
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
+		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_files()} WHERE id = %d", $file_id));
 		
 		if ($file) {
 			// Delete physical file
-			if (file_exists($file->file_path)) {
-				unlink($file->file_path);
+			if ( file_exists( $file->file_path ) ) {
+				wp_delete_file( $file->file_path );
 			}
 
 			// Delete from database
-			$wpdb->delete($files_table, array('id' => $file_id), array('%d'));
+			$wpdb->delete($this->table_files(), array('id' => $file_id), array('%d'));
 		}
 
-		wp_send_json_success(__('File deleted successfully', 'lknwp-filebrowser'));
+		wp_send_json_success(esc_html__('File deleted successfully', 'lknwp-filebrowser'));
 	}
 
 	/**
@@ -369,7 +399,7 @@ class LknwpFilebrowserAdmin {
 	public function get_folder_contents_ajax() {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
-		$folder_id = intval($_POST['folder_id']);
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		$contents = $this->get_folder_contents($folder_id);
 		
@@ -383,9 +413,9 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 
-		$folders = $wpdb->get_results("SELECT * FROM $folders_table ORDER BY parent_id ASC, name ASC");
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
+		$folders = $wpdb->get_results("SELECT * FROM {$this->table_folders()} ORDER BY parent_id ASC, name ASC");
 		
 		wp_send_json_success($folders);
 	}
@@ -395,20 +425,20 @@ class LknwpFilebrowserAdmin {
 	 */
 	private function get_folder_contents($folder_id) {
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get subfolders
 		$folders = $wpdb->get_results($wpdb->prepare(
-			"SELECT * FROM $folders_table WHERE parent_id = %d ORDER BY name ASC",
+			"SELECT * FROM {$this->table_folders()} WHERE parent_id = %d ORDER BY name ASC",
 			$folder_id
 		));
 
 		// Get files
 		$files = $wpdb->get_results($wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		return array(
 			'folders' => $folders,
@@ -425,9 +455,10 @@ class LknwpFilebrowserAdmin {
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		
-		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM $folders_table WHERE id = %d", $folder_id));
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names via private method, hardcoded from $wpdb->prefix.
+		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_folders()} WHERE id = %d", $folder_id));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
 		if ($folder && $folder->parent_id > 0) {
 			return $this->build_folder_path($folder->parent_id) . '/' . $folder->name;
@@ -443,12 +474,11 @@ class LknwpFilebrowserAdmin {
 	 */
 	private function delete_folder_recursive($folder_id) {
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get all subfolders
 		$subfolders = $wpdb->get_results($wpdb->prepare(
-			"SELECT id FROM $folders_table WHERE parent_id = %d",
+			"SELECT id FROM {$this->table_folders()} WHERE parent_id = %d",
 			$folder_id
 		));
 
@@ -459,21 +489,22 @@ class LknwpFilebrowserAdmin {
 
 		// Delete all files in this folder
 		$files = $wpdb->get_results($wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d",
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		foreach ($files as $file) {
-			if (file_exists($file->file_path)) {
-				unlink($file->file_path);
+			if ( file_exists( $file->file_path ) ) {
+				wp_delete_file( $file->file_path );
 			}
 		}
 
 		// Delete files from database
-		$wpdb->delete($files_table, array('folder_id' => $folder_id), array('%d'));
+		$wpdb->delete($this->table_files(), array('folder_id' => $folder_id), array('%d'));
 
 		// Delete the folder itself
-		$wpdb->delete($folders_table, array('id' => $folder_id), array('%d'));
+		$wpdb->delete($this->table_folders(), array('id' => $folder_id), array('%d'));
 	}
 
 	/**
@@ -483,40 +514,41 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$folder_id = intval($_POST['id']);
-		$new_name = sanitize_text_field($_POST['new_name']);
+		$folder_id = isset( $_POST['id'] ) ? intval( wp_unslash( $_POST['id'] ) ) : 0;
+		$new_name = isset( $_POST['new_name'] ) ? sanitize_text_field( wp_unslash( $_POST['new_name'] ) ) : '';
 
 		if (empty($new_name)) {
-			wp_send_json_error(__('Nome da pasta não pode estar vazio', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Folder name cannot be empty', 'lknwp-filebrowser'));
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Check if folder exists
-		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM $folders_table WHERE id = %d", $folder_id));
+		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_folders()} WHERE id = %d", $folder_id));
 		if (!$folder) {
-			wp_send_json_error(__('Pasta não encontrada', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Folder not found', 'lknwp-filebrowser'));
 		}
 
 		// Check if name already exists in the same parent folder
 		$existing = $wpdb->get_var($wpdb->prepare(
-			"SELECT id FROM $folders_table WHERE name = %s AND parent_id = %d AND id != %d",
+			"SELECT id FROM {$this->table_folders()} WHERE name = %s AND parent_id = %d AND id != %d",
 			$new_name,
 			$folder->parent_id,
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		if ($existing) {
-			wp_send_json_error(__('Já existe uma pasta com este nome', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('A folder with this name already exists', 'lknwp-filebrowser'));
 		}
 
 		// Update folder name
 		$result = $wpdb->update(
-			$folders_table,
+			$this->table_folders(),
 			array('name' => $new_name),
 			array('id' => $folder_id),
 			array('%s'),
@@ -524,9 +556,9 @@ class LknwpFilebrowserAdmin {
 		);
 
 		if ($result !== false) {
-			wp_send_json_success(__('Nome da pasta atualizado com sucesso', 'lknwp-filebrowser'));
+			wp_send_json_success(esc_html__('Folder name updated successfully', 'lknwp-filebrowser'));
 		} else {
-			wp_send_json_error(__('Erro ao atualizar nome da pasta', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Error updating folder name', 'lknwp-filebrowser'));
 		}
 	}
 
@@ -537,35 +569,36 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer('lknwp_filebrowser_nonce', 'nonce');
 		
 		if (!current_user_can('manage_options')) {
-			wp_die(__('Insufficient permissions', 'lknwp-filebrowser'));
+			wp_die(esc_html__('Insufficient permissions', 'lknwp-filebrowser'));
 		}
 
-		$file_id = intval($_POST['id']);
-		$new_name = sanitize_file_name($_POST['new_name']);
+		$file_id = isset( $_POST['id'] ) ? intval( wp_unslash( $_POST['id'] ) ) : 0;
+		$new_name = isset( $_POST['new_name'] ) ? sanitize_file_name( wp_unslash( $_POST['new_name'] ) ) : '';
 
 		if (empty($new_name)) {
-			wp_send_json_error(__('Nome do arquivo não pode estar vazio', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('File name cannot be empty', 'lknwp-filebrowser'));
 		}
 
 		global $wpdb;
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Check if file exists
-		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM $files_table WHERE id = %d", $file_id));
+		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_files()} WHERE id = %d", $file_id));
 		if (!$file) {
-			wp_send_json_error(__('Arquivo não encontrado', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('File not found', 'lknwp-filebrowser'));
 		}
 
 		// Check if name already exists in the same folder
 		$existing = $wpdb->get_var($wpdb->prepare(
-			"SELECT id FROM $files_table WHERE original_name = %s AND folder_id = %d AND id != %d",
+			"SELECT id FROM {$this->table_files()} WHERE original_name = %s AND folder_id = %d AND id != %d",
 			$new_name,
 			$file->folder_id,
 			$file_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		if ($existing) {
-			wp_send_json_error(__('Já existe um arquivo com este nome', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('A file with this name already exists', 'lknwp-filebrowser'));
 		}
 
 		// Get file extension to validate
@@ -574,13 +607,13 @@ class LknwpFilebrowserAdmin {
 		
 		if (isset($file_info['extension']) && isset($old_file_info['extension'])) {
 			if (\strtolower($file_info['extension']) !== \strtolower($old_file_info['extension'])) {
-				wp_send_json_error(__('Não é possível alterar a extensão do arquivo', 'lknwp-filebrowser'));
+				wp_send_json_error(esc_html__('Cannot change the file extension', 'lknwp-filebrowser'));
 			}
 		}
 
 		// Update file name
 		$result = $wpdb->update(
-			$files_table,
+			$this->table_files(),
 			array('original_name' => $new_name),
 			array('id' => $file_id),
 			array('%s'),
@@ -588,9 +621,9 @@ class LknwpFilebrowserAdmin {
 		);
 
 		if ($result !== false) {
-			wp_send_json_success(__('Nome do arquivo atualizado com sucesso', 'lknwp-filebrowser'));
+			wp_send_json_success(esc_html__('File name updated successfully', 'lknwp-filebrowser'));
 		} else {
-			wp_send_json_error(__('Erro ao atualizar nome do arquivo', 'lknwp-filebrowser'));
+			wp_send_json_error(esc_html__('Error updating file name', 'lknwp-filebrowser'));
 		}
 	}
 
@@ -600,16 +633,17 @@ class LknwpFilebrowserAdmin {
 	public function get_folder_files_ajax() {
 		check_ajax_referer( 'lknwp_filebrowser_admin_nonce', 'nonce' );
 		
-		$folder_id = intval( $_POST['folder_id'] );
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		global $wpdb;
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 		
 		// Get files from folder
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		$files = $wpdb->get_results( $wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
 		wp_send_json_success( $files );
 	}
@@ -621,14 +655,15 @@ class LknwpFilebrowserAdmin {
 		check_ajax_referer( 'lknwp_filebrowser_nonce', 'nonce' );
 		
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
+		global $wpdb;
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get all folders
-		$folders = $wpdb->get_results("SELECT * FROM $folders_table ORDER BY parent_id ASC, name ASC");
+		$folders = $wpdb->get_results("SELECT * FROM {$this->table_folders()} ORDER BY parent_id ASC, name ASC");
 		
 		// Get all files
-		$files = $wpdb->get_results("SELECT * FROM $files_table ORDER BY folder_id ASC, original_name ASC");
+		$files = $wpdb->get_results("SELECT * FROM {$this->table_files()} ORDER BY folder_id ASC, original_name ASC");
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		wp_send_json_success(array(
 			'folders' => $folders,
@@ -636,4 +671,25 @@ class LknwpFilebrowserAdmin {
 		));
 	}
 
+	/**
+	 * Get the folders table name.
+	 *
+	 * @since   1.0.0
+	 * @return  string
+	 */
+	private function table_folders() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_folders';
+	}
+
+	/**
+	 * Get the files table name.
+	 *
+	 * @since   1.0.0
+	 * @return  string
+	 */
+	private function table_files() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_files';
+	}
 }

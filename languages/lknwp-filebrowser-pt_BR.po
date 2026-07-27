@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lknwp-filebrowser\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2025-08-12 12:10-0300\n"
+"POT-Creation-Date: 2026-07-27 12:22-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: www.linknacional.com\n"
@@ -24,53 +24,137 @@ msgstr ""
 "X-Generator: Poedit 3.4.2\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/LknwpFilebrowserAdmin.php:68 includes/LknwpFilebrowserAdmin.php:68
+#: admin/LknwpFilebrowserAdmin.php:76
 msgid "Copied!"
 msgstr "Copiado!"
 
-#: admin/LknwpFilebrowserAdmin.php:77 admin/LknwpFilebrowserAdmin.php:78
-#: includes/LknwpFilebrowserAdmin.php:88 includes/LknwpFilebrowserAdmin.php:89
+#: admin/LknwpFilebrowserAdmin.php:77 public/LknwpFilebrowserPublic.php:86
+#: public/LknwpFilebrowserPublic.php:165
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: admin/LknwpFilebrowserAdmin.php:78
+msgid "Uploading files..."
+msgstr "Carregando arquivos..."
+
+#: admin/LknwpFilebrowserAdmin.php:79 public/LknwpFilebrowserPublic.php:88
+msgid "Error loading contents"
+msgstr "Erro ao carregar conteúdo"
+
+#: admin/LknwpFilebrowserAdmin.php:80 public/LknwpFilebrowserPublic.php:91
+msgid "This folder is empty"
+msgstr "Esta pasta está vazia"
+
+#: admin/LknwpFilebrowserAdmin.php:81 public/LknwpFilebrowserPublic.php:95
+msgid "Folder"
+msgstr "Pasta"
+
+#: admin/LknwpFilebrowserAdmin.php:82
+msgid "Saved"
+msgstr "Salvo"
+
+#: admin/LknwpFilebrowserAdmin.php:83
+msgid "Name cannot be empty"
+msgstr "O nome não pode estar vazio"
+
+#: admin/LknwpFilebrowserAdmin.php:84
+msgid "Error updating name"
+msgstr "Erro ao atualizar o nome"
+
+#: admin/LknwpFilebrowserAdmin.php:85
+msgid "Unknown error"
+msgstr "Erro desconhecido"
+
+#: admin/LknwpFilebrowserAdmin.php:86
+msgid "Error creating folder"
+msgstr "Falha ao criar pasta"
+
+#: admin/LknwpFilebrowserAdmin.php:87
+msgid "Error uploading files"
+msgstr "Falha ao enviar arquivos"
+
+#: admin/LknwpFilebrowserAdmin.php:88 public/LknwpFilebrowserPublic.php:100
+msgid "Hide Subfolders"
+msgstr "Esconder Subpastas"
+
+#: admin/LknwpFilebrowserAdmin.php:89 public/LknwpFilebrowserPublic.php:101
+msgid "Show Subfolders"
+msgstr "Mostrar Subpastas"
+
+#: admin/LknwpFilebrowserAdmin.php:90
+msgid "Expand/Collapse"
+msgstr "Expandir/Recolher"
+
+#: admin/LknwpFilebrowserAdmin.php:91
+msgid "Collapse"
+msgstr "Recolher"
+
+#: admin/LknwpFilebrowserAdmin.php:92
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: admin/LknwpFilebrowserAdmin.php:93 admin/LknwpFilebrowserAdmin.php:193
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: admin/LknwpFilebrowserAdmin.php:94
+msgid "Edit name"
+msgstr "Editar nome"
+
+#: admin/LknwpFilebrowserAdmin.php:95
+msgid "Delete folder"
+msgstr "Excluir pasta"
+
+#: admin/LknwpFilebrowserAdmin.php:96
+msgid "Delete file"
+msgstr "Excluir arquivo"
+
+#: admin/LknwpFilebrowserAdmin.php:97 public/LknwpFilebrowserPublic.php:102
+msgid "Open file"
+msgstr "Abrir arquivo"
+
+#: admin/LknwpFilebrowserAdmin.php:106 admin/LknwpFilebrowserAdmin.php:107
 msgid "File Browser"
 msgstr "Navegador de Arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:93 includes/LknwpFilebrowserAdmin.php:104
+#: admin/LknwpFilebrowserAdmin.php:122
 msgid "File Browser Manager"
 msgstr "Gerenciador de Arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:98 includes/LknwpFilebrowserAdmin.php:109
+#: admin/LknwpFilebrowserAdmin.php:127
 msgid "How to Use"
 msgstr "Como Usar"
 
-#: admin/LknwpFilebrowserAdmin.php:101
+#: admin/LknwpFilebrowserAdmin.php:130
 msgid "To display the file browser on your website, follow these simple steps:"
 msgstr ""
 "Para exibir o navegador de arquivos no seu site, siga estes passos simples:"
 
-#: admin/LknwpFilebrowserAdmin.php:103
+#: admin/LknwpFilebrowserAdmin.php:132
 msgid "Copy the shortcode below"
 msgstr "Copie o shortcode abaixo"
 
-#: admin/LknwpFilebrowserAdmin.php:104
+#: admin/LknwpFilebrowserAdmin.php:133
 msgid "Go to the page or post where you want to display the file browser"
 msgstr "Vá para a página ou post onde deseja exibir o navegador de arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:105
+#: admin/LknwpFilebrowserAdmin.php:134
 msgid "Add a shortcode component/element in your editor"
 msgstr "Adicione um componente/elemento de shortcode no seu editor"
 
-#: admin/LknwpFilebrowserAdmin.php:106
+#: admin/LknwpFilebrowserAdmin.php:135
 msgid "Paste the shortcode into the component"
 msgstr "Cole o shortcode no componente"
 
-#: admin/LknwpFilebrowserAdmin.php:107
+#: admin/LknwpFilebrowserAdmin.php:136
 msgid "Save and publish your page"
 msgstr "Salve e publique sua página"
 
-#: admin/LknwpFilebrowserAdmin.php:112 includes/LknwpFilebrowserAdmin.php:116
+#: admin/LknwpFilebrowserAdmin.php:141
 msgid "Copy Shortcode"
 msgstr "Copiar Shortcode"
 
-#: admin/LknwpFilebrowserAdmin.php:116
+#: admin/LknwpFilebrowserAdmin.php:145
 msgid ""
 "The file browser will display all folders and files you create here. Users "
 "can navigate through folders, search for files, and download them directly "
@@ -80,271 +164,241 @@ msgstr ""
 "aqui. Os usuários podem navegar pelas pastas, pesquisar arquivos e baixá-los "
 "diretamente do frontend."
 
-#: admin/LknwpFilebrowserAdmin.php:124 includes/LknwpFilebrowserAdmin.php:125
+#: admin/LknwpFilebrowserAdmin.php:153
 msgid "Create Folder"
 msgstr "Criar Pasta"
 
-#: admin/LknwpFilebrowserAdmin.php:127 includes/LknwpFilebrowserAdmin.php:128
+#: admin/LknwpFilebrowserAdmin.php:156
 msgid "Upload Files"
 msgstr "Enviar Arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:133 includes/LknwpFilebrowserAdmin.php:134
-#: includes/LknwpFilebrowserPublic.php:128
-#: includes/LknwpFilebrowserPublic.php:248
-#: includes/LknwpFilebrowserPublic.php:281
-#: public/LknwpFilebrowserPublic.php:127 public/LknwpFilebrowserPublic.php:278
-#: public/LknwpFilebrowserPublic.php:337
+#: admin/LknwpFilebrowserAdmin.php:162 public/LknwpFilebrowserPublic.php:150
+#: public/LknwpFilebrowserPublic.php:313 public/LknwpFilebrowserPublic.php:375
 msgid "Home"
 msgstr "Início"
 
-#: admin/LknwpFilebrowserAdmin.php:138 includes/LknwpFilebrowserAdmin.php:139
-#: public/LknwpFilebrowserPublic.php:117
+#: admin/LknwpFilebrowserAdmin.php:167 public/LknwpFilebrowserPublic.php:140
 msgid "Folders"
 msgstr "Pastas"
 
-#: admin/LknwpFilebrowserAdmin.php:157 includes/LknwpFilebrowserAdmin.php:158
+#: admin/LknwpFilebrowserAdmin.php:186
 msgid "Create New Folder"
 msgstr "Criar Nova Pasta"
 
-#: admin/LknwpFilebrowserAdmin.php:159 includes/LknwpFilebrowserAdmin.php:160
+#: admin/LknwpFilebrowserAdmin.php:188
 msgid "Folder Name:"
 msgstr "Nome da Pasta:"
 
-#: admin/LknwpFilebrowserAdmin.php:163 includes/LknwpFilebrowserAdmin.php:164
+#: admin/LknwpFilebrowserAdmin.php:192
 msgid "Create"
 msgstr "Criar"
 
-#: admin/LknwpFilebrowserAdmin.php:164 includes/LknwpFilebrowserAdmin.php:165
-msgid "Cancel"
-msgstr "Cancelar"
+#: admin/LknwpFilebrowserAdmin.php:207 public/LknwpFilebrowserPublic.php:56
+msgid "Invalid request method."
+msgstr "Método de requisição inválido."
 
-#: admin/LknwpFilebrowserAdmin.php:186 admin/LknwpFilebrowserAdmin.php:229
-#: admin/LknwpFilebrowserAdmin.php:304 admin/LknwpFilebrowserAdmin.php:326
-#: admin/LknwpFilebrowserAdmin.php:470 admin/LknwpFilebrowserAdmin.php:524
-#: includes/LknwpFilebrowserAdmin.php:187
-#: includes/LknwpFilebrowserAdmin.php:230
-#: includes/LknwpFilebrowserAdmin.php:305
-#: includes/LknwpFilebrowserAdmin.php:327
-#: includes/LknwpFilebrowserAdmin.php:471
-#: includes/LknwpFilebrowserAdmin.php:525
+#: admin/LknwpFilebrowserAdmin.php:213 public/LknwpFilebrowserPublic.php:62
+msgid "Action name required"
+msgstr "Nome da ação é obrigatório"
+
+#: admin/LknwpFilebrowserAdmin.php:226 admin/LknwpFilebrowserAdmin.php:268
+#: admin/LknwpFilebrowserAdmin.php:344 admin/LknwpFilebrowserAdmin.php:364
+#: admin/LknwpFilebrowserAdmin.php:509 admin/LknwpFilebrowserAdmin.php:564
 msgid "Insufficient permissions"
 msgstr "Permissões insuficientes"
 
-#: admin/LknwpFilebrowserAdmin.php:193 includes/LknwpFilebrowserAdmin.php:194
+#: admin/LknwpFilebrowserAdmin.php:233
 msgid "Folder name is required"
 msgstr "Nome da pasta é obrigatório"
 
-#: admin/LknwpFilebrowserAdmin.php:213 includes/LknwpFilebrowserAdmin.php:214
+#: admin/LknwpFilebrowserAdmin.php:252
 msgid "Failed to create folder"
 msgstr "Falha ao criar pasta"
 
-#: admin/LknwpFilebrowserAdmin.php:217 includes/LknwpFilebrowserAdmin.php:218
+#: admin/LknwpFilebrowserAdmin.php:256
 msgid "Folder created successfully"
 msgstr "Pasta criada com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:235 includes/LknwpFilebrowserAdmin.php:236
+#: admin/LknwpFilebrowserAdmin.php:274
 msgid "No files uploaded"
 msgstr "Nenhum arquivo enviado"
 
-#: admin/LknwpFilebrowserAdmin.php:288 includes/LknwpFilebrowserAdmin.php:289
+#: admin/LknwpFilebrowserAdmin.php:328
 msgid "Failed to upload files"
 msgstr "Falha ao enviar arquivos"
 
-#: admin/LknwpFilebrowserAdmin.php:292 includes/LknwpFilebrowserAdmin.php:293
+#: admin/LknwpFilebrowserAdmin.php:332
 msgid "Files uploaded successfully"
 msgstr "Arquivos enviados com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:316 includes/LknwpFilebrowserAdmin.php:317
+#: admin/LknwpFilebrowserAdmin.php:354
 msgid "Folder deleted successfully"
 msgstr "Pasta excluída com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:347 includes/LknwpFilebrowserAdmin.php:348
+#: admin/LknwpFilebrowserAdmin.php:385
 msgid "File deleted successfully"
 msgstr "Arquivo excluído com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:477 includes/LknwpFilebrowserAdmin.php:478
-msgid "Nome da pasta não pode estar vazio"
+#: admin/LknwpFilebrowserAdmin.php:516
+msgid "Folder name cannot be empty"
 msgstr "Nome da pasta não pode estar vazio"
 
-#: admin/LknwpFilebrowserAdmin.php:486 includes/LknwpFilebrowserAdmin.php:487
-msgid "Pasta não encontrada"
+#: admin/LknwpFilebrowserAdmin.php:525
+msgid "Folder not found"
 msgstr "Pasta não encontrada"
 
-#: admin/LknwpFilebrowserAdmin.php:498 includes/LknwpFilebrowserAdmin.php:499
-msgid "Já existe uma pasta com este nome"
+#: admin/LknwpFilebrowserAdmin.php:538
+msgid "A folder with this name already exists"
 msgstr "Já existe uma pasta com este nome"
 
-#: admin/LknwpFilebrowserAdmin.php:511 includes/LknwpFilebrowserAdmin.php:512
-msgid "Nome da pasta atualizado com sucesso"
+#: admin/LknwpFilebrowserAdmin.php:551
+msgid "Folder name updated successfully"
 msgstr "Nome da pasta atualizado com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:513 includes/LknwpFilebrowserAdmin.php:514
-msgid "Erro ao atualizar nome da pasta"
+#: admin/LknwpFilebrowserAdmin.php:553
+msgid "Error updating folder name"
 msgstr "Erro ao atualizar nome da pasta"
 
-#: admin/LknwpFilebrowserAdmin.php:531 includes/LknwpFilebrowserAdmin.php:532
-msgid "Nome do arquivo não pode estar vazio"
+#: admin/LknwpFilebrowserAdmin.php:571
+msgid "File name cannot be empty"
 msgstr "Nome do arquivo não pode estar vazio"
 
-#: admin/LknwpFilebrowserAdmin.php:540 includes/LknwpFilebrowserAdmin.php:541
-msgid "Arquivo não encontrado"
+#: admin/LknwpFilebrowserAdmin.php:580
+msgid "File not found"
 msgstr "Arquivo não encontrado"
 
-#: admin/LknwpFilebrowserAdmin.php:552 includes/LknwpFilebrowserAdmin.php:553
-msgid "Já existe um arquivo com este nome"
+#: admin/LknwpFilebrowserAdmin.php:593
+msgid "A file with this name already exists"
 msgstr "Já existe um arquivo com este nome"
 
-#: admin/LknwpFilebrowserAdmin.php:561 includes/LknwpFilebrowserAdmin.php:562
-msgid "Não é possível alterar a extensão do arquivo"
+#: admin/LknwpFilebrowserAdmin.php:602
+msgid "Cannot change the file extension"
 msgstr "Não é possível alterar a extensão do arquivo"
 
-#: admin/LknwpFilebrowserAdmin.php:575 includes/LknwpFilebrowserAdmin.php:576
-msgid "Nome do arquivo atualizado com sucesso"
+#: admin/LknwpFilebrowserAdmin.php:616
+msgid "File name updated successfully"
 msgstr "Nome do arquivo atualizado com sucesso"
 
-#: admin/LknwpFilebrowserAdmin.php:577 includes/LknwpFilebrowserAdmin.php:578
-msgid "Erro ao atualizar nome do arquivo"
+#: admin/LknwpFilebrowserAdmin.php:618
+msgid "Error updating file name"
 msgstr "Erro ao atualizar nome do arquivo"
 
-#: includes/LknwpFilebrowserAdmin.php:69 includes/LknwpFilebrowserPublic.php:68
-#: includes/LknwpFilebrowserPublic.php:143
-#: public/LknwpFilebrowserPublic.php:142
-msgid "Loading..."
-msgstr "Carregando..."
-
-#: includes/LknwpFilebrowserAdmin.php:70
-msgid "Uploading files..."
-msgstr "Carregando arquivos..."
-
-#: includes/LknwpFilebrowserAdmin.php:71 includes/LknwpFilebrowserPublic.php:70
-msgid "Error loading contents"
-msgstr "Erro ao carregar conteúdo"
-
-#: includes/LknwpFilebrowserAdmin.php:72 includes/LknwpFilebrowserPublic.php:73
-msgid "This folder is empty"
-msgstr "Esta pasta está vazia"
-
-#: includes/LknwpFilebrowserAdmin.php:73 includes/LknwpFilebrowserPublic.php:77
-msgid "Folder"
-msgstr "Pasta"
-
-#: includes/LknwpFilebrowserAdmin.php:74
-msgid "Saved"
-msgstr "Salvo"
-
-#: includes/LknwpFilebrowserAdmin.php:75
-msgid "Name cannot be empty"
-msgstr "O nome não pode estar vazio"
-
-#: includes/LknwpFilebrowserAdmin.php:76
-msgid "Error updating name"
-msgstr "Erro ao atualizar o nome"
-
-#: includes/LknwpFilebrowserAdmin.php:77
-msgid "Unknown error"
-msgstr "Erro desconhecido"
-
-#: includes/LknwpFilebrowserAdmin.php:78
-msgid "Error creating folder"
-msgstr "Falha ao criar pasta"
-
-#: includes/LknwpFilebrowserAdmin.php:79
-msgid "Error uploading files"
-msgstr "Falha ao enviar arquivos"
-
-#: includes/LknwpFilebrowserAdmin.php:112
-msgid ""
-"Use the shortcode below to display the file browser on any page or post:"
-msgstr ""
-"Use o shortcode abaixo para exibir o navegador de arquivos em qualquer "
-"página ou post:"
-
-#: includes/LknwpFilebrowserPublic.php:69
+#: public/LknwpFilebrowserPublic.php:87
 msgid "Searching..."
 msgstr "Pesquisando..."
 
-#: includes/LknwpFilebrowserPublic.php:71
+#: public/LknwpFilebrowserPublic.php:89
 msgid "Error performing search"
 msgstr "Erro ao executar a pesquisa"
 
-#: includes/LknwpFilebrowserPublic.php:72
+#: public/LknwpFilebrowserPublic.php:90
 msgid "Error loading folders"
 msgstr "Erro ao carregar pastas"
 
-#: includes/LknwpFilebrowserPublic.php:74
+#: public/LknwpFilebrowserPublic.php:92
 msgid "No files or folders found in this location."
 msgstr "Nenhum arquivo ou pasta encontrado neste local."
 
-#: includes/LknwpFilebrowserPublic.php:75
+#: public/LknwpFilebrowserPublic.php:93
 msgid "No results found"
 msgstr "Nenhum resultado encontrado"
 
-#: includes/LknwpFilebrowserPublic.php:76
+#: public/LknwpFilebrowserPublic.php:94
 msgid "Try adjusting your search terms."
 msgstr "Tente ajustar os termos de pesquisa."
 
-#: includes/LknwpFilebrowserPublic.php:78
+#: public/LknwpFilebrowserPublic.php:96
 msgid "DOWNLOAD"
 msgstr "BAIXAR"
 
-#: includes/LknwpFilebrowserPublic.php:79
+#: public/LknwpFilebrowserPublic.php:97
 msgid "Search results for"
 msgstr "Resultados da pesquisa para"
 
-#: includes/LknwpFilebrowserPublic.php:80
+#: public/LknwpFilebrowserPublic.php:98
 msgid "Found"
 msgstr "Encontrado"
 
-#: includes/LknwpFilebrowserPublic.php:81
+#: public/LknwpFilebrowserPublic.php:99
 msgid "items"
 msgstr "itens"
 
-#: includes/LknwpFilebrowserPublic.php:115
-#: public/LknwpFilebrowserPublic.php:103
+#: public/LknwpFilebrowserPublic.php:126
 msgid "Search files and folders..."
 msgstr "Pesquisar arquivos e pastas..."
 
-#: includes/LknwpFilebrowserPublic.php:175
-#: public/LknwpFilebrowserPublic.php:192
+#: public/LknwpFilebrowserPublic.php:142
+msgid "Loading folders..."
+msgstr "Carregando pastas..."
+
+#: public/LknwpFilebrowserPublic.php:225
 msgid "Search term is required"
 msgstr "Termo de busca é obrigatório"
 
-#: includes/plugin-updater/Puc/Plugin/Ui.php:54
-msgid "View details"
-msgstr "Ver detalhes"
+#~ msgid "Nome da pasta não pode estar vazio"
+#~ msgstr "Nome da pasta não pode estar vazio"
 
-#: includes/plugin-updater/Puc/Plugin/Ui.php:77
+#~ msgid "Pasta não encontrada"
+#~ msgstr "Pasta não encontrada"
+
+#~ msgid "Já existe uma pasta com este nome"
+#~ msgstr "Já existe uma pasta com este nome"
+
+#~ msgid "Nome da pasta atualizado com sucesso"
+#~ msgstr "Nome da pasta atualizado com sucesso"
+
+#~ msgid "Erro ao atualizar nome da pasta"
+#~ msgstr "Erro ao atualizar nome da pasta"
+
+#~ msgid "Nome do arquivo não pode estar vazio"
+#~ msgstr "Nome do arquivo não pode estar vazio"
+
+#~ msgid "Arquivo não encontrado"
+#~ msgstr "Arquivo não encontrado"
+
+#~ msgid "Já existe um arquivo com este nome"
+#~ msgstr "Já existe um arquivo com este nome"
+
+#~ msgid "Não é possível alterar a extensão do arquivo"
+#~ msgstr "Não é possível alterar a extensão do arquivo"
+
+#~ msgid "Nome do arquivo atualizado com sucesso"
+#~ msgstr "Nome do arquivo atualizado com sucesso"
+
+#~ msgid "Erro ao atualizar nome do arquivo"
+#~ msgstr "Erro ao atualizar nome do arquivo"
+
+#~ msgid ""
+#~ "Use the shortcode below to display the file browser on any page or post:"
+#~ msgstr ""
+#~ "Use o shortcode abaixo para exibir o navegador de arquivos em qualquer "
+#~ "página ou post:"
+
+#~ msgid "View details"
+#~ msgstr "Ver detalhes"
+
 #, php-format
-msgid "More information about %s"
-msgstr "Mais informações sobre %s"
+#~ msgid "More information about %s"
+#~ msgstr "Mais informações sobre %s"
 
-#: includes/plugin-updater/Puc/Plugin/Ui.php:128
-msgid "Check for updates"
-msgstr "Verificar atualizações"
+#~ msgid "Check for updates"
+#~ msgstr "Verificar atualizações"
 
-#: includes/plugin-updater/Puc/Plugin/Ui.php:214
 #, php-format
-msgctxt "the plugin title"
-msgid "The %s plugin is up to date."
-msgstr "O plugin %s está atualizado."
+#~ msgctxt "the plugin title"
+#~ msgid "The %s plugin is up to date."
+#~ msgstr "O plugin %s está atualizado."
 
-#: includes/plugin-updater/Puc/Plugin/Ui.php:217
 #, php-format
-msgctxt "the plugin title"
-msgid "A new version of the %s plugin is available."
-msgstr "Uma nova versão do plugin %s está disponível."
+#~ msgctxt "the plugin title"
+#~ msgid "A new version of the %s plugin is available."
+#~ msgstr "Uma nova versão do plugin %s está disponível."
 
-#: includes/plugin-updater/Puc/Plugin/Ui.php:220
 #, php-format
-msgctxt "the plugin title"
-msgid "Could not determine if updates are available for %s."
-msgstr "Não foi possível determinar se há atualizações disponíveis para %s."
+#~ msgctxt "the plugin title"
+#~ msgid "Could not determine if updates are available for %s."
+#~ msgstr "Não foi possível determinar se há atualizações disponíveis para %s."
 
-#: includes/plugin-updater/Puc/Plugin/Ui.php:226
 #, php-format
-msgid "Unknown update checker status \"%s\""
-msgstr "Status do verificador de atualizações desconhecido \"%s\""
-
-#: public/LknwpFilebrowserPublic.php:119
-msgid "Loading folders..."
-msgstr "Carregando pastas..."
+#~ msgid "Unknown update checker status \"%s\""
+#~ msgstr "Status do verificador de atualizações desconhecido \"%s\""

@@ -1,5 +1,8 @@
 <?php
 
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+// Custom tables — no WP core API exists. $wpdb is the only correct approach.
+
 namespace Lkn\WPFilebrowser\Public;
 
 /**
@@ -46,22 +49,38 @@ class LknwpFilebrowserPublic {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
+	 * Create a nonce
 	 */
-	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'public/css/lknwp-filebrowser-public.css', array(), LKNWP_FILEBROWSER_VERSION, 'all' );
-		wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0' );
+	public function lknwp_get_public_nonce() {
+		if ( ! wp_doing_ajax() ) {
+			wp_die( esc_html__( 'Invalid request method.', 'lknwp-filebrowser' ) );
+		}
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- This endpoint generates the nonce that subsequent AJAX calls verify.
+		$action_name = isset( $_POST['action_name'] ) ? sanitize_text_field( wp_unslash( $_POST['action_name'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		if ( ! $action_name ) {
+			wp_send_json_error( esc_html__( 'Action name required', 'lknwp-filebrowser' ) );
+		}
+		$nonce = wp_create_nonce( $action_name );
+		wp_send_json_success( array( 'nonce' => $nonce ) );
 	}
 
 	/**
-	 * Register the JavaScript for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
+	 * Register shortcode
 	 */
-	public function enqueue_scripts() {
+	public function register_shortcode() {
+		add_shortcode( 'lknwp_filebrowser', array( $this, 'render_filebrowser_shortcode' ) );
+	}
+
+	/**
+	 * Render filebrowser shortcode
+	 */
+	public function render_filebrowser_shortcode( $atts ) {
+		// Enqueue assets only when shortcode is rendered (post context is available).
+		wp_enqueue_script( 'lknwp-filebrowser-fontawesome', LKNWP_FILEBROWSER_PLUGIN_URL . 'assets/js/compiled/fontawesome.compiled.js', array(), LKNWP_FILEBROWSER_VERSION, false );
+		wp_enqueue_style( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'public/css/lknwp-filebrowser-public.css', array(), LKNWP_FILEBROWSER_VERSION, 'all' );
 		wp_enqueue_script( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'public/js/lknwp-filebrowser-public.js', array( 'jquery' ), LKNWP_FILEBROWSER_VERSION, false );
+
 		wp_localize_script( $this->plugin_name, 'lknwp_public_ajax', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'loading_text' => __( 'Loading...', 'lknwp-filebrowser' ),
@@ -77,33 +96,12 @@ class LknwpFilebrowserPublic {
 			'download_text' => __( 'DOWNLOAD', 'lknwp-filebrowser' ),
 			'search_results_text' => __( 'Search results for', 'lknwp-filebrowser' ),
 			'found_items_text' => __( 'Found', 'lknwp-filebrowser' ),
-			'items_text' => __( 'items', 'lknwp-filebrowser' )
+			'items_text' => __( 'items', 'lknwp-filebrowser' ),
+			'hide_subfolders' => __( 'Hide Subfolders', 'lknwp-filebrowser' ),
+			'show_subfolders' => __( 'Show Subfolders', 'lknwp-filebrowser' ),
+			'open_file' => __( 'Open file', 'lknwp-filebrowser' ),
 		));
-	}
 
-	/**
-	 * Create a nonce
-	 */
-	public function lknwp_get_public_nonce() {
-		$action_name = isset($_POST['action_name']) ? sanitize_text_field(wp_unslash($_POST['action_name'])) : '';
-		if (!$action_name) {
-			wp_send_json_error('Action name required');
-		}
-		$nonce = wp_create_nonce($action_name);
-		wp_send_json_success(array('nonce' => $nonce));
-	}
-
-	/**
-	 * Register shortcode
-	 */
-	public function register_shortcode() {
-		add_shortcode( 'lknwp_filebrowser', array( $this, 'render_filebrowser_shortcode' ) );
-	}
-
-	/**
-	 * Render filebrowser shortcode
-	 */
-	public function render_filebrowser_shortcode( $atts ) {
 		$atts = shortcode_atts( array(
 			'folder_id' => 0,
 			'show_search' => 'true',
@@ -125,7 +123,7 @@ class LknwpFilebrowserPublic {
 			<?php if ( $show_search ): ?>
 			<div class="lknwp-search-container">
 				<div class="lknwp-search-box">
-					<input type="text" id="lknwp-search-input" placeholder="<?php \_e( 'Search files and folders...', 'lknwp-filebrowser' ); ?>">
+					<input type="text" id="lknwp-search-input" placeholder="<?php esc_attr_e( 'Search files and folders...', 'lknwp-filebrowser' ); ?>">
 					<button type="button" id="lknwp-search-btn">
 						<i class="fas fa-search"></i>
 					</button>
@@ -139,9 +137,9 @@ class LknwpFilebrowserPublic {
 			<div class="lknwp-file-manager-public">
 				<?php if ( $show_folder_tree ): ?>
 				<div class="lknwp-sidebar-public">
-					<h4><?php \_e( 'Folders', 'lknwp-filebrowser' ); ?></h4>
+					<h4><?php esc_html_e( 'Folders', 'lknwp-filebrowser' ); ?></h4>
 					<div id="lknwp-folder-tree-public">
-						<div class="loading"><i class="fas fa-spinner"></i> <?php \_e( 'Loading folders...', 'lknwp-filebrowser' ); ?></div>
+						<div class="loading"><i class="fas fa-spinner"></i> <?php esc_html_e( 'Loading folders...', 'lknwp-filebrowser' ); ?></div>
 					</div>
 				</div>
 				<?php endif; ?>
@@ -149,7 +147,7 @@ class LknwpFilebrowserPublic {
 				<div class="lknwp-content-public <?php echo !$show_folder_tree ? 'full-width' : ''; ?>">
 					<?php if ( $show_breadcrumb ): ?>
 					<div class="lknwp-breadcrumb-public">
-						<span id="lknwp-current-path"><?php \_e( 'Home', 'lknwp-filebrowser' ); ?></span>
+						<span id="lknwp-current-path"><?php esc_html_e( 'Home', 'lknwp-filebrowser' ); ?></span>
 					</div>
 					<?php endif; ?>
 
@@ -164,7 +162,7 @@ class LknwpFilebrowserPublic {
 
 					<div class="lknwp-filebrowser-content <?php echo esc_attr( $layout ); ?>">
 						<div id="lknwp-loading" class="loading">
-							<i class="fas fa-spinner"></i> <?php \_e( 'Loading...', 'lknwp-filebrowser' ); ?>
+							<i class="fas fa-spinner"></i> <?php esc_html_e( 'Loading...', 'lknwp-filebrowser' ); ?>
 						</div>
 					</div>
 				</div>
@@ -182,18 +180,18 @@ class LknwpFilebrowserPublic {
 		check_ajax_referer( 'lknwp_filebrowser_public_nonce', 'nonce' );
 		
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 		
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get all folders
 		$folders = $wpdb->get_results(
-			"SELECT * FROM $folders_table ORDER BY parent_id ASC, name ASC"
+			"SELECT * FROM {$this->table_folders()} ORDER BY parent_id ASC, name ASC"
 		);
 		
 		// Get all files
 		$files = $wpdb->get_results(
-			"SELECT * FROM $files_table ORDER BY folder_id ASC, original_name ASC"
+			"SELECT * FROM {$this->table_files()} ORDER BY folder_id ASC, original_name ASC"
 		);
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
 		wp_send_json_success( array(
 			'folders' => $folders,
@@ -207,7 +205,7 @@ class LknwpFilebrowserPublic {
 	public function get_folder_contents_frontend() {
 		check_ajax_referer( 'lknwp_filebrowser_public_nonce', 'nonce' );
 		
-		$folder_id = intval( $_POST['folder_id'] );
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		$contents = $this->get_folder_contents( $folder_id );
 		
@@ -220,41 +218,43 @@ class LknwpFilebrowserPublic {
 	public function search_files_frontend() {
 		check_ajax_referer( 'lknwp_filebrowser_public_nonce', 'nonce' );
 		
-		$search_term = sanitize_text_field( $_POST['search_term'] );
-		$folder_id = intval( $_POST['folder_id'] );
+		$search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		if ( empty( $search_term ) ) {
 			wp_send_json_error( __( 'Search term is required', 'lknwp-filebrowser' ) );
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
-
+		
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Search folders with parent info for path building
 		$folders = $wpdb->get_results( $wpdb->prepare(
 			"SELECT f.*, p.name as parent_name, p.path as parent_path 
-			 FROM $folders_table f 
-			 LEFT JOIN $folders_table p ON f.parent_id = p.id 
+			 FROM {$this->table_folders()} f 
+			 LEFT JOIN {$this->table_folders()} p ON f.parent_id = p.id 
 			 WHERE f.name LIKE %s 
 			 ORDER BY f.name ASC",
 			'%' . $wpdb->esc_like( $search_term ) . '%'
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		// Enhance folders with full path information
 		foreach ($folders as $folder) {
 			$folder->full_path = $this->build_folder_path( $folder->id );
 		}
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Search files with folder info
 		$files = $wpdb->get_results( $wpdb->prepare(
 			"SELECT f.*, folder.name as folder_name, folder.path as folder_path 
-			 FROM $files_table f 
-			 LEFT JOIN $folders_table folder ON f.folder_id = folder.id 
+			 FROM {$this->table_files()} f 
+			 LEFT JOIN {$this->table_folders()} folder ON f.folder_id = folder.id 
 			 WHERE f.original_name LIKE %s 
 			 ORDER BY f.original_name ASC",
 			'%' . $wpdb->esc_like( $search_term ) . '%'
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		$results = array(
 			'folders' => $folders,
@@ -270,18 +270,17 @@ class LknwpFilebrowserPublic {
 	 */
 	private function get_folder_contents( $folder_id ) {
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get subfolders
 		$folders = $wpdb->get_results( $wpdb->prepare(
-			"SELECT * FROM $folders_table WHERE parent_id = %d ORDER BY name ASC",
+			"SELECT * FROM {$this->table_folders()} WHERE parent_id = %d ORDER BY name ASC",
 			$folder_id
 		));
 
 		// Get files
 		$files = $wpdb->get_results( $wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
 
@@ -289,10 +288,11 @@ class LknwpFilebrowserPublic {
 		$current_folder = null;
 		if ( $folder_id > 0 ) {
 			$current_folder = $wpdb->get_row( $wpdb->prepare(
-				"SELECT * FROM $folders_table WHERE id = %d",
+				"SELECT * FROM {$this->table_folders()} WHERE id = %d",
 				$folder_id
 			));
 		}
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		return array(
 			'folders' => $folders,
@@ -317,16 +317,16 @@ class LknwpFilebrowserPublic {
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		
 		$breadcrumb = array();
 		$current_id = $folder_id;
 		$path_parts = array();
 
 		// First, collect all folder names for the full path
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		while ( $current_id > 0 ) {
 			$folder = $wpdb->get_row( $wpdb->prepare(
-				"SELECT * FROM $folders_table WHERE id = %d",
+				"SELECT * FROM {$this->table_folders()} WHERE id = %d",
 				$current_id
 			));
 
@@ -337,14 +337,16 @@ class LknwpFilebrowserPublic {
 				break;
 			}
 		}
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		// Reset and build breadcrumb with consistent paths
 		$current_id = $folder_id;
 		$partial_path = '';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		while ( $current_id > 0 ) {
 			$folder = $wpdb->get_row( $wpdb->prepare(
-				"SELECT * FROM $folders_table WHERE id = %d",
+				"SELECT * FROM {$this->table_folders()} WHERE id = %d",
 				$current_id
 			));
 
@@ -365,6 +367,7 @@ class LknwpFilebrowserPublic {
 				break;
 			}
 		}
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		// Add root
 		array_unshift( $breadcrumb, array(
@@ -385,14 +388,14 @@ class LknwpFilebrowserPublic {
 		}
 
 		global $wpdb;
-		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		
 		$path_parts = array();
 		$current_id = $folder_id;
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		while ( $current_id != 0 ) {
 			$folder = $wpdb->get_row( $wpdb->prepare(
-				"SELECT id, name, parent_id FROM $folders_table WHERE id = %d",
+				"SELECT id, name, parent_id FROM {$this->table_folders()} WHERE id = %d",
 				$current_id
 			));
 
@@ -403,6 +406,7 @@ class LknwpFilebrowserPublic {
 				break;
 			}
 		}
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		return 'Home' . ( !empty( $path_parts ) ? ' / ' . implode( ' / ', $path_parts ) : '' );
 	}
@@ -413,17 +417,40 @@ class LknwpFilebrowserPublic {
 	public function get_folder_files_frontend() {
 		check_ajax_referer( 'lknwp_filebrowser_public_nonce', 'nonce' );
 		
-		$folder_id = intval( $_POST['folder_id'] );
+		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		
 		global $wpdb;
-		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 		
 		// Get files from folder
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		$files = $wpdb->get_results( $wpdb->prepare(
-			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
+			"SELECT * FROM {$this->table_files()} WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
 		wp_send_json_success( $files );
+	}
+
+	/**
+	 * Get the folders table name.
+	 *
+	 * @since   1.0.0
+	 * @return  string
+	 */
+	private function table_folders() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_folders';
+	}
+
+	/**
+	 * Get the files table name.
+	 *
+	 * @since   1.0.0
+	 * @return  string
+	 */
+	private function table_files() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_files';
 	}
 }
