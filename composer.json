@@ -1,5 +1,5 @@
 {
-    "name": "lkn/wp-filebrowser",
+    "name": "linknacional/file-browser",
     "description": "Link Nacional File Browser - WordPress Plugin",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+",
@@ -14,9 +14,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Lkn\\WPFilebrowser\\Includes\\": "includes/",
-            "Lkn\\WPFilebrowser\\Admin\\": "admin/",
-            "Lkn\\WPFilebrowser\\Public\\": "public/"
+            "LinkNacional\\Filebrowser\\Includes\\": "includes/",
+            "LinkNacional\\Filebrowser\\Admin\\": "admin/",
+            "LinkNacional\\Filebrowser\\Public\\": "public/"
         }
     },
     "config": {

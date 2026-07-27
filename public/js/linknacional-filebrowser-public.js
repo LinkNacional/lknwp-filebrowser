@@ -9,8 +9,8 @@
 	$(document).ready(function () {
 
 		// Initialize filebrowser
-		fetchAndSetNonce('lknwp_filebrowser_public_nonce', function () {
-			$('.lknwp-filebrowser-public').each(function () {
+		fetchAndSetNonce('lkn_filebrowser_public_nonce', function () {
+			$('.lkn-filebrowser-public').each(function () {
 				const $container = $(this);
 				const initialFolderId = parseInt($container.data('folder-id')) || 0;
 				const initialLayout = $container.data('layout') || 'grid';
@@ -24,7 +24,7 @@
 
 
 		// Search functionality
-		$('#lknwp-search-input').on('input', function () {
+		$('#lkn-search-input').on('input', function () {
 			const searchTerm = $(this).val().trim();
 
 			clearTimeout(searchTimeout);
@@ -39,20 +39,20 @@
 		});
 
 		// Search button click
-		$('#lknwp-search-btn').on('click', function () {
-			const searchTerm = $('#lknwp-search-input').val().trim();
+		$('#lkn-search-btn').on('click', function () {
+			const searchTerm = $('#lkn-search-input').val().trim();
 			if (searchTerm.length >= 2) {
 				performSearch(searchTerm);
 			}
 		});
 
 		// Clear search button
-		$('#lknwp-clear-search').on('click', function () {
+		$('#lkn-clear-search').on('click', function () {
 			clearSearch();
 		});
 
 		// Enter key search
-		$('#lknwp-search-input').on('keypress', function (e) {
+		$('#lkn-search-input').on('keypress', function (e) {
 			if (e.which === 13) {
 				e.preventDefault();
 				const searchTerm = $(this).val().trim();
@@ -65,8 +65,8 @@
 		// Layout switcher
 		$('.layout-btn').on('click', function () {
 			const layout = $(this).data('layout');
-			const $container = $('.lknwp-filebrowser-public');
-			const $content = $('.lknwp-filebrowser-content');
+			const $container = $('.lkn-filebrowser-public');
+			const $content = $('.lkn-filebrowser-content');
 
 			$('.layout-btn').removeClass('active');
 			$(this).addClass('active');
@@ -93,16 +93,16 @@
 
 			const fileName = $(this).find('.content-item-name').text().trim();
 			const folderId = $(this).data('folder-id'); // Get folder ID from data attribute
-			const $container = $(this).closest('.lknwp-filebrowser-public');
-			const $treeContainer = $container.find('#lknwp-folder-tree-public');
+			const $container = $(this).closest('.lkn-filebrowser-public');
+			const $treeContainer = $container.find('#lkn-folder-tree-public');
 
 			// Navigate to the folder containing the file
 			currentFolderId = folderId;
 
 			// Clear search UI without reloading content
 			if (isSearchMode) {
-				$('#lknwp-search-input').val('');
-				$('#lknwp-clear-search').hide();
+				$('#lkn-search-input').val('');
+				$('#lkn-clear-search').hide();
 				isSearchMode = false;
 			}
 
@@ -157,7 +157,7 @@
 					$subfolders.addClass('show');
 					$subfiles.addClass('show');
 					$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-					$toggleBtn.attr('title', lknwp_public_ajax.hide_subfolders || 'Hide Subfolders');
+					$toggleBtn.attr('title', lkn_public_ajax.hide_subfolders || 'Hide Subfolders');
 				}
 			}, 300);
 		});
@@ -202,9 +202,9 @@
 
 	function fetchAndSetNonce(actionName, onReady) {
 		$.ajax({
-			url: lknwp_public_ajax.ajax_url,
+			url: lkn_public_ajax.ajax_url,
 			type: 'POST',
-			data: { action: 'lknwp_get_public_nonce', action_name: actionName },
+			data: { action: 'lkn_get_public_nonce', action_name: actionName },
 			success: function (response) {
 				if (response.success && response.data.nonce) {
 					nonce = response.data.nonce;
@@ -220,15 +220,15 @@
 	}
 
 	function loadFolderContents(folderId, $container, skipTreeUpdate = false, callback = null) {
-		const $content = $container.find('.lknwp-filebrowser-content');
+		const $content = $container.find('.lkn-filebrowser-content');
 
-		$content.html('<div class="loading"><i class="fas fa-spinner"></i> ' + (lknwp_public_ajax.loading_text || 'Loading...') + '</div>');
+		$content.html('<div class="loading"><i class="fas fa-spinner"></i> ' + (lkn_public_ajax.loading_text || 'Loading...') + '</div>');
 
 		$.ajax({
-			url: lknwp_public_ajax.ajax_url,
+			url: lkn_public_ajax.ajax_url,
 			type: 'POST',
 			data: {
-				action: 'lknwp_frontend_get_contents',
+				action: 'lkn_frontend_get_contents',
 				nonce: nonce,
 				folder_id: folderId
 			},
@@ -245,17 +245,17 @@
 						callback();
 					}
 				} else {
-					$content.html('<div class="error">' + (lknwp_public_ajax.error_loading_text || 'Error loading contents') + '</div>');
+					$content.html('<div class="error">' + (lkn_public_ajax.error_loading_text || 'Error loading contents') + '</div>');
 				}
 			},
 			error: function () {
-				$content.html('<div class="error">' + (lknwp_public_ajax.error_loading_text || 'Error loading contents') + '</div>');
+				$content.html('<div class="error">' + (lkn_public_ajax.error_loading_text || 'Error loading contents') + '</div>');
 			}
 		});
 	}
 
 	function renderFolderContents(data, $container) {
-		const $content = $container.find('.lknwp-filebrowser-content');
+		const $content = $container.find('.lkn-filebrowser-content');
 		const layout = $container.data('layout') || 'grid';
 
 		$content.empty();
@@ -267,8 +267,8 @@
 			$content.html(`
 				<div class="empty-folder">
 					<i class="fas fa-folder-open"></i>
-					<h3>${lknwp_public_ajax.empty_folder_text || 'This folder is empty'}</h3>
-					<p>${lknwp_public_ajax.empty_folder_desc || 'No files or folders found in this location.'}</p>
+					<h3>${lkn_public_ajax.empty_folder_text || 'This folder is empty'}</h3>
+					<p>${lkn_public_ajax.empty_folder_desc || 'No files or folders found in this location.'}</p>
 				</div>
 			`);
 			return;
@@ -292,7 +292,7 @@
 			<div class="content-item folder" data-folder-id="${folder.id}" data-folder-name="${folder.name}">
 				<i class="fas fa-folder"></i>
 				<div class="content-item-name">${folder.name}</div>
-				<div class="content-item-info">${lknwp_public_ajax.folder_text || 'Folder'}</div>
+				<div class="content-item-info">${lkn_public_ajax.folder_text || 'Folder'}</div>
 			</div>
 		`);
 
@@ -307,13 +307,13 @@
 			const $element = $(`
 				<div class="content-item file ${file.file_type}" data-file-id="${file.id}" data-file-url="${file.file_url}" data-file-type="${file.file_type}" data-folder-id="${file.folder_id}">
 					<i class="${fileIcon}"></i>
-					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="${lknwp_public_ajax.open_file || 'Open file'}">
+					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="${lkn_public_ajax.open_file || 'Open file'}">
 						<i class="fas fa-external-link-alt"></i>
 					</button>
 					<div class="content-item-name">${file.original_name}</div>
 					<div class="content-item-info">${fileSize}</div>
 					<button class="file-download-btn" data-file-url="${file.file_url}" data-file-name="${file.original_name}">
-						${lknwp_public_ajax.download_text || 'DOWNLOAD'}
+						${lkn_public_ajax.download_text || 'DOWNLOAD'}
 					</button>
 				</div>
 			`);
@@ -323,13 +323,13 @@
 			const $element = $(`
 				<div class="content-item file ${file.file_type}" data-file-id="${file.id}" data-file-url="${file.file_url}" data-file-type="${file.file_type}" data-folder-id="${file.folder_id}">
 					<i class="${fileIcon}"></i>
-					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="${lknwp_public_ajax.open_file || 'Open file'}">
+					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="${lkn_public_ajax.open_file || 'Open file'}">
 						<i class="fas fa-external-link-alt"></i>
 					</button>
 					<div class="content-item-name">${file.original_name}</div>
 					<div class="content-item-info">${fileSize}</div>
 					<button class="file-download-btn" data-file-url="${file.file_url}" data-file-name="${file.original_name}">
-						${lknwp_public_ajax.download_text || 'DOWNLOAD'}
+						${lkn_public_ajax.download_text || 'DOWNLOAD'}
 					</button>
 				</div>
 			`);
@@ -338,24 +338,24 @@
 	}
 
 	function performSearch(searchTerm) {
-		const $container = $('.lknwp-filebrowser-public');
-		const $content = $container.find('.lknwp-filebrowser-content');
-		const $treeContainer = $container.find('#lknwp-folder-tree-public');
+		const $container = $('.lkn-filebrowser-public');
+		const $content = $container.find('.lkn-filebrowser-content');
+		const $treeContainer = $container.find('#lkn-folder-tree-public');
 
 		isSearchMode = true;
-		$('#lknwp-clear-search').show();
+		$('#lkn-clear-search').show();
 
 		// Clear file selections when performing search
 		$treeContainer.find('.file-item-tree').removeClass('selected');
 		$container.find('.content-item.file').removeClass('selected-in-tree');
 
-		$content.html('<div class="loading"><i class="fas fa-spinner"></i> ' + (lknwp_public_ajax.searching_text || 'Searching...') + '</div>');
+		$content.html('<div class="loading"><i class="fas fa-spinner"></i> ' + (lkn_public_ajax.searching_text || 'Searching...') + '</div>');
 
 		$.ajax({
-			url: lknwp_public_ajax.ajax_url,
+			url: lkn_public_ajax.ajax_url,
 			type: 'POST',
 			data: {
-				action: 'lknwp_frontend_search',
+				action: 'lkn_frontend_search',
 				nonce: nonce,
 				search_term: searchTerm,
 				folder_id: currentFolderId
@@ -364,17 +364,17 @@
 				if (response.success) {
 					renderSearchResults(response.data, $container);
 				} else {
-					$content.html('<div class="error">' + (lknwp_public_ajax.error_search_text || 'Error performing search') + '</div>');
+					$content.html('<div class="error">' + (lkn_public_ajax.error_search_text || 'Error performing search') + '</div>');
 				}
 			},
 			error: function () {
-				$content.html('<div class="error">' + (lknwp_public_ajax.error_search_text || 'Error performing search') + '</div>');
+				$content.html('<div class="error">' + (lkn_public_ajax.error_search_text || 'Error performing search') + '</div>');
 			}
 		});
 	}
 
 	function renderSearchResults(data, $container) {
-		const $content = $container.find('.lknwp-filebrowser-content');
+		const $content = $container.find('.lkn-filebrowser-content');
 		const layout = $container.data('layout') || 'grid';
 
 		$content.empty();
@@ -383,7 +383,7 @@
 		const searchHeader = $(`
 			<div class="search-results-header">
 				<i class="fas fa-search"></i>
-				${lknwp_public_ajax.search_results_text || 'Search results for'} "${data.search_term}" - ${lknwp_public_ajax.found_items_text || 'Found'} ${(data.folders.length + data.files.length)} ${lknwp_public_ajax.items_text || 'items'}
+				${lkn_public_ajax.search_results_text || 'Search results for'} "${data.search_term}" - ${lkn_public_ajax.found_items_text || 'Found'} ${(data.folders.length + data.files.length)} ${lkn_public_ajax.items_text || 'items'}
 			</div>
 		`);
 		$content.append(searchHeader);
@@ -395,8 +395,8 @@
 			$content.append(`
 				<div class="empty-folder">
 					<i class="fas fa-search"></i>
-					<h3>${lknwp_public_ajax.no_results_text || 'No results found'}</h3>
-					<p>${lknwp_public_ajax.no_results_desc || 'Try adjusting your search terms.'}</p>
+					<h3>${lkn_public_ajax.no_results_text || 'No results found'}</h3>
+					<p>${lkn_public_ajax.no_results_desc || 'Try adjusting your search terms.'}</p>
 				</div>
 			`);
 			return;
@@ -426,11 +426,11 @@
 	}
 
 	function clearSearch() {
-		const $container = $('.lknwp-filebrowser-public');
-		const $treeContainer = $container.find('#lknwp-folder-tree-public');
+		const $container = $('.lkn-filebrowser-public');
+		const $treeContainer = $container.find('#lkn-folder-tree-public');
 
-		$('#lknwp-search-input').val('');
-		$('#lknwp-clear-search').hide();
+		$('#lkn-search-input').val('');
+		$('#lkn-clear-search').hide();
 		isSearchMode = false;
 
 		// Clear file selections when clearing search
@@ -442,15 +442,15 @@
 	}
 
 	function navigateToFolder(folderId, folderName) {
-		const $container = $('.lknwp-filebrowser-public');
-		const $treeContainer = $container.find('#lknwp-folder-tree-public');
+		const $container = $('.lkn-filebrowser-public');
+		const $treeContainer = $container.find('#lkn-folder-tree-public');
 
 		currentFolderId = folderId;
 
 		// Clear search UI without reloading content
 		if (isSearchMode) {
-			$('#lknwp-search-input').val('');
-			$('#lknwp-clear-search').hide();
+			$('#lkn-search-input').val('');
+			$('#lkn-clear-search').hide();
 			isSearchMode = false;
 		}
 
@@ -465,7 +465,7 @@
 	}
 
 	function updateBreadcrumb(breadcrumb, $container) {
-		const $breadcrumbContainer = $container.find('#lknwp-current-path');
+		const $breadcrumbContainer = $container.find('#lkn-current-path');
 
 		if (!breadcrumb || breadcrumb.length === 0) return;
 
@@ -518,7 +518,7 @@
 	}
 
 	function updateActiveFolderInTree(folderId, $container) {
-		const $treeContainer = $container.find('#lknwp-folder-tree-public');
+		const $treeContainer = $container.find('#lkn-folder-tree-public');
 		if ($treeContainer.length === 0) return;
 
 		// Remove active class from all folders
@@ -553,7 +553,7 @@
 						$subfolders.addClass('show');
 						$subfiles.addClass('show');
 						$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-						$toggleBtn.attr('title', lknwp_public_ajax.hide_subfolders || 'Hide Subfolders');
+						$toggleBtn.attr('title', lkn_public_ajax.hide_subfolders || 'Hide Subfolders');
 					}
 				}
 
@@ -581,7 +581,7 @@
 			if ($childToggleBtn.length > 0) {
 				const $childIcon = $childToggleBtn.find('i');
 				$childIcon.removeClass('fa-caret-down').addClass('fa-caret-right');
-				$childToggleBtn.attr('title', lknwp_public_ajax.show_subfolders || 'Show Subfolders');
+				$childToggleBtn.attr('title', lkn_public_ajax.show_subfolders || 'Show Subfolders');
 			}
 
 			// Recursively hide children of this child
@@ -590,25 +590,25 @@
 	}
 
 	function loadFolderTree($container) {
-		const $treeContainer = $container.find('#lknwp-folder-tree-public');
+		const $treeContainer = $container.find('#lkn-folder-tree-public');
 		if ($treeContainer.length === 0) return;
 
 		$.ajax({
-			url: lknwp_public_ajax.ajax_url,
+			url: lkn_public_ajax.ajax_url,
 			type: 'POST',
 			data: {
-				action: 'lknwp_frontend_get_all_folders',
+				action: 'lkn_frontend_get_all_folders',
 				nonce: nonce
 			},
 			success: function (response) {
 				if (response.success) {
 					renderFolderTree(response.data.folders, response.data.files, $treeContainer, $container);
 				} else {
-					$treeContainer.html('<div class="error">' + (lknwp_public_ajax.error_folders_text || 'Error loading folders') + '</div>');
+					$treeContainer.html('<div class="error">' + (lkn_public_ajax.error_folders_text || 'Error loading folders') + '</div>');
 				}
 			},
 			error: function () {
-				$treeContainer.html('<div class="error">' + (lknwp_public_ajax.error_folders_text || 'Error loading folders') + '</div>');
+				$treeContainer.html('<div class="error">' + (lkn_public_ajax.error_folders_text || 'Error loading folders') + '</div>');
 			}
 		});
 	}
@@ -644,7 +644,7 @@
 
 			// Clear file selections when navigating to different folder
 			$treeContainer.find('.file-item-tree').removeClass('selected');
-			const $container = $treeContainer.closest('.lknwp-filebrowser-public');
+			const $container = $treeContainer.closest('.lkn-filebrowser-public');
 			$container.find('.content-item.file').removeClass('selected-in-tree');
 
 			// Update active folder
@@ -674,13 +674,13 @@
 				hideSubfoldersRecursively(folderId, $treeContainer);
 				$subfiles.removeClass('show');
 				$icon.removeClass('fa-caret-down').addClass('fa-caret-right');
-				$btn.attr('title', lknwp_public_ajax.show_subfolders || 'Show Subfolders');
+				$btn.attr('title', lkn_public_ajax.show_subfolders || 'Show Subfolders');
 			} else {
 				// Show subfolders and files
 				$subfolders.addClass('show');
 				$subfiles.addClass('show');
 				$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-				$btn.attr('title', lknwp_public_ajax.hide_subfolders || 'Hide Subfolders');
+				$btn.attr('title', lkn_public_ajax.hide_subfolders || 'Hide Subfolders');
 			}
 		});
 
@@ -703,7 +703,7 @@
 			$fileItem.addClass('selected');
 
 			// Also remove and add selected styling from main content files
-			const $container = $treeContainer.closest('.lknwp-filebrowser-public');
+			const $container = $treeContainer.closest('.lkn-filebrowser-public');
 			$container.find('.content-item.file').removeClass('selected-in-tree');
 
 			// Load folder contents with callback to apply selection after loading
@@ -741,7 +741,7 @@
 					<div class="folder-item-content-public">
 						<i class="fas fa-folder"></i> ${folder.name}
 					</div>
-					<button class="folder-toggle-btn-public" data-folder-id="${folder.id}" title="${lknwp_public_ajax.show_subfolders || 'Show Subfolders'}">
+					<button class="folder-toggle-btn-public" data-folder-id="${folder.id}" title="${lkn_public_ajax.show_subfolders || 'Show Subfolders'}">
 						<i class="fas fa-caret-right"></i>
 					</button>
 				`;

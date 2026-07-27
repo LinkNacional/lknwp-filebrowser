@@ -29,7 +29,7 @@ Link Nacional File Browser lets you create and manage a complete hierarchical fi
 
 == Installation ==
 
-1. Upload the plugin to the `/wp-content/plugins/lknwp-filebrowser/` directory
+1. Upload the plugin to the `/wp-content/plugins/linknacional-file-browser/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. The plugin will automatically create the required database tables
 4. Go to 'File Browser' in the admin menu to start organizing your files
@@ -43,13 +43,13 @@ The plugin includes an instructions panel in the admin area with practical examp
 Go to 'File Browser' in the admin menu for complete usage instructions.
 
 **Basic usage:**
-`[lknwp_filebrowser]`
+`[lkn_filebrowser]`
 
 **Specific folder:**
-`[lknwp_filebrowser folder_id="1"]`
+`[lkn_filebrowser folder_id="1"]`
 
 **Different layout:**
-`[lknwp_filebrowser layout="list"]`
+`[lkn_filebrowser layout="list"]`
 
 **Available layouts:** grid (default) and list
 
@@ -105,16 +105,16 @@ Yes! The plugin is built with responsive design and automatically adapts to tabl
 == Technical Details ==
 
 **Database Structure:**
-* `{prefix}lknwp_filebrowser_folders` — Stores folder information
-* `{prefix}lknwp_filebrowser_files` — Stores file information
+* `{prefix}lkn_filebrowser_folders` — Stores folder information
+* `{prefix}lkn_filebrowser_files` — Stores file information
 
 **Upload Directory:**
-Files are stored in `/wp-content/uploads/lknwp-filebrowser/`
+Files are stored in `/wp-content/uploads/lkn-filebrowser/`
 
 **Available Hooks:**
-* `lknwp_filebrowser_before_upload` — Fires before a file upload
-* `lknwp_filebrowser_after_upload` — Fires after a file upload
-* `lknwp_filebrowser_before_delete` — Fires before a file deletion
+* `lkn_filebrowser_before_upload` — Fires before a file upload
+* `lkn_filebrowser_after_upload` — Fires after a file upload
+* `lkn_filebrowser_before_delete` — Fires before a file deletion
 
 == Support ==
 
