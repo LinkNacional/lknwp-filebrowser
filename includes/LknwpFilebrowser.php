@@ -121,8 +121,6 @@ class LknwpFilebrowser {
 	private function define_public_hooks() {
 		$plugin_public = new LknwpFilebrowserPublic( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode' );
 		$this->loader->add_action( 'wp_ajax_lknwp_frontend_get_contents', $plugin_public, 'get_folder_contents_frontend' );
 		$this->loader->add_action( 'wp_ajax_nopriv_lknwp_frontend_get_contents', $plugin_public, 'get_folder_contents_frontend' );

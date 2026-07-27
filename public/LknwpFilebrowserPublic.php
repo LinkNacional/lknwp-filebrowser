@@ -49,48 +49,6 @@ class LknwpFilebrowserPublic {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-		if ( ! $this->has_filebrowser_shortcode() ) {
-			return;
-		}
-		wp_enqueue_script( 'lknwp-filebrowser-fontawesome', LKNWP_FILEBROWSER_PLUGIN_URL . 'assets/js/compiled/fontawesome.compiled.js', array(), LKNWP_FILEBROWSER_VERSION, false );
-		wp_enqueue_style( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'public/css/lknwp-filebrowser-public.css', array(), LKNWP_FILEBROWSER_VERSION, 'all' );
-	}
-
-	/**
-	 * Register the JavaScript for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-		if ( ! $this->has_filebrowser_shortcode() ) {
-			return;
-		}
-		wp_enqueue_script( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'public/js/lknwp-filebrowser-public.js', array( 'jquery' ), LKNWP_FILEBROWSER_VERSION, false );
-		wp_localize_script( $this->plugin_name, 'lknwp_public_ajax', array(
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'loading_text' => __( 'Loading...', 'lknwp-filebrowser' ),
-			'searching_text' => __( 'Searching...', 'lknwp-filebrowser' ),
-			'error_loading_text' => __( 'Error loading contents', 'lknwp-filebrowser' ),
-			'error_search_text' => __( 'Error performing search', 'lknwp-filebrowser' ),
-			'error_folders_text' => __( 'Error loading folders', 'lknwp-filebrowser' ),
-			'empty_folder_text' => __( 'This folder is empty', 'lknwp-filebrowser' ),
-			'empty_folder_desc' => __( 'No files or folders found in this location.', 'lknwp-filebrowser' ),
-			'no_results_text' => __( 'No results found', 'lknwp-filebrowser' ),
-			'no_results_desc' => __( 'Try adjusting your search terms.', 'lknwp-filebrowser' ),
-			'folder_text' => __( 'Folder', 'lknwp-filebrowser' ),
-			'download_text' => __( 'DOWNLOAD', 'lknwp-filebrowser' ),
-			'search_results_text' => __( 'Search results for', 'lknwp-filebrowser' ),
-			'found_items_text' => __( 'Found', 'lknwp-filebrowser' ),
-			'items_text' => __( 'items', 'lknwp-filebrowser' )
-		));
-	}
-
-	/**
 	 * Create a nonce
 	 */
 	public function lknwp_get_public_nonce() {
@@ -118,6 +76,29 @@ class LknwpFilebrowserPublic {
 	 * Render filebrowser shortcode
 	 */
 	public function render_filebrowser_shortcode( $atts ) {
+		// Enqueue assets only when shortcode is rendered (post context is available).
+		wp_enqueue_script( 'lknwp-filebrowser-fontawesome', LKNWP_FILEBROWSER_PLUGIN_URL . 'assets/js/compiled/fontawesome.compiled.js', array(), LKNWP_FILEBROWSER_VERSION, false );
+		wp_enqueue_style( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'public/css/lknwp-filebrowser-public.css', array(), LKNWP_FILEBROWSER_VERSION, 'all' );
+		wp_enqueue_script( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'public/js/lknwp-filebrowser-public.js', array( 'jquery' ), LKNWP_FILEBROWSER_VERSION, false );
+
+		wp_localize_script( $this->plugin_name, 'lknwp_public_ajax', array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'loading_text' => __( 'Loading...', 'lknwp-filebrowser' ),
+			'searching_text' => __( 'Searching...', 'lknwp-filebrowser' ),
+			'error_loading_text' => __( 'Error loading contents', 'lknwp-filebrowser' ),
+			'error_search_text' => __( 'Error performing search', 'lknwp-filebrowser' ),
+			'error_folders_text' => __( 'Error loading folders', 'lknwp-filebrowser' ),
+			'empty_folder_text' => __( 'This folder is empty', 'lknwp-filebrowser' ),
+			'empty_folder_desc' => __( 'No files or folders found in this location.', 'lknwp-filebrowser' ),
+			'no_results_text' => __( 'No results found', 'lknwp-filebrowser' ),
+			'no_results_desc' => __( 'Try adjusting your search terms.', 'lknwp-filebrowser' ),
+			'folder_text' => __( 'Folder', 'lknwp-filebrowser' ),
+			'download_text' => __( 'DOWNLOAD', 'lknwp-filebrowser' ),
+			'search_results_text' => __( 'Search results for', 'lknwp-filebrowser' ),
+			'found_items_text' => __( 'Found', 'lknwp-filebrowser' ),
+			'items_text' => __( 'items', 'lknwp-filebrowser' )
+		));
+
 		$atts = shortcode_atts( array(
 			'folder_id' => 0,
 			'show_search' => 'true',
@@ -446,20 +427,6 @@ class LknwpFilebrowserPublic {
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
 		wp_send_json_success( $files );
-	}
-
-	/**
-	 * Check whether the current post contains the plugin's shortcode.
-	 *
-	 * @since    1.0.1
-	 * @return   bool
-	 */
-	private function has_filebrowser_shortcode() {
-		global $post;
-		if ( ! is_a( $post, 'WP_Post' ) ) {
-			return false;
-		}
-		return has_shortcode( $post->post_content, 'lknwp_filebrowser' );
 	}
 
 	/**

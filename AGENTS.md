@@ -112,7 +112,7 @@ LKNWP_FILEBROWSER_PLUGIN_PATH   // plugin_dir_path(__FILE__)
 - **Font Awesome 6** → instalado via npm (`@fortawesome/fontawesome-free`), compilado com webpack (`style-loader` + `css-loader`) em `assets/js/compiled/fontawesome.compiled.js`. CSS injetado no runtime — zero CDN.
 - `console.log` proibido em production. Só `console.error` para erros reais.
 - Admin enfileira **somente** na página do plugin (`toplevel_page_lknwp-filebrowser`), via `$hook_suffix`.
-- Public enfileira **somente** quando `[lknwp_filebrowser]` está no post atual, via `has_shortcode()`.
+- Public enfileira **somente** quando `[lknwp_filebrowser]` é renderizado — `wp_enqueue_style`/`wp_enqueue_script` dentro do shortcode, não via `wp_enqueue_scripts`.
 
 ### Build
 ```bash
