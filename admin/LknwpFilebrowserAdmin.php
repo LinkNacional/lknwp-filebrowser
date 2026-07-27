@@ -51,8 +51,8 @@ class LknwpFilebrowserAdmin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'admin/css/lknwp-filebrowser-admin.css', array(), LKNWP_FILEBROWSER_VERSION, 'all' );
-		wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0' );
+		wp_enqueue_style( 'lknwp-filebrowser-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0', 'all' );
+		wp_enqueue_style( $this->plugin_name, LKNWP_FILEBROWSER_PLUGIN_URL . 'admin/css/lknwp-filebrowser-admin.css', array( 'lknwp-filebrowser-fontawesome' ), LKNWP_FILEBROWSER_VERSION, 'all' );
 	}
 
 	/**
