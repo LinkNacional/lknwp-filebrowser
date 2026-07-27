@@ -755,7 +755,7 @@
 
 			const $folderItem = $('<div class="folder-item-public' + (level > 0 ? ' child-folder-public' : '') + '" data-folder-id="' + folder.id + '" data-folder-name="' + folder.name + '"' + (level > 0 ? ' data-parent-id="' + parentId + '"' : '') + '>')
 				.html(folderItemHtml)
-				.css('padding-left', (20 * level + 20) + 'px');
+				.css('padding-left', (20 * level + 10) + 'px');
 
 			$treeContainer.append($folderItem);
 
@@ -771,7 +771,7 @@
 							<i class="${iconClass}"></i> ${file.original_name}
 						</div>
 					`)
-					.css('padding-left', (20 * (level + 1) + 20) + 'px'); // Same level as child folders
+					.css('padding-left', (20 * (level + 1) + 10) + 'px'); // Same level as child folders
 
 				$treeContainer.append($fileItem);
 			});
@@ -792,7 +792,7 @@
 							<i class="${iconClass}"></i> ${file.original_name}
 						</div>
 					`)
-					.css('padding-left', (20 * level + 40) + 'px'); // Extra padding for root files
+					.css('padding-left', (20 * level + 10) + 'px'); // Matches folder padding at same level
 
 				$treeContainer.append($fileItem);
 			});
