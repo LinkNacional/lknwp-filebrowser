@@ -1,5 +1,8 @@
 <?php
 
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+// Custom tables — no WP core API exists. $wpdb is the only correct approach.
+
 namespace Lkn\WPFilebrowser\Public;
 
 /**

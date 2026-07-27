@@ -1,5 +1,8 @@
 <?php
 
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+// Custom tables — no WP core API exists. $wpdb is the only correct approach.
+
 namespace Lkn\WPFilebrowser\Admin;
 
 /**
@@ -435,8 +438,9 @@ class LknwpFilebrowserAdmin {
 
 		global $wpdb;
 		
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names via private method, hardcoded from $wpdb->prefix.
 		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->table_folders()} WHERE id = %d", $folder_id));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
 		if ($folder && $folder->parent_id > 0) {
 			return $this->build_folder_path($folder->parent_id) . '/' . $folder->name;
