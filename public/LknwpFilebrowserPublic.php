@@ -85,11 +85,12 @@ class LknwpFilebrowserPublic {
 	 * Create a nonce
 	 */
 	public function lknwp_get_public_nonce() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This endpoint generates the nonce that subsequent AJAX calls verify. Nonce verification is not possible here.
 		if ( ! wp_doing_ajax() ) {
 			wp_die( esc_html__( 'Invalid request method.', 'lknwp-filebrowser' ) );
 		}
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- This endpoint generates the nonce that subsequent AJAX calls verify.
 		$action_name = isset( $_POST['action_name'] ) ? sanitize_text_field( wp_unslash( $_POST['action_name'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 		if ( ! $action_name ) {
 			wp_send_json_error( esc_html__( 'Action name required', 'lknwp-filebrowser' ) );
 		}
@@ -189,6 +190,7 @@ class LknwpFilebrowserPublic {
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 		
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get all folders
 		$folders = $wpdb->get_results(
 			"SELECT * FROM $folders_table ORDER BY parent_id ASC, name ASC"
@@ -198,6 +200,7 @@ class LknwpFilebrowserPublic {
 		$files = $wpdb->get_results(
 			"SELECT * FROM $files_table ORDER BY folder_id ASC, original_name ASC"
 		);
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
 		wp_send_json_success( array(
 			'folders' => $folders,
@@ -235,6 +238,7 @@ class LknwpFilebrowserPublic {
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Search folders with parent info for path building
 		$folders = $wpdb->get_results( $wpdb->prepare(
 			"SELECT f.*, p.name as parent_name, p.path as parent_path 
@@ -244,12 +248,14 @@ class LknwpFilebrowserPublic {
 			 ORDER BY f.name ASC",
 			'%' . $wpdb->esc_like( $search_term ) . '%'
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		// Enhance folders with full path information
 		foreach ($folders as $folder) {
 			$folder->full_path = $this->build_folder_path( $folder->id );
 		}
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Search files with folder info
 		$files = $wpdb->get_results( $wpdb->prepare(
 			"SELECT f.*, folder.name as folder_name, folder.path as folder_path 
@@ -259,6 +265,7 @@ class LknwpFilebrowserPublic {
 			 ORDER BY f.original_name ASC",
 			'%' . $wpdb->esc_like( $search_term ) . '%'
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		$results = array(
 			'folders' => $folders,
@@ -277,15 +284,14 @@ class LknwpFilebrowserPublic {
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get subfolders
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $folders_table is a hardcoded table name from $wpdb->prefix.
 		$folders = $wpdb->get_results( $wpdb->prepare(
 			"SELECT * FROM $folders_table WHERE parent_id = %d ORDER BY name ASC",
 			$folder_id
 		));
 
 		// Get files
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $files_table is a hardcoded table name from $wpdb->prefix.
 		$files = $wpdb->get_results( $wpdb->prepare(
 			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
@@ -294,12 +300,12 @@ class LknwpFilebrowserPublic {
 		// Get current folder info
 		$current_folder = null;
 		if ( $folder_id > 0 ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $folders_table is a hardcoded table name from $wpdb->prefix.
 			$current_folder = $wpdb->get_row( $wpdb->prepare(
 				"SELECT * FROM $folders_table WHERE id = %d",
 				$folder_id
 			));
 		}
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		return array(
 			'folders' => $folders,
@@ -331,8 +337,8 @@ class LknwpFilebrowserPublic {
 		$path_parts = array();
 
 		// First, collect all folder names for the full path
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		while ( $current_id > 0 ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $folders_table is a hardcoded table name from $wpdb->prefix.
 			$folder = $wpdb->get_row( $wpdb->prepare(
 				"SELECT * FROM $folders_table WHERE id = %d",
 				$current_id
@@ -345,13 +351,14 @@ class LknwpFilebrowserPublic {
 				break;
 			}
 		}
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		// Reset and build breadcrumb with consistent paths
 		$current_id = $folder_id;
 		$partial_path = '';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		while ( $current_id > 0 ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $folders_table is a hardcoded table name from $wpdb->prefix.
 			$folder = $wpdb->get_row( $wpdb->prepare(
 				"SELECT * FROM $folders_table WHERE id = %d",
 				$current_id
@@ -374,6 +381,7 @@ class LknwpFilebrowserPublic {
 				break;
 			}
 		}
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		// Add root
 		array_unshift( $breadcrumb, array(
@@ -399,8 +407,8 @@ class LknwpFilebrowserPublic {
 		$path_parts = array();
 		$current_id = $folder_id;
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		while ( $current_id != 0 ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $folders_table is a hardcoded table name from $wpdb->prefix.
 			$folder = $wpdb->get_row( $wpdb->prepare(
 				"SELECT id, name, parent_id FROM $folders_table WHERE id = %d",
 				$current_id
@@ -413,6 +421,7 @@ class LknwpFilebrowserPublic {
 				break;
 			}
 		}
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		return 'Home' . ( !empty( $path_parts ) ? ' / ' . implode( ' / ', $path_parts ) : '' );
 	}
@@ -429,11 +438,12 @@ class LknwpFilebrowserPublic {
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 		
 		// Get files from folder
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $files_table is a hardcoded table name from $wpdb->prefix.
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		$files = $wpdb->get_results( $wpdb->prepare(
 			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
 		wp_send_json_success( $files );
 	}

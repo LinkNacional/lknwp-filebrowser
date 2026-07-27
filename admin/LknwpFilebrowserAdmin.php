@@ -184,11 +184,12 @@ class LknwpFilebrowserAdmin {
 	 * Create a nonce
 	 */
 	public function lknwp_get_admin_nonce() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This endpoint generates the nonce that subsequent AJAX calls verify. Nonce verification is not possible here.
 		if ( ! wp_doing_ajax() ) {
 			wp_die( esc_html__( 'Invalid request method.', 'lknwp-filebrowser' ) );
 		}
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- This endpoint generates the nonce that subsequent AJAX calls verify.
 		$action_name = isset( $_POST['action_name'] ) ? sanitize_text_field( wp_unslash( $_POST['action_name'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 		if ( ! $action_name ) {
 			wp_send_json_error( esc_html__( 'Action name required', 'lknwp-filebrowser' ) );
 		}
@@ -260,6 +261,7 @@ class LknwpFilebrowserAdmin {
 		$filebrowser_url = $upload_dir['baseurl'] . '/lknwp-filebrowser';
 
 		$uploaded_files = array();
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- $_FILES data is not user-input text; individual fields sanitized below with sanitize_file_name() and wp_check_filetype().
 		$files = $_FILES['files'];
 
 		for ($i = 0; $i < count($files['name']); $i++) {
@@ -353,6 +355,7 @@ class LknwpFilebrowserAdmin {
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
 		// Get file info
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $files_table is a hardcoded table name from $wpdb->prefix.
 		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM $files_table WHERE id = %d", $file_id));
 		
 		if ($file) {
@@ -390,6 +393,7 @@ class LknwpFilebrowserAdmin {
 		global $wpdb;
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $folders_table is a hardcoded table name from $wpdb->prefix.
 		$folders = $wpdb->get_results("SELECT * FROM $folders_table ORDER BY parent_id ASC, name ASC");
 		
 		wp_send_json_success($folders);
@@ -403,6 +407,7 @@ class LknwpFilebrowserAdmin {
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get subfolders
 		$folders = $wpdb->get_results($wpdb->prepare(
 			"SELECT * FROM $folders_table WHERE parent_id = %d ORDER BY name ASC",
@@ -414,6 +419,7 @@ class LknwpFilebrowserAdmin {
 			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		return array(
 			'folders' => $folders,
@@ -432,6 +438,7 @@ class LknwpFilebrowserAdmin {
 		global $wpdb;
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $folders_table is a hardcoded table name from $wpdb->prefix.
 		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM $folders_table WHERE id = %d", $folder_id));
 		
 		if ($folder && $folder->parent_id > 0) {
@@ -451,6 +458,7 @@ class LknwpFilebrowserAdmin {
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get all subfolders
 		$subfolders = $wpdb->get_results($wpdb->prepare(
 			"SELECT id FROM $folders_table WHERE parent_id = %d",
@@ -467,6 +475,7 @@ class LknwpFilebrowserAdmin {
 			"SELECT * FROM $files_table WHERE folder_id = %d",
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		foreach ($files as $file) {
 			if ( file_exists( $file->file_path ) ) {
@@ -501,6 +510,7 @@ class LknwpFilebrowserAdmin {
 		global $wpdb;
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Check if folder exists
 		$folder = $wpdb->get_row($wpdb->prepare("SELECT * FROM $folders_table WHERE id = %d", $folder_id));
 		if (!$folder) {
@@ -514,6 +524,7 @@ class LknwpFilebrowserAdmin {
 			$folder->parent_id,
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		if ($existing) {
 			wp_send_json_error(esc_html__('Já existe uma pasta com este nome', 'lknwp-filebrowser'));
@@ -555,6 +566,7 @@ class LknwpFilebrowserAdmin {
 		global $wpdb;
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Check if file exists
 		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM $files_table WHERE id = %d", $file_id));
 		if (!$file) {
@@ -568,6 +580,7 @@ class LknwpFilebrowserAdmin {
 			$file->folder_id,
 			$file_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		if ($existing) {
 			wp_send_json_error(esc_html__('Já existe um arquivo com este nome', 'lknwp-filebrowser'));
@@ -611,10 +624,12 @@ class LknwpFilebrowserAdmin {
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 		
 		// Get files from folder
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		$files = $wpdb->get_results( $wpdb->prepare(
 			"SELECT * FROM $files_table WHERE folder_id = %d ORDER BY original_name ASC",
 			$folder_id
 		));
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		
 		wp_send_json_success( $files );
 	}
@@ -629,11 +644,13 @@ class LknwpFilebrowserAdmin {
 		$folders_table = $wpdb->prefix . 'lknwp_filebrowser_folders';
 		$files_table = $wpdb->prefix . 'lknwp_filebrowser_files';
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table names are hardcoded from $wpdb->prefix, not user input.
 		// Get all folders
 		$folders = $wpdb->get_results("SELECT * FROM $folders_table ORDER BY parent_id ASC, name ASC");
 		
 		// Get all files
 		$files = $wpdb->get_results("SELECT * FROM $files_table ORDER BY folder_id ASC, original_name ASC");
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		wp_send_json_success(array(
 			'folders' => $folders,
