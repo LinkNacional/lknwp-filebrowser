@@ -288,6 +288,14 @@ class LknwpFilebrowserAdmin {
 				$file_size = $files['size'][$i];
 				$file_type = wp_check_filetype($original_name);
 				
+				// Allowlist safe extensions — block everything else server-side.
+				$allowed_types = array(
+					'pdf', 'doc', 'docx', 'xls', 'xlsx',
+					'ppt', 'pptx', 'txt', 'jpg', 'jpeg', 'png', 'gif',
+				);
+				if ( empty( $file_type['ext'] ) || ! in_array( strtolower( $file_type['ext'] ), $allowed_types, true ) ) {
+					continue;
+				}
 				// Generate unique filename
 				$filename = wp_unique_filename($filebrowser_dir, $original_name);
 				$file_path = $filebrowser_dir . '/' . $filename;
