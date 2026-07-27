@@ -44,14 +44,10 @@ jobs:
       run: |
         mkdir -p dist
         mkdir -p build/${{ env.PLUGIN_NAME }}
-        mv ./admin ./assets ./includes ./public ./languages *.php LICENSE.txt *.txt composer.json composer.lock ./build/${{ env.PLUGIN_NAME }}
+        cp -r ./admin ./assets ./includes ./public ./languages ./vendor ./build/${{ env.PLUGIN_NAME }}
+        cp ./*.php ./LICENSE.txt ./*.txt ./composer.json ./composer.lock ./build/${{ env.PLUGIN_NAME }}/
         find ./build -type f -exec chmod 0644 {} +
         find ./build -type d -exec chmod 0755 {} +
-    
-    # Move vendor directory separately (can be slow)
-    - name: Move vendor directory
-      run: |
-        cp -r ./vendor ./build/${{ env.PLUGIN_NAME }}/vendor
 
     # Compact plugin as .zip
     - name: Archive Release
