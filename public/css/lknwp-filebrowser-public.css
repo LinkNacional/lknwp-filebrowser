@@ -626,6 +626,10 @@
         min-width: 50px;
     }
 
+    .file-locate-btn {
+        padding: 0;
+    }
+
     .lknwp-file-manager-public {
         flex-direction: column;
     }
