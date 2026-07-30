@@ -59,7 +59,7 @@ $this->loader->run(); // dispara todos na seq
 ### Constantes (`linknacional-file-browser.php`)
 ```php
 LKN_FILEBROWSER_VERSION       // '1.0.0'
-LINK_PLUGIN_NAME                // 'linknacional-file-browser'
+LKN_FILEBROWSER_PLUGIN_NAME                // 'linknacional-file-browser'
 LKN_FILEBROWSER_PLUGIN_URL    // plugin_dir_url(__FILE__)
 LKN_FILEBROWSER_PLUGIN_PATH   // plugin_dir_path(__FILE__)
 ```

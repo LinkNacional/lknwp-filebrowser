@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  */
 define( 'LKN_FILEBROWSER_VERSION', '1.0.0' );
-define( 'LINK_PLUGIN_NAME', 'linknacional-file-browser' );
+define( 'LKN_FILEBROWSER_PLUGIN_NAME', 'linknacional-file-browser' );
 
 /**
  * Plugin constants

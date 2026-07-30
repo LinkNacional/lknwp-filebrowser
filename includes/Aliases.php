@@ -1,5 +1,10 @@
 <?php
 
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class aliases for backward compatibility.
  * Maps old class names to new PSR-4 namespaced classes.
