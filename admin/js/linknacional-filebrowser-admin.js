@@ -7,6 +7,45 @@
 
 	$(document).ready(function () {
 
+		// Migration button handler
+		$('#linknacional-migrate-btn').on('click', function () {
+			const $btn = $(this);
+			const $status = $('#linknacional-migration-status');
+			const $banner = $('#linknacional-migration-banner');
+
+			$btn.prop('disabled', true);
+			$btn.html('<i class="fas fa-spinner fa-spin"></i> ' + (linknacional_ajax.migrating_text || 'Migrating...'));
+			$status.hide();
+
+			$.ajax({
+				url: linknacional_ajax.ajax_url,
+				type: 'POST',
+				data: {
+					action: 'linknacional_migrate',
+					nonce: adminNonce
+				},
+				success: function (response) {
+					if (response.success) {
+						$status.text(response.data.message).css('color', '#008a20').show();
+						$banner.fadeOut(1500, function () {
+							$banner.remove();
+							loadFolderTree();
+							loadFolderContents(currentFolderId);
+						});
+					} else {
+						$status.text(response.data || (linknacional_ajax.migrate_error || 'Migration failed')).css('color', '#d63638').show();
+						$btn.prop('disabled', false);
+						$btn.html('<i class="fas fa-sync-alt"></i> ' + (linknacional_ajax.migrate_text || 'Migrate Now'));
+					}
+				},
+				error: function () {
+					$status.text(linknacional_ajax.migrate_error || 'Migration failed').css('color', '#d63638').show();
+					$btn.prop('disabled', false);
+					$btn.html('<i class="fas fa-sync-alt"></i> ' + (linknacional_ajax.migrate_text || 'Migrate Now'));
+				}
+			});
+		});
+
 		// Copy shortcode button handler
 		$('.copy-shortcode').on('click', function (e) {
 			e.preventDefault();
@@ -22,7 +61,7 @@
 			// Show feedback
 			const $btn = $(this);
 			const originalText = $btn.html();
-			$btn.html('<i class="fas fa-check"></i> ' + (lkn_ajax.copied_text || 'Copied!'));
+			$btn.html('<i class="fas fa-check"></i> ' + (linknacional_ajax.copied_text || 'Copied!'));
 			$btn.addClass('copied');
 
 			setTimeout(function () {
@@ -57,12 +96,12 @@
 		});
 
 		// Close modal
-		$('.lkn-close').on('click', function () {
-			$(this).closest('.lkn-modal').hide();
+		$('.linknacional-close').on('click', function () {
+			$(this).closest('.linknacional-modal').hide();
 		});
 
 		// Close modal on outside click
-		$('.lkn-modal').on('click', function (e) {
+		$('.linknacional-modal').on('click', function (e) {
 			if (e.target === this) {
 				$(this).hide();
 			}
@@ -224,10 +263,10 @@
 				<div class="edit-container">
 					<input type="text" class="edit-name-input" value="${inputValue}" data-extension="${extension}">
 					<div class="edit-controls">
-						<button class="edit-confirm-btn" title="${lkn_ajax.confirm_edit || 'Confirm'}">
+						<button class="edit-confirm-btn" title="${linknacional_ajax.confirm_edit || 'Confirm'}">
 							<i class="fas fa-check"></i>
 						</button>
-						<button class="edit-cancel-btn" title="${lkn_ajax.cancel || 'Cancel'}">
+						<button class="edit-cancel-btn" title="${linknacional_ajax.cancel || 'Cancel'}">
 							<i class="fas fa-times"></i>
 						</button>
 					</div>
@@ -284,7 +323,7 @@
 			const extension = $input.data('extension') || '';
 
 			if (!newName) {
-				alert(lkn_ajax.name_empty_error || 'Name cannot be empty');
+				alert(linknacional_ajax.name_empty_error || 'Name cannot be empty');
 				return;
 			}
 
@@ -308,7 +347,7 @@
 		}
 
 		// Load initial content only after fetching the nonce
-		fetchAndSetAdminNonce('lkn_filebrowser_nonce', function () {
+		fetchAndSetAdminNonce('linknacional_filebrowser_nonce', function () {
 			loadFolderTree();
 			loadFolderContents(0);
 		});
@@ -316,9 +355,9 @@
 
 	function fetchAndSetAdminNonce(actionName, onReady) {
 		$.ajax({
-			url: lkn_ajax.ajax_url,
+			url: linknacional_ajax.ajax_url,
 			type: 'POST',
-			data: { action: 'lkn_get_admin_nonce', action_name: actionName },
+			data: { action: 'linknacional_get_admin_nonce', action_name: actionName },
 			success: function (response) {
 				if (response.success && response.data.nonce) {
 					adminNonce = response.data.nonce;
@@ -337,10 +376,10 @@
 	function loadFolderTree() {
 		// Get all folders and files to build tree
 		$.ajax({
-			url: lkn_ajax.ajax_url,
+			url: linknacional_ajax.ajax_url,
 			type: 'POST',
 			data: {
-				action: 'lkn_get_all_folders_admin_frontend',
+				action: 'linknacional_get_all_folders_admin_frontend',
 				nonce: adminNonce
 			},
 			success: function (response) {
@@ -380,7 +419,7 @@
 					<div class="folder-item-content">
 						<i class="fas fa-folder"></i> ${folder.name}
 					</div>
-					<button class="folder-toggle-btn" data-folder-id="${folder.id}" title="${lkn_ajax.expand_collapse || 'Expand/Collapse'}">
+					<button class="folder-toggle-btn" data-folder-id="${folder.id}" title="${linknacional_ajax.expand_collapse || 'Expand/Collapse'}">
 						<i class="fas fa-caret-right"></i>
 					</button>
 				`;
@@ -446,13 +485,13 @@
 	}
 
 	function loadFolderContents(folderId, callback) {
-		$('#folder-contents').html('<div class="loading"><i class="fas fa-spinner"></i> ' + (lkn_ajax.loading_text || 'Loading...') + '</div>');
+		$('#folder-contents').html('<div class="loading"><i class="fas fa-spinner"></i> ' + (linknacional_ajax.loading_text || 'Loading...') + '</div>');
 
 		$.ajax({
-			url: lkn_ajax.ajax_url,
+			url: linknacional_ajax.ajax_url,
 			type: 'POST',
 			data: {
-				action: 'lkn_get_folder_contents',
+				action: 'linknacional_get_folder_contents',
 				nonce: adminNonce,
 				folder_id: folderId
 			},
@@ -463,11 +502,11 @@
 						callback();
 					}
 				} else {
-					$('#folder-contents').html('<div class="error">' + (lkn_ajax.error_loading_text || 'Error loading contents') + '</div>');
+					$('#folder-contents').html('<div class="error">' + (linknacional_ajax.error_loading_text || 'Error loading contents') + '</div>');
 				}
 			},
 			error: function () {
-				$('#folder-contents').html('<div class="error">' + (lkn_ajax.error_loading_text || 'Error loading contents') + '</div>');
+				$('#folder-contents').html('<div class="error">' + (linknacional_ajax.error_loading_text || 'Error loading contents') + '</div>');
 			}
 		});
 	}
@@ -480,7 +519,7 @@
 		const files = data.files || [];
 
 		if (folders.length === 0 && files.length === 0) {
-			container.html('<div class="empty-folder"><i class="fas fa-folder-open"></i><p>' + (lkn_ajax.empty_folder_text || 'This folder is empty') + '</p></div>');
+			container.html('<div class="empty-folder"><i class="fas fa-folder-open"></i><p>' + (linknacional_ajax.empty_folder_text || 'This folder is empty') + '</p></div>');
 			return;
 		}
 
@@ -489,16 +528,16 @@
 			const folderElement = $(`
 				<div class="content-item folder" data-folder-id="${folder.id}" data-folder-name="${folder.name}">
 					<div class="content-item-actions">
-						<button class="edit-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="${lkn_ajax.edit_name || 'Edit name'}">
+						<button class="edit-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="${linknacional_ajax.edit_name || 'Edit name'}">
 							<i class="fas fa-edit"></i>
 						</button>
-						<button class="delete-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="${lkn_ajax.delete_folder || 'Delete folder'}">
+						<button class="delete-btn" data-type="pasta" data-id="${folder.id}" data-name="${folder.name}" title="${linknacional_ajax.delete_folder || 'Delete folder'}">
 							<i class="fas fa-trash"></i>
 						</button>
 					</div>
 					<i class="fas fa-folder"></i>
 					<div class="content-item-name">${folder.name}</div>
-					<div class="content-item-info">${lkn_ajax.folder_text || 'Folder'}</div>
+					<div class="content-item-info">${linknacional_ajax.folder_text || 'Folder'}</div>
 				</div>
 			`);
 			container.append(folderElement);
@@ -512,10 +551,10 @@
 			const fileElement = $(`
 				<div class="content-item file ${file.file_type}" data-file-id="${file.id}" data-folder-id="${file.folder_id}">
 					<div class="content-item-actions">
-						<button class="edit-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="${lkn_ajax.edit_name || 'Edit name'}">
+						<button class="edit-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="${linknacional_ajax.edit_name || 'Edit name'}">
 							<i class="fas fa-edit"></i>
 						</button>
-						<button class="delete-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="${lkn_ajax.delete_file || 'Delete file'}">
+						<button class="delete-btn" data-type="arquivo" data-id="${file.id}" data-name="${file.original_name}" title="${linknacional_ajax.delete_file || 'Delete file'}">
 							<i class="fas fa-trash"></i>
 						</button>
 					</div>
@@ -524,7 +563,7 @@
 						<div class="content-item-name">${file.original_name}</div>
 						<div class="content-item-info">${fileSize}</div>
 					</div>
-					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="${lkn_ajax.open_file || 'Open file'}">
+					<button class="file-locate-btn" data-folder-id="${file.folder_id}" data-file-name="${file.original_name}" title="${linknacional_ajax.open_file || 'Open file'}">
 						<i class="fas fa-external-link-alt"></i>
 					</button>
 				</div>
@@ -571,11 +610,11 @@
 
 	function createFolder() {
 		const formData = new FormData($('#create-folder-form')[0]);
-		formData.append('action', 'lkn_create_folder');
+		formData.append('action', 'linknacional_create_folder');
 		formData.append('nonce', adminNonce);
 
 		$.ajax({
-			url: lkn_ajax.ajax_url,
+			url: linknacional_ajax.ajax_url,
 			type: 'POST',
 			data: formData,
 			processData: false,
@@ -592,14 +631,14 @@
 				}
 			},
 			error: function () {
-				alert(lkn_ajax.create_folder_error || 'Error creating folder');
+				alert(linknacional_ajax.create_folder_error || 'Error creating folder');
 			}
 		});
 	}
 
 	function uploadFiles(files, folderId) {
 		const formData = new FormData();
-		formData.append('action', 'lkn_upload_file');
+		formData.append('action', 'linknacional_upload_file');
 		formData.append('nonce', adminNonce);
 		formData.append('folder_id', folderId);
 
@@ -608,10 +647,10 @@
 		}
 
 		// Show loading
-		$('#folder-contents').html('<div class="loading"><i class="fas fa-spinner"></i> ' + (lkn_ajax.uploading_text || 'Uploading files...') + '</div>');
+		$('#folder-contents').html('<div class="loading"><i class="fas fa-spinner"></i> ' + (linknacional_ajax.uploading_text || 'Uploading files...') + '</div>');
 
 		$.ajax({
-			url: lkn_ajax.ajax_url,
+			url: linknacional_ajax.ajax_url,
 			type: 'POST',
 			data: formData,
 			processData: false,
@@ -627,7 +666,7 @@
 				}
 			},
 			error: function () {
-				alert(lkn_ajax.upload_error || 'Error uploading files');
+				alert(linknacional_ajax.upload_error || 'Error uploading files');
 				loadFolderContents(currentFolderId);
 			}
 		});
@@ -638,10 +677,10 @@
 
 	function deleteFolder(folderId) {
 		$.ajax({
-			url: lkn_ajax.ajax_url,
+			url: linknacional_ajax.ajax_url,
 			type: 'POST',
 			data: {
-				action: 'lkn_delete_folder',
+				action: 'linknacional_delete_folder',
 				nonce: adminNonce,
 				folder_id: folderId
 			},
@@ -663,10 +702,10 @@
 
 	function deleteFile(fileId) {
 		$.ajax({
-			url: lkn_ajax.ajax_url,
+			url: linknacional_ajax.ajax_url,
 			type: 'POST',
 			data: {
-				action: 'lkn_delete_file',
+				action: 'linknacional_delete_file',
 				nonce: adminNonce,
 				file_id: fileId
 			},
@@ -768,7 +807,7 @@
 					if (!$subfolders.hasClass('show')) {
 						$subfolders.addClass('show');
 						$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-						$toggleBtn.attr('title', lkn_ajax.hide_subfolders || 'Hide Subfolders');
+						$toggleBtn.attr('title', linknacional_ajax.hide_subfolders || 'Hide Subfolders');
 					}
 				}
 
@@ -777,13 +816,13 @@
 			}
 		}
 	} function updateItemName(itemType, itemId, newName, $contentItem, $editContainer, $nameElement) {
-		const action = itemType === 'pasta' ? 'lkn_update_folder_name' : 'lkn_update_file_name';
+		const action = itemType === 'pasta' ? 'linknacional_update_folder_name' : 'linknacional_update_file_name';
 
 		// Show loading state
 		$editContainer.find('.edit-controls').html('<i class="fas fa-spinner fa-spin"></i>');
 
 		$.ajax({
-			url: lkn_ajax.ajax_url,
+			url: linknacional_ajax.ajax_url,
 			type: 'POST',
 			data: {
 				action: action,
@@ -814,18 +853,18 @@
 					}
 
 					// Show success message briefly
-					const $success = $('<span style="color: #0073aa; font-size: 10px;">✓ ' + (lkn_ajax.saved_text || 'Saved') + '</span>');
+					const $success = $('<span style="color: #0073aa; font-size: 10px;">✓ ' + (linknacional_ajax.saved_text || 'Saved') + '</span>');
 					$nameElement.after($success);
 					setTimeout(() => $success.remove(), 2000);
 				} else {
-					alert((lkn_ajax.update_error || 'Error updating name') + ': ' + (response.data || (lkn_ajax.unknown_error || 'Unknown error')));
+					alert((linknacional_ajax.update_error || 'Error updating name') + ': ' + (response.data || (linknacional_ajax.unknown_error || 'Unknown error')));
 					$contentItem.removeClass('editing');
 					$editContainer.remove();
 					$nameElement.show();
 				}
 			},
 			error: function () {
-				alert(lkn_ajax.update_error || 'Error updating name');
+				alert(linknacional_ajax.update_error || 'Error updating name');
 				$contentItem.removeClass('editing');
 				$editContainer.remove();
 				$nameElement.show();
@@ -834,7 +873,7 @@
 	}
 
 	// Global functions for modal
-	window.closeModal = function (modalId) {
+	window.linknacionalCloseModal = function (modalId) {
 		$('#' + modalId).hide();
 	};
 
@@ -928,7 +967,7 @@
 						$files.addClass('show');
 						$subfolders.addClass('show');
 						$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-						$toggleBtn.attr('title', lkn_ajax.collapse || 'Collapse');
+						$toggleBtn.attr('title', linknacional_ajax.collapse || 'Collapse');
 					}
 				}
 			}
@@ -999,7 +1038,7 @@
 							$subfolders.addClass('show');
 							$files.addClass('show');
 							$icon.removeClass('fa-caret-right').addClass('fa-caret-down');
-							$toggleBtn.attr('title', lkn_ajax.collapse || 'Collapse');
+							$toggleBtn.attr('title', linknacional_ajax.collapse || 'Collapse');
 						}
 					}
 				}

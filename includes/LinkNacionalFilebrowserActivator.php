@@ -7,8 +7,8 @@ class LinkNacionalFilebrowserActivator {
 	public static function activate() {
 		global $wpdb;
 
-		$folders_table = $wpdb->prefix . 'lkn_filebrowser_folders';
-		$files_table   = $wpdb->prefix . 'lkn_filebrowser_files';
+		$folders_table = $wpdb->prefix . 'linknacional_filebrowser_folders';
+		$files_table   = $wpdb->prefix . 'linknacional_filebrowser_files';
 
 		$charset_collate = $wpdb->get_charset_collate();
 
@@ -44,12 +44,12 @@ class LinkNacionalFilebrowserActivator {
 		\dbDelta( $sql_files );
 
 		$upload_dir      = wp_upload_dir();
-		$filebrowser_dir = $upload_dir['basedir'] . '/lkn-filebrowser';
+		$filebrowser_dir = $upload_dir['basedir'] . '/linknacional-filebrowser';
 
 		if ( ! \file_exists( $filebrowser_dir ) ) {
 			wp_mkdir_p( $filebrowser_dir );
 		}
 
-		\add_option( 'lkn_filebrowser_db_version', '1.0.0' );
+		\add_option( 'linknacional_filebrowser_db_version', '1.0.0' );
 	}
 }

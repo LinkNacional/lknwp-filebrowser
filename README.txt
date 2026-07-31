@@ -43,13 +43,13 @@ The plugin includes an instructions panel in the admin area with practical examp
 Go to 'File Browser' in the admin menu for complete usage instructions.
 
 **Basic usage:**
-`[lkn_filebrowser]`
+`[linkn_filebrowser]`
 
 **Specific folder:**
-`[lkn_filebrowser folder_id="1"]`
+`[linkn_filebrowser folder_id="1"]`
 
 **Different layout:**
-`[lkn_filebrowser layout="list"]`
+`[linkn_filebrowser layout="list"]`
 
 **Available layouts:** grid (default) and list
 
@@ -105,16 +105,16 @@ Yes! The plugin is built with responsive design and automatically adapts to tabl
 == Technical Details ==
 
 **Database Structure:**
-* `{prefix}lkn_filebrowser_folders` — Stores folder information
-* `{prefix}lkn_filebrowser_files` — Stores file information
+* `{prefix}linknacional_filebrowser_folders` — Stores folder information
+* `{prefix}linknacional_filebrowser_files` — Stores file information
 
 **Upload Directory:**
-Files are stored in `/wp-content/uploads/lkn-filebrowser/`
+Files are stored in `/wp-content/uploads/linknacional-filebrowser/`
 
 **Available Hooks:**
-* `lkn_filebrowser_before_upload` — Fires before a file upload
-* `lkn_filebrowser_after_upload` — Fires after a file upload
-* `lkn_filebrowser_before_delete` — Fires before a file deletion
+* `linknacional_filebrowser_before_upload` — Fires before a file upload
+* `linknacional_filebrowser_after_upload` — Fires after a file upload
+* `linknacional_filebrowser_before_delete` — Fires before a file deletion
 
 == Support ==
 

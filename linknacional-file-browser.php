@@ -30,14 +30,14 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'LKN_FILEBROWSER_VERSION', '1.0.0' );
-define( 'LINK_PLUGIN_NAME', 'linknacional-file-browser' );
+define( 'LINKNACIONAL_FILEBROWSER_VERSION', '1.0.0' );
+define( 'LINKNACIONAL_FILEBROWSER_PLUGIN_NAME', 'linknacional-file-browser' );
 
 /**
  * Plugin constants
  */
-define( 'LKN_FILEBROWSER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'LKN_FILEBROWSER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'LINKNACIONAL_FILEBROWSER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'LINKNACIONAL_FILEBROWSER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
  * Autoloader using Composer
@@ -80,25 +80,25 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/Aliases.php';
 /**
  * The code that runs during plugin activation.
  */
-function lkn_filebrowser_activate() {
+function linknacional_filebrowser_activate() {
 	LinkNacionalFilebrowserActivator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  */
-function lkn_filebrowser_deactivate() {
+function linknacional_filebrowser_deactivate() {
 	LinkNacionalFilebrowserDeactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'lkn_filebrowser_activate' );
-register_deactivation_hook( __FILE__, 'lkn_filebrowser_deactivate' );
+register_activation_hook( __FILE__, 'linknacional_filebrowser_activate' );
+register_deactivation_hook( __FILE__, 'linknacional_filebrowser_deactivate' );
 
 /**
  * Begins execution of the plugin.
  */
-function lkn_filebrowser_run() {
+function linknacional_filebrowser_run() {
 	$plugin = new LinkNacionalFilebrowser();
 	$plugin->run();
 }
-lkn_filebrowser_run();
+linknacional_filebrowser_run();

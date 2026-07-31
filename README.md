@@ -46,7 +46,7 @@ O [plugin](https://www.linknacional.com.br/wordpress/plugins/) grátis para [Wor
 1. Adicione o plugin pelo admin do WP ou faça upload do plugin para `/wp-content/plugins/`
 2. Ative o plugin no painel administrativo
 3. Configure as permissões necessárias
-4. Use o shortcode `[lkn_filebrowser]` para exibir no frontend
+4. Use o shortcode `[linkn_filebrowser]` para exibir no frontend
 
 ## 📋 Requisitos
 
@@ -78,19 +78,19 @@ O plugin inclui um painel de instruções no admin que mostra como usar o shortc
 
 #### Uso Básico:
 ```
-[lkn_filebrowser]
+[linkn_filebrowser]
 ```
 Exibe todos os arquivos e pastas da raiz.
 
 #### Pasta Específica:
 ```
-[lkn_filebrowser folder_id="1"]
+[linkn_filebrowser folder_id="1"]
 ```
 Exibe arquivos de uma pasta específica. Substitua "1" pelo ID da pasta desejada.
 
 #### Layout Diferente:
 ```
-[lkn_filebrowser layout="list"]
+[linkn_filebrowser layout="list"]
 ```
 Layouts disponíveis: "grid" (padrão) ou "list".
 

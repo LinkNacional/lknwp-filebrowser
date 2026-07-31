@@ -4,7 +4,7 @@
  */
 
 /* Instructions Panel */
-.lkn-instructions-panel {
+.linknacional-instructions-panel {
     background: #fff;
     border: 1px solid #c3c4c7;
     border-radius: 4px;
@@ -12,13 +12,13 @@
     overflow: hidden;
 }
 
-.lkn-instructions-header {
+.linknacional-instructions-header {
     background: linear-gradient(135deg, #0073aa 0%, #005177 100%);
     padding: 15px 20px;
     border-bottom: 1px solid #005177;
 }
 
-.lkn-instructions-header h2 {
+.linknacional-instructions-header h2 {
     margin: 0;
     font-size: 16px;
     font-weight: 600;
@@ -33,37 +33,37 @@
     font-size: 16px !important;
 }
 
-.lkn-instructions-content {
+.linknacional-instructions-content {
     padding: 20px;
 }
 
-.lkn-instructions-content>p {
+.linknacional-instructions-content>p {
     margin: 0 0 15px 0;
     font-size: 14px;
     color: #555;
     line-height: 1.5;
 }
 
-.lkn-instructions-content ul {
+.linknacional-instructions-content ul {
     margin: 15px 0;
     padding-left: 20px;
     list-style-type: disc;
 }
 
-.lkn-instructions-content ol {
+.linknacional-instructions-content ol {
     margin: 15px 0;
     padding-left: 20px;
     list-style-type: decimal;
 }
 
-.lkn-instructions-content li {
+.linknacional-instructions-content li {
     margin-bottom: 8px;
     font-size: 13px;
     color: #666;
     line-height: 1.4;
 }
 
-.lkn-shortcode-box {
+.linknacional-shortcode-box {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -74,7 +74,7 @@
     margin: 0;
 }
 
-.lkn-shortcode-box code {
+.linknacional-shortcode-box code {
     flex: 1;
     background: transparent;
     padding: 0;
@@ -84,7 +84,7 @@
     font-weight: 600;
 }
 
-.lkn-shortcode-box .copy-shortcode {
+.linknacional-shortcode-box .copy-shortcode {
     font-size: 13px;
     padding: 6px 12px;
     height: auto;
@@ -98,30 +98,30 @@
     white-space: nowrap;
 }
 
-.lkn-shortcode-box .copy-shortcode:hover {
+.linknacional-shortcode-box .copy-shortcode:hover {
     background: #005177;
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.lkn-shortcode-box .copy-shortcode.copied {
+.linknacional-shortcode-box .copy-shortcode.copied {
     background: #28a745;
     transform: none;
 }
 
-.lkn-shortcode-box .copy-shortcode i {
+.linknacional-shortcode-box .copy-shortcode i {
     margin-right: 6px;
     font-size: 12px;
 }
 
-#lkn-filebrowser-admin {
+#linknacional-filebrowser-admin {
     background: #fff;
     border: 1px solid #c3c4c7;
     margin: 20px 0;
     padding: 0;
 }
 
-.lkn-toolbar {
+.linknacional-toolbar {
     background: #f6f7f7;
     border-bottom: 1px solid #c3c4c7;
     padding: 15px 20px;
@@ -130,11 +130,11 @@
     align-items: center;
 }
 
-.lkn-toolbar .button i {
+.linknacional-toolbar .button i {
     margin-right: 5px;
 }
 
-.lkn-breadcrumb {
+.linknacional-breadcrumb {
     background: #fafafa;
     border-bottom: 1px solid #e1e1e1;
     padding: 10px 20px;
@@ -142,12 +142,12 @@
     color: #23282d;
 }
 
-.lkn-file-manager {
+.linknacional-file-manager {
     display: flex;
     min-height: 500px;
 }
 
-.lkn-sidebar {
+.linknacional-sidebar {
     width: 250px;
     background: #f9f9f9;
     border-right: 1px solid #e1e1e1;
@@ -155,7 +155,7 @@
     box-sizing: border-box;
 }
 
-.lkn-sidebar h3 {
+.linknacional-sidebar h3 {
     margin: 0 0 15px 0;
     font-size: 14px;
     color: #23282d;
@@ -163,7 +163,7 @@
     font-weight: 600;
 }
 
-.lkn-content {
+.linknacional-content {
     flex: 1;
     padding: 20px;
 }
@@ -705,7 +705,7 @@
 }
 
 /* Modal Styles */
-.lkn-modal {
+.linknacional-modal {
     position: fixed;
     z-index: 100000;
     left: 0;
@@ -718,7 +718,7 @@
     justify-content: center;
 }
 
-.lkn-modal-content {
+.linknacional-modal-content {
     background-color: #fff;
     padding: 20px;
     border-radius: 4px;
@@ -727,7 +727,7 @@
     position: relative;
 }
 
-.lkn-close {
+.linknacional-close {
     position: absolute;
     top: 10px;
     right: 15px;
@@ -737,22 +737,22 @@
     color: #666;
 }
 
-.lkn-close:hover {
+.linknacional-close:hover {
     color: #000;
 }
 
-.lkn-modal h2 {
+.linknacional-modal h2 {
     margin-top: 0;
     margin-bottom: 20px;
 }
 
-.lkn-modal label {
+.linknacional-modal label {
     display: block;
     margin-bottom: 5px;
     font-weight: 600;
 }
 
-.lkn-modal input[type="text"] {
+.linknacional-modal input[type="text"] {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
@@ -845,11 +845,11 @@
         gap: 12px;
     }
 
-    .lkn-file-manager {
+    .linknacional-file-manager {
         flex-direction: column;
     }
 
-    .lkn-sidebar {
+    .linknacional-sidebar {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #e1e1e1;
@@ -863,17 +863,17 @@
         gap: 10px;
     }
 
-    .lkn-file-manager {
+    .linknacional-file-manager {
         flex-direction: column;
     }
 
-    .lkn-sidebar {
+    .linknacional-sidebar {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #e1e1e1;
     }
 
-    .lkn-toolbar {
+    .linknacional-toolbar {
         flex-wrap: wrap;
     }
 
