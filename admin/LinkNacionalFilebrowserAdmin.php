@@ -16,19 +16,19 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function enqueue_styles( $hook_suffix ) {
-		if ( 'toplevel_page_lkn-filebrowser' !== $hook_suffix ) {
+		if ( 'toplevel_page_linknacional-filebrowser' !== $hook_suffix ) {
 			return;
 		}
-		wp_enqueue_script( 'lkn-filebrowser-fontawesome', LKN_FILEBROWSER_PLUGIN_URL . 'assets/js/compiled/fontawesome.compiled.js', array(), LKN_FILEBROWSER_VERSION, false );
-		wp_enqueue_style( $this->plugin_name, LKN_FILEBROWSER_PLUGIN_URL . 'admin/css/linknacional-filebrowser-admin.css', array(), LKN_FILEBROWSER_VERSION, 'all' );
+		wp_enqueue_script( 'linknacional-filebrowser-fontawesome', LINKNACIONAL_FILEBROWSER_PLUGIN_URL . 'assets/js/compiled/fontawesome.compiled.js', array(), LINKNACIONAL_FILEBROWSER_VERSION, false );
+		wp_enqueue_style( $this->plugin_name, LINKNACIONAL_FILEBROWSER_PLUGIN_URL . 'admin/css/linknacional-filebrowser-admin.css', array(), LINKNACIONAL_FILEBROWSER_VERSION, 'all' );
 	}
 
 	public function enqueue_scripts( $hook_suffix ) {
-		if ( 'toplevel_page_lkn-filebrowser' !== $hook_suffix ) {
+		if ( 'toplevel_page_linknacional-filebrowser' !== $hook_suffix ) {
 			return;
 		}
-		wp_enqueue_script( $this->plugin_name, LKN_FILEBROWSER_PLUGIN_URL . 'admin/js/linknacional-filebrowser-admin.js', array( 'jquery' ), LKN_FILEBROWSER_VERSION, false );
-		wp_localize_script( $this->plugin_name, 'lkn_ajax', array(
+		wp_enqueue_script( $this->plugin_name, LINKNACIONAL_FILEBROWSER_PLUGIN_URL . 'admin/js/linknacional-filebrowser-admin.js', array( 'jquery' ), LINKNACIONAL_FILEBROWSER_VERSION, false );
+		wp_localize_script( $this->plugin_name, 'linknacional_ajax', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'copied_text' => esc_html__( 'Copied!', 'linknacional-file-browser' ),
 			'loading_text' => esc_html__( 'Loading...', 'linknacional-file-browser' ),
@@ -52,6 +52,8 @@ class LinkNacionalFilebrowserAdmin {
 			'delete_folder' => esc_html__( 'Delete folder', 'linknacional-file-browser' ),
 			'delete_file' => esc_html__( 'Delete file', 'linknacional-file-browser' ),
 			'open_file' => esc_html__( 'Open file', 'linknacional-file-browser' ),
+			'migrating_text' => esc_html__( 'Migrating...', 'linknacional-file-browser' ),
+			'migrate_error' => esc_html__( 'Migration failed. Please try again.', 'linknacional-file-browser' ),
 		));
 	}
 
@@ -60,7 +62,7 @@ class LinkNacionalFilebrowserAdmin {
 			esc_html__('File Browser', 'linknacional-file-browser'),
 			esc_html__('File Browser', 'linknacional-file-browser'),
 			'manage_options',
-			'lkn-filebrowser',
+			'linknacional-filebrowser',
 			array($this, 'admin_page'),
 			'dashicons-portfolio',
 			30
@@ -72,11 +74,11 @@ class LinkNacionalFilebrowserAdmin {
 		<div class="wrap">
 			<h1><?php esc_html_e('File Browser Manager', 'linknacional-file-browser'); ?></h1>
 
-			<div class="lkn-instructions-panel">
-				<div class="lkn-instructions-header">
+			<div class="linknacional-instructions-panel">
+				<div class="linknacional-instructions-header">
 					<h2><i class="fas fa-info-circle"></i> <?php esc_html_e('How to Use', 'linknacional-file-browser'); ?></h2>
 				</div>
-				<div class="lkn-instructions-content">
+				<div class="linknacional-instructions-content">
 					<p><?php esc_html_e('To display the file browser on your website, follow these simple steps:', 'linknacional-file-browser'); ?></p>
 					<ol style="margin: 15px 0; padding-left: 20px;">
 						<li><?php esc_html_e('Copy the shortcode below', 'linknacional-file-browser'); ?></li>
@@ -85,9 +87,9 @@ class LinkNacionalFilebrowserAdmin {
 						<li><?php esc_html_e('Paste the shortcode into the component', 'linknacional-file-browser'); ?></li>
 						<li><?php esc_html_e('Save and publish your page', 'linknacional-file-browser'); ?></li>
 					</ol>
-					<div class="lkn-shortcode-box">
-						<code>[lkn_filebrowser]</code>
-						<button type="button" class="button button-primary copy-shortcode" data-shortcode="[lkn_filebrowser]">
+					<div class="linknacional-shortcode-box">
+						<code>[linkn_filebrowser]</code>
+						<button type="button" class="button button-primary copy-shortcode" data-shortcode="[linkn_filebrowser]">
 							<i class="fas fa-copy"></i> <?php esc_html_e('Copy Shortcode', 'linknacional-file-browser'); ?>
 						</button>
 					</div>
@@ -97,8 +99,25 @@ class LinkNacionalFilebrowserAdmin {
 				</div>
 			</div>
 
-			<div id="lkn-filebrowser-admin">
-				<div class="lkn-toolbar">
+			<?php if ( $this->old_tables_exist() ) : ?>
+			<div id="linknacional-migration-banner" style="background: #fff; border-left: 4px solid #2271b1; padding: 16px 20px; margin: 20px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between;">
+				<div>
+					<strong><?php esc_html_e( 'Data migration required', 'linknacional-file-browser' ); ?></strong>
+					<p style="margin: 4px 0 0; color: #555;">
+						<?php esc_html_e( 'We detected data from a previous version. Migrate your folders, files, and uploads to the new format.', 'linknacional-file-browser' ); ?>
+					</p>
+				</div>
+				<div style="display: flex; gap: 8px; align-items: center;">
+					<span id="linknacional-migration-status" style="display: none; color: #2271b1; font-weight: 500;"></span>
+					<button type="button" id="linknacional-migrate-btn" class="button button-primary">
+						<i class="fas fa-sync-alt"></i> <?php esc_html_e( 'Migrate Now', 'linknacional-file-browser' ); ?>
+					</button>
+				</div>
+			</div>
+			<?php endif; ?>
+
+			<div id="linknacional-filebrowser-admin">
+				<div class="linknacional-toolbar">
 					<button type="button" class="button button-primary" id="create-folder-btn">
 						<i class="fas fa-folder-plus"></i> <?php esc_html_e('Create Folder', 'linknacional-file-browser'); ?>
 					</button>
@@ -108,26 +127,26 @@ class LinkNacionalFilebrowserAdmin {
 					<input type="file" id="file-upload-input" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.gif" style="display: none;">
 				</div>
 
-				<div class="lkn-breadcrumb">
+				<div class="linknacional-breadcrumb">
 					<span id="current-path"><?php esc_html_e('Home', 'linknacional-file-browser'); ?></span>
 				</div>
 
-				<div class="lkn-file-manager">
-					<div class="lkn-sidebar">
+				<div class="linknacional-file-manager">
+					<div class="linknacional-sidebar">
 						<h3><?php esc_html_e('Folders', 'linknacional-file-browser'); ?></h3>
 						<div id="folder-tree"></div>
 					</div>
 
-					<div class="lkn-content">
+					<div class="linknacional-content">
 						<div id="folder-contents"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div id="create-folder-modal" class="lkn-modal" style="display: none;">
-			<div class="lkn-modal-content">
-				<span class="lkn-close">&times;</span>
+		<div id="create-folder-modal" class="linknacional-modal" style="display: none;">
+			<div class="linknacional-modal-content">
+				<span class="linknacional-close">&times;</span>
 				<h2><?php esc_html_e('Create New Folder', 'linknacional-file-browser'); ?></h2>
 				<form id="create-folder-form">
 					<label for="folder-name"><?php esc_html_e('Folder Name:', 'linknacional-file-browser'); ?></label>
@@ -135,7 +154,7 @@ class LinkNacionalFilebrowserAdmin {
 					<input type="hidden" id="parent-folder-id" name="parent_id" value="0">
 					<div class="form-actions">
 						<button type="submit" class="button button-primary"><?php esc_html_e('Create', 'linknacional-file-browser'); ?></button>
-						<button type="button" class="button" onclick="closeModal('create-folder-modal')"><?php esc_html_e('Cancel', 'linknacional-file-browser'); ?></button>
+						<button type="button" class="button" onclick="linknacionalCloseModal('create-folder-modal')"><?php esc_html_e('Cancel', 'linknacional-file-browser'); ?></button>
 					</div>
 				</form>
 			</div>
@@ -143,7 +162,7 @@ class LinkNacionalFilebrowserAdmin {
 		<?php
 	}
 
-	public function lkn_get_admin_nonce() {
+	public function linknacional_get_admin_nonce() {
 		if ( ! wp_doing_ajax() ) {
 			wp_die( esc_html__( 'Invalid request method.', 'linknacional-file-browser' ) );
 		}
@@ -158,7 +177,7 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function create_folder_ajax() {
-		check_ajax_referer('lkn_filebrowser_nonce', 'nonce');
+		check_ajax_referer('linknacional_filebrowser_nonce', 'nonce');
 		if (!current_user_can('manage_options')) {
 			wp_die(esc_html__('Insufficient permissions', 'linknacional-file-browser'));
 		}
@@ -184,7 +203,7 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function upload_file_ajax() {
-		check_ajax_referer('lkn_filebrowser_nonce', 'nonce');
+		check_ajax_referer('linknacional_filebrowser_nonce', 'nonce');
 		if (!current_user_can('manage_options')) {
 			wp_die(esc_html__('Insufficient permissions', 'linknacional-file-browser'));
 		}
@@ -193,37 +212,98 @@ class LinkNacionalFilebrowserAdmin {
 			wp_send_json_error(esc_html__('No files uploaded', 'linknacional-file-browser'));
 		}
 		$upload_dir = wp_upload_dir();
-		$filebrowser_dir = $upload_dir['basedir'] . '/lkn-filebrowser';
-		$filebrowser_url = $upload_dir['baseurl'] . '/lkn-filebrowser';
+		$filebrowser_dir = $upload_dir['basedir'] . '/linknacional-filebrowser';
+		$filebrowser_url = $upload_dir['baseurl'] . '/linknacional-filebrowser';
+
+		if ( ! file_exists( $filebrowser_dir ) ) {
+			wp_mkdir_p( $filebrowser_dir );
+		}
+
+		$filter_upload_dir = function ( $dirs ) use ( $filebrowser_dir, $filebrowser_url ) {
+			return array(
+				'path'    => $filebrowser_dir,
+				'url'     => $filebrowser_url,
+				'subdir'  => '',
+				'basedir' => $filebrowser_dir,
+				'baseurl' => $filebrowser_url,
+				'error'   => false,
+			);
+		};
+		add_filter( 'upload_dir', $filter_upload_dir );
+
+		$overrides = array(
+			'test_form' => false,
+			'mimes'     => array(
+				'pdf'                       => 'application/pdf',
+				'doc'                       => 'application/msword',
+				'docx'                      => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+				'xls'                       => 'application/vnd.ms-excel',
+				'xlsx'                      => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+				'ppt'                       => 'application/vnd.ms-powerpoint',
+				'pptx'                      => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+				'txt'                       => 'text/plain',
+				'jpg|jpeg|jpe'              => 'image/jpeg',
+				'png'                       => 'image/png',
+				'gif'                       => 'image/gif',
+			),
+		);
+
 		$uploaded_files = array();
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$files = $_FILES['files'];
-		for ($i = 0; $i < count($files['name']); $i++) {
-			if ($files['error'][$i] === UPLOAD_ERR_OK) {
-				$original_name = sanitize_file_name($files['name'][$i]);
-				$file_size = $files['size'][$i];
-				$file_type = wp_check_filetype($original_name);
-				$allowed_types = array('pdf','doc','docx','xls','xlsx','ppt','pptx','txt','jpg','jpeg','png','gif');
-				if ( empty( $file_type['ext'] ) || ! in_array( strtolower( $file_type['ext'] ), $allowed_types, true ) ) {
-					continue;
-				}
-				$filename = wp_unique_filename($filebrowser_dir, $original_name);
-				$file_path = $filebrowser_dir . '/' . $filename;
-				$file_url = $filebrowser_url . '/' . $filename;
-				// phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
-				if ( move_uploaded_file( $files['tmp_name'][$i], $file_path ) ) {
-					global $wpdb;
-					$result = $wpdb->insert(
-						$this->table_files(),
-						array('name' => $filename, 'original_name' => $original_name, 'folder_id' => $folder_id, 'file_type' => $file_type['ext'], 'file_size' => $file_size, 'file_path' => $file_path, 'file_url' => $file_url),
-						array('%s', '%s', '%d', '%s', '%d', '%s', '%s')
-					);
-					if ($result !== false) {
-						$uploaded_files[] = array('id' => $wpdb->insert_id, 'name' => $original_name, 'size' => $file_size, 'type' => $file_type['ext']);
-					}
-				}
+		for ( $i = 0; $i < count( $files['name'] ); $i++ ) {
+			if ( UPLOAD_ERR_OK !== $files['error'][$i] ) {
+				continue;
+			}
+
+			$original_name = sanitize_file_name( $files['name'][$i] );
+			$file_size     = $files['size'][$i];
+
+			$single_file = array(
+				'name'     => $files['name'][$i],
+				'type'     => $files['type'][$i],
+				'tmp_name' => $files['tmp_name'][$i],
+				'error'    => $files['error'][$i],
+				'size'     => $files['size'][$i],
+			);
+
+			$movefile = wp_handle_upload( $single_file, $overrides );
+
+			if ( isset( $movefile['error'] ) ) {
+				continue;
+			}
+
+			$filename  = basename( $movefile['file'] );
+			$file_path = $movefile['file'];
+			$file_url  = $movefile['url'];
+			$file_ext  = pathinfo( $filename, PATHINFO_EXTENSION );
+
+			global $wpdb;
+			$result = $wpdb->insert(
+				$this->table_files(),
+				array(
+					'name'          => $filename,
+					'original_name' => $original_name,
+					'folder_id'     => $folder_id,
+					'file_type'     => $file_ext,
+					'file_size'     => $file_size,
+					'file_path'     => $file_path,
+					'file_url'      => $file_url,
+				),
+				array( '%s', '%s', '%d', '%s', '%d', '%s', '%s' )
+			);
+
+			if ( false !== $result ) {
+				$uploaded_files[] = array(
+					'id'   => $wpdb->insert_id,
+					'name' => $original_name,
+					'size' => $file_size,
+					'type' => $file_ext,
+				);
 			}
 		}
+
+		remove_filter( 'upload_dir', $filter_upload_dir );
 		if (empty($uploaded_files)) {
 			wp_send_json_error(esc_html__('Failed to upload files', 'linknacional-file-browser'));
 		}
@@ -231,7 +311,7 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function delete_folder_ajax() {
-		check_ajax_referer('lkn_filebrowser_nonce', 'nonce');
+		check_ajax_referer('linknacional_filebrowser_nonce', 'nonce');
 		if (!current_user_can('manage_options')) {
 			wp_die(esc_html__('Insufficient permissions', 'linknacional-file-browser'));
 		}
@@ -242,7 +322,7 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function delete_file_ajax() {
-		check_ajax_referer('lkn_filebrowser_nonce', 'nonce');
+		check_ajax_referer('linknacional_filebrowser_nonce', 'nonce');
 		if (!current_user_can('manage_options')) {
 			wp_die(esc_html__('Insufficient permissions', 'linknacional-file-browser'));
 		}
@@ -260,14 +340,14 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function get_folder_contents_ajax() {
-		check_ajax_referer('lkn_filebrowser_nonce', 'nonce');
+		check_ajax_referer('linknacional_filebrowser_nonce', 'nonce');
 		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		$contents = $this->get_folder_contents($folder_id);
 		wp_send_json_success($contents);
 	}
 
 	public function get_all_folders_ajax() {
-		check_ajax_referer('lkn_filebrowser_nonce', 'nonce');
+		check_ajax_referer('linknacional_filebrowser_nonce', 'nonce');
 		global $wpdb;
 		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$folders = $wpdb->get_results("SELECT * FROM {$this->table_folders()} ORDER BY parent_id ASC, name ASC");
@@ -316,7 +396,7 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function update_folder_name_ajax() {
-		check_ajax_referer('lkn_filebrowser_nonce', 'nonce');
+		check_ajax_referer('linknacional_filebrowser_nonce', 'nonce');
 		if (!current_user_can('manage_options')) {
 			wp_die(esc_html__('Insufficient permissions', 'linknacional-file-browser'));
 		}
@@ -345,7 +425,7 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function update_file_name_ajax() {
-		check_ajax_referer('lkn_filebrowser_nonce', 'nonce');
+		check_ajax_referer('linknacional_filebrowser_nonce', 'nonce');
 		if (!current_user_can('manage_options')) {
 			wp_die(esc_html__('Insufficient permissions', 'linknacional-file-browser'));
 		}
@@ -381,7 +461,7 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function get_folder_files_ajax() {
-		check_ajax_referer( 'lkn_filebrowser_admin_nonce', 'nonce' );
+		check_ajax_referer( 'linknacional_filebrowser_nonce', 'nonce' );
 		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		global $wpdb;
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -391,7 +471,7 @@ class LinkNacionalFilebrowserAdmin {
 	}
 
 	public function get_all_folders_admin_frontend() {
-		check_ajax_referer( 'lkn_filebrowser_nonce', 'nonce' );
+		check_ajax_referer( 'linknacional_filebrowser_nonce', 'nonce' );
 		global $wpdb;
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$folders = $wpdb->get_results("SELECT * FROM {$this->table_folders()} ORDER BY parent_id ASC, name ASC");
@@ -402,11 +482,171 @@ class LinkNacionalFilebrowserAdmin {
 
 	private function table_folders() {
 		global $wpdb;
-		return $wpdb->prefix . 'lkn_filebrowser_folders';
+		return $wpdb->prefix . 'linknacional_filebrowser_folders';
 	}
 
 	private function table_files() {
 		global $wpdb;
-		return $wpdb->prefix . 'lkn_filebrowser_files';
+		return $wpdb->prefix . 'linknacional_filebrowser_files';
+	}
+
+	private function old_table_folders() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_folders';
+	}
+
+	private function old_table_files() {
+		global $wpdb;
+		return $wpdb->prefix . 'lknwp_filebrowser_files';
+	}
+
+	public function old_tables_exist() {
+		global $wpdb;
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$folders_exists = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $this->old_table_folders() ) ) === $this->old_table_folders();
+		$files_exists   = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $this->old_table_files() ) ) === $this->old_table_files();
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return $folders_exists || $files_exists;
+	}
+
+	public function migrate_ajax() {
+		check_ajax_referer( 'linknacional_filebrowser_nonce', 'nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( esc_html__( 'Insufficient permissions', 'linknacional-file-browser' ) );
+		}
+
+		global $wpdb;
+
+		$upload_dir       = wp_upload_dir();
+		$old_dir          = $upload_dir['basedir'] . '/lknwp-filebrowser';
+		$new_dir          = $upload_dir['basedir'] . '/linknacional-filebrowser';
+		$old_url          = $upload_dir['baseurl'] . '/lknwp-filebrowser';
+		$new_url          = $upload_dir['baseurl'] . '/linknacional-filebrowser';
+
+		if ( ! file_exists( $new_dir ) ) {
+			wp_mkdir_p( $new_dir );
+		}
+
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.SchemaChange,PluginCheck.Security.DirectDB.UnescapedDBParameter
+
+		// --- Migrate folders ---
+		$old_folders = $wpdb->get_results( "SELECT * FROM {$this->old_table_folders()} ORDER BY id ASC" );
+		$id_map      = array(); // old_id → new_id
+		$migrated_folders = 0;
+
+		if ( is_array( $old_folders ) ) {
+			foreach ( $old_folders as $folder ) {
+				$new_parent_id = isset( $id_map[ $folder->parent_id ] ) ? $id_map[ $folder->parent_id ] : 0;
+				$folder_name   = $folder->name;
+
+				// Resolve name conflicts
+				$unique_name = $folder_name;
+				$suffix_num  = 1;
+				while ( $wpdb->get_var( $wpdb->prepare(
+					"SELECT COUNT(*) FROM {$this->table_folders()} WHERE name = %s AND parent_id = %d",
+					$unique_name, $new_parent_id
+				) ) > 0 ) {
+					$unique_name = $folder_name . ' (copy)';
+					if ( $suffix_num > 1 ) {
+						$unique_name = $folder_name . ' (copy)' . $suffix_num;
+					}
+					++$suffix_num;
+				}
+
+				$new_path = '/' . $unique_name;
+				if ( $new_parent_id > 0 ) {
+					$parent_path = $wpdb->get_var( $wpdb->prepare(
+						"SELECT path FROM {$this->table_folders()} WHERE id = %d", $new_parent_id
+					) );
+					$new_path = $parent_path . '/' . $unique_name;
+				}
+
+				$inserted = $wpdb->insert(
+					$this->table_folders(),
+					array(
+						'name'      => $unique_name,
+						'parent_id' => $new_parent_id,
+						'path'      => $new_path,
+					),
+					array( '%s', '%d', '%s' )
+				);
+
+				if ( false !== $inserted ) {
+					$id_map[ $folder->id ] = $wpdb->insert_id;
+					++$migrated_folders;
+				}
+			}
+		}
+
+		// --- Migrate files ---
+		$old_files       = $wpdb->get_results( "SELECT * FROM {$this->old_table_files()} ORDER BY id ASC" );
+		$migrated_files  = 0;
+
+		if ( is_array( $old_files ) ) {
+			foreach ( $old_files as $file ) {
+				$new_folder_id = isset( $id_map[ $file->folder_id ] ) ? $id_map[ $file->folder_id ] : 0;
+				$original_name = $file->original_name;
+
+				// Resolve name conflicts
+				$unique_name = $original_name;
+				$suffix_num  = 1;
+				while ( $wpdb->get_var( $wpdb->prepare(
+					"SELECT COUNT(*) FROM {$this->table_files()} WHERE original_name = %s AND folder_id = %d",
+					$unique_name, $new_folder_id
+				) ) > 0 ) {
+					$ext         = pathinfo( $original_name, PATHINFO_EXTENSION );
+					$base        = $ext ? substr( $original_name, 0, - ( strlen( $ext ) + 1 ) ) : $original_name;
+					$unique_name = $base . ' (copy).' . $ext;
+					if ( $suffix_num > 1 ) {
+						$unique_name = $base . ' (copy)' . $suffix_num . '.' . $ext;
+					}
+					++$suffix_num;
+				}
+
+				$new_file_path = $new_dir . '/' . $unique_name;
+				$new_file_url  = $new_url . '/' . $unique_name;
+
+				// Copy physical file
+				$old_file_path = $old_dir . '/' . $file->name;
+				if ( file_exists( $old_file_path ) && ! file_exists( $new_file_path ) ) {
+					copy( $old_file_path, $new_file_path );
+				}
+
+				$inserted = $wpdb->insert(
+					$this->table_files(),
+					array(
+						'name'          => $unique_name,
+						'original_name' => $unique_name,
+						'folder_id'     => $new_folder_id,
+						'file_type'     => $file->file_type,
+						'file_size'     => $file->file_size,
+						'file_path'     => $new_file_path,
+						'file_url'      => $new_file_url,
+					),
+					array( '%s', '%s', '%d', '%s', '%d', '%s', '%s' )
+				);
+
+				if ( false !== $inserted ) {
+					++$migrated_files;
+				}
+			}
+		}
+
+		// --- Drop old tables ---
+		$wpdb->query( "DROP TABLE IF EXISTS {$this->old_table_folders()}" );
+		$wpdb->query( "DROP TABLE IF EXISTS {$this->old_table_files()}" );
+
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.SchemaChange,PluginCheck.Security.DirectDB.UnescapedDBParameter
+
+		wp_send_json_success( array(
+			'message'          => sprintf(
+				/* translators: 1: folders count, 2: files count */
+				esc_html__( 'Migration complete: %1$d folders and %2$d files migrated.', 'linknacional-file-browser' ),
+				$migrated_folders,
+				$migrated_files
+			),
+			'folders_migrated' => $migrated_folders,
+			'files_migrated'   => $migrated_files,
+		) );
 	}
 }

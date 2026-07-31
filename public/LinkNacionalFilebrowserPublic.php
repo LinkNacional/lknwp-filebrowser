@@ -15,7 +15,7 @@ class LinkNacionalFilebrowserPublic {
 		$this->version = $version;
 	}
 
-	public function lkn_get_public_nonce() {
+	public function linknacional_get_public_nonce() {
 		if ( ! wp_doing_ajax() ) {
 			wp_die( esc_html__( 'Invalid request method.', 'linknacional-file-browser' ) );
 		}
@@ -30,15 +30,15 @@ class LinkNacionalFilebrowserPublic {
 	}
 
 	public function register_shortcode() {
-		add_shortcode( 'lkn_filebrowser', array( $this, 'render_filebrowser_shortcode' ) );
+		add_shortcode( 'linkn_filebrowser', array( $this, 'render_filebrowser_shortcode' ) );
 	}
 
 	public function render_filebrowser_shortcode( $atts ) {
-		wp_enqueue_script( 'lkn-filebrowser-fontawesome', LKN_FILEBROWSER_PLUGIN_URL . 'assets/js/compiled/fontawesome.compiled.js', array(), LKN_FILEBROWSER_VERSION, false );
-		wp_enqueue_style( $this->plugin_name, LKN_FILEBROWSER_PLUGIN_URL . 'public/css/linknacional-filebrowser-public.css', array(), LKN_FILEBROWSER_VERSION, 'all' );
-		wp_enqueue_script( $this->plugin_name, LKN_FILEBROWSER_PLUGIN_URL . 'public/js/linknacional-filebrowser-public.js', array( 'jquery' ), LKN_FILEBROWSER_VERSION, false );
+		wp_enqueue_script( 'linknacional-filebrowser-fontawesome', LINKNACIONAL_FILEBROWSER_PLUGIN_URL . 'assets/js/compiled/fontawesome.compiled.js', array(), LINKNACIONAL_FILEBROWSER_VERSION, false );
+		wp_enqueue_style( $this->plugin_name, LINKNACIONAL_FILEBROWSER_PLUGIN_URL . 'public/css/linknacional-filebrowser-public.css', array(), LINKNACIONAL_FILEBROWSER_VERSION, 'all' );
+		wp_enqueue_script( $this->plugin_name, LINKNACIONAL_FILEBROWSER_PLUGIN_URL . 'public/js/linknacional-filebrowser-public.js', array( 'jquery' ), LINKNACIONAL_FILEBROWSER_VERSION, false );
 
-		wp_localize_script( $this->plugin_name, 'lkn_public_ajax', array(
+		wp_localize_script( $this->plugin_name, 'linknacional_public_ajax', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'loading_text' => __( 'Loading...', 'linknacional-file-browser' ),
 			'searching_text' => __( 'Searching...', 'linknacional-file-browser' ),
@@ -75,42 +75,42 @@ class LinkNacionalFilebrowserPublic {
 
 		ob_start();
 		?>
-		<div class="lkn-filebrowser-public" data-folder-id="<?php echo esc_attr( $folder_id ); ?>" data-layout="<?php echo esc_attr( $layout ); ?>">
+		<div class="linknacional-filebrowser-public" data-folder-id="<?php echo esc_attr( $folder_id ); ?>" data-layout="<?php echo esc_attr( $layout ); ?>">
 
 			<?php if ( $show_search ): ?>
-			<div class="lkn-search-container">
-				<div class="lkn-search-box">
-					<input type="text" id="lkn-search-input" placeholder="<?php esc_attr_e( 'Search files and folders...', 'linknacional-file-browser' ); ?>">
-					<button type="button" id="lkn-search-btn"><i class="fas fa-search"></i></button>
-					<button type="button" id="lkn-clear-search" style="display: none;"><i class="fas fa-times"></i></button>
+			<div class="linknacional-search-container">
+				<div class="linknacional-search-box">
+					<input type="text" id="linknacional-search-input" placeholder="<?php esc_attr_e( 'Search files and folders...', 'linknacional-file-browser' ); ?>">
+					<button type="button" id="linknacional-search-btn"><i class="fas fa-search"></i></button>
+					<button type="button" id="linknacional-clear-search" style="display: none;"><i class="fas fa-times"></i></button>
 				</div>
 			</div>
 			<?php endif; ?>
 
-			<div class="lkn-file-manager-public">
+			<div class="linknacional-file-manager-public">
 				<?php if ( $show_folder_tree ): ?>
-				<div class="lkn-sidebar-public">
+				<div class="linknacional-sidebar-public">
 					<h4><?php esc_html_e( 'Folders', 'linknacional-file-browser' ); ?></h4>
-					<div id="lkn-folder-tree-public">
+					<div id="linknacional-folder-tree-public">
 						<div class="loading"><i class="fas fa-spinner"></i> <?php esc_html_e( 'Loading folders...', 'linknacional-file-browser' ); ?></div>
 					</div>
 				</div>
 				<?php endif; ?>
 
-				<div class="lkn-content-public <?php echo !$show_folder_tree ? 'full-width' : ''; ?>">
+				<div class="linknacional-content-public <?php echo !$show_folder_tree ? 'full-width' : ''; ?>">
 					<?php if ( $show_breadcrumb ): ?>
-					<div class="lkn-breadcrumb-public">
-						<span id="lkn-current-path"><?php esc_html_e( 'Home', 'linknacional-file-browser' ); ?></span>
+					<div class="linknacional-breadcrumb-public">
+						<span id="linknacional-current-path"><?php esc_html_e( 'Home', 'linknacional-file-browser' ); ?></span>
 					</div>
 					<?php endif; ?>
 
-					<div class="lkn-layout-controls">
+					<div class="linknacional-layout-controls">
 						<button type="button" class="layout-btn <?php echo $layout === 'grid' ? 'active' : ''; ?>" data-layout="grid"><i class="fas fa-th"></i></button>
 						<button type="button" class="layout-btn <?php echo $layout === 'list' ? 'active' : ''; ?>" data-layout="list"><i class="fas fa-list"></i></button>
 					</div>
 
-					<div class="lkn-filebrowser-content <?php echo esc_attr( $layout ); ?>">
-						<div id="lkn-loading" class="loading">
+					<div class="linknacional-filebrowser-content <?php echo esc_attr( $layout ); ?>">
+						<div id="linknacional-loading" class="loading">
 							<i class="fas fa-spinner"></i> <?php esc_html_e( 'Loading...', 'linknacional-file-browser' ); ?>
 						</div>
 					</div>
@@ -122,7 +122,7 @@ class LinkNacionalFilebrowserPublic {
 	}
 
 	public function get_all_folders_frontend() {
-		check_ajax_referer( 'lkn_filebrowser_public_nonce', 'nonce' );
+		check_ajax_referer( 'linknacional_filebrowser_public_nonce', 'nonce' );
 		global $wpdb;
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$folders = $wpdb->get_results("SELECT * FROM {$this->table_folders()} ORDER BY parent_id ASC, name ASC");
@@ -132,14 +132,14 @@ class LinkNacionalFilebrowserPublic {
 	}
 
 	public function get_folder_contents_frontend() {
-		check_ajax_referer( 'lkn_filebrowser_public_nonce', 'nonce' );
+		check_ajax_referer( 'linknacional_filebrowser_public_nonce', 'nonce' );
 		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		$contents = $this->get_folder_contents( $folder_id );
 		wp_send_json_success( $contents );
 	}
 
 	public function search_files_frontend() {
-		check_ajax_referer( 'lkn_filebrowser_public_nonce', 'nonce' );
+		check_ajax_referer( 'linknacional_filebrowser_public_nonce', 'nonce' );
 		$search_term = isset( $_POST['search_term'] ) ? sanitize_text_field( wp_unslash( $_POST['search_term'] ) ) : '';
 		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		if ( empty( $search_term ) ) {
@@ -219,7 +219,7 @@ class LinkNacionalFilebrowserPublic {
 	}
 
 	public function get_folder_files_frontend() {
-		check_ajax_referer( 'lkn_filebrowser_public_nonce', 'nonce' );
+		check_ajax_referer( 'linknacional_filebrowser_public_nonce', 'nonce' );
 		$folder_id = isset( $_POST['folder_id'] ) ? intval( wp_unslash( $_POST['folder_id'] ) ) : 0;
 		global $wpdb;
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -230,11 +230,11 @@ class LinkNacionalFilebrowserPublic {
 
 	private function table_folders() {
 		global $wpdb;
-		return $wpdb->prefix . 'lkn_filebrowser_folders';
+		return $wpdb->prefix . 'linknacional_filebrowser_folders';
 	}
 
 	private function table_files() {
 		global $wpdb;
-		return $wpdb->prefix . 'lkn_filebrowser_files';
+		return $wpdb->prefix . 'linknacional_filebrowser_files';
 	}
 }

@@ -13,8 +13,8 @@ class LinkNacionalFilebrowser {
 	protected $version;
 
 	public function __construct() {
-		if ( defined( 'LKN_FILEBROWSER_VERSION' ) ) {
-			$this->version = LKN_FILEBROWSER_VERSION;
+		if ( defined( 'LINKNACIONAL_FILEBROWSER_VERSION' ) ) {
+			$this->version = LINKNACIONAL_FILEBROWSER_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -35,34 +35,35 @@ class LinkNacionalFilebrowser {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
-		$this->loader->add_action( 'wp_ajax_lkn_create_folder', $plugin_admin, 'create_folder_ajax' );
-		$this->loader->add_action( 'wp_ajax_lkn_upload_file', $plugin_admin, 'upload_file_ajax' );
-		$this->loader->add_action( 'wp_ajax_lkn_delete_folder', $plugin_admin, 'delete_folder_ajax' );
-		$this->loader->add_action( 'wp_ajax_lkn_delete_file', $plugin_admin, 'delete_file_ajax' );
-		$this->loader->add_action( 'wp_ajax_lkn_update_folder_name', $plugin_admin, 'update_folder_name_ajax' );
-		$this->loader->add_action( 'wp_ajax_lkn_update_file_name', $plugin_admin, 'update_file_name_ajax' );
-		$this->loader->add_action( 'wp_ajax_lkn_get_folder_contents', $plugin_admin, 'get_folder_contents_ajax' );
-		$this->loader->add_action( 'wp_ajax_lkn_get_all_folders', $plugin_admin, 'get_all_folders_ajax' );
-		$this->loader->add_action( 'wp_ajax_lkn_get_folder_files', $plugin_admin, 'get_folder_files_ajax' );
-		$this->loader->add_action( 'wp_ajax_lkn_get_all_folders_admin_frontend', $plugin_admin, 'get_all_folders_admin_frontend' );
-		$this->loader->add_action( 'wp_ajax_nopriv_lkn_get_admin_nonce', $plugin_admin, 'lkn_get_admin_nonce');
-		$this->loader->add_action( 'wp_ajax_lkn_get_admin_nonce', $plugin_admin, 'lkn_get_admin_nonce');
+		$this->loader->add_action( 'wp_ajax_linknacional_create_folder', $plugin_admin, 'create_folder_ajax' );
+		$this->loader->add_action( 'wp_ajax_linknacional_upload_file', $plugin_admin, 'upload_file_ajax' );
+		$this->loader->add_action( 'wp_ajax_linknacional_delete_folder', $plugin_admin, 'delete_folder_ajax' );
+		$this->loader->add_action( 'wp_ajax_linknacional_delete_file', $plugin_admin, 'delete_file_ajax' );
+		$this->loader->add_action( 'wp_ajax_linknacional_update_folder_name', $plugin_admin, 'update_folder_name_ajax' );
+		$this->loader->add_action( 'wp_ajax_linknacional_update_file_name', $plugin_admin, 'update_file_name_ajax' );
+		$this->loader->add_action( 'wp_ajax_linknacional_get_folder_contents', $plugin_admin, 'get_folder_contents_ajax' );
+		$this->loader->add_action( 'wp_ajax_linknacional_get_all_folders', $plugin_admin, 'get_all_folders_ajax' );
+		$this->loader->add_action( 'wp_ajax_linknacional_get_folder_files', $plugin_admin, 'get_folder_files_ajax' );
+		$this->loader->add_action( 'wp_ajax_linknacional_get_all_folders_admin_frontend', $plugin_admin, 'get_all_folders_admin_frontend' );
+		$this->loader->add_action( 'wp_ajax_nopriv_linknacional_get_admin_nonce', $plugin_admin, 'linknacional_get_admin_nonce');
+		$this->loader->add_action( 'wp_ajax_linknacional_get_admin_nonce', $plugin_admin, 'linknacional_get_admin_nonce');
+		$this->loader->add_action( 'wp_ajax_linknacional_migrate', $plugin_admin, 'migrate_ajax' );
 	}
 
 	private function define_public_hooks() {
 		$plugin_public = new LinkNacionalFilebrowserPublic( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode' );
-		$this->loader->add_action( 'wp_ajax_lkn_frontend_get_contents', $plugin_public, 'get_folder_contents_frontend' );
-		$this->loader->add_action( 'wp_ajax_nopriv_lkn_frontend_get_contents', $plugin_public, 'get_folder_contents_frontend' );
-		$this->loader->add_action( 'wp_ajax_lkn_frontend_get_all_folders', $plugin_public, 'get_all_folders_frontend' );
-		$this->loader->add_action( 'wp_ajax_nopriv_lkn_frontend_get_all_folders', $plugin_public, 'get_all_folders_frontend' );
-		$this->loader->add_action( 'wp_ajax_lkn_frontend_search', $plugin_public, 'search_files_frontend' );
-		$this->loader->add_action( 'wp_ajax_nopriv_lkn_frontend_search', $plugin_public, 'search_files_frontend' );
-		$this->loader->add_action( 'wp_ajax_lkn_frontend_get_folder_files', $plugin_public, 'get_folder_files_frontend' );
-		$this->loader->add_action( 'wp_ajax_nopriv_lkn_frontend_get_folder_files', $plugin_public, 'get_folder_files_frontend' );
-		$this->loader->add_action( 'wp_ajax_nopriv_lkn_get_public_nonce', $plugin_public, 'lkn_get_public_nonce');
-		$this->loader->add_action( 'wp_ajax_lkn_get_public_nonce', $plugin_public, 'lkn_get_public_nonce');
+		$this->loader->add_action( 'wp_ajax_linknacional_frontend_get_contents', $plugin_public, 'get_folder_contents_frontend' );
+		$this->loader->add_action( 'wp_ajax_nopriv_linknacional_frontend_get_contents', $plugin_public, 'get_folder_contents_frontend' );
+		$this->loader->add_action( 'wp_ajax_linknacional_frontend_get_all_folders', $plugin_public, 'get_all_folders_frontend' );
+		$this->loader->add_action( 'wp_ajax_nopriv_linknacional_frontend_get_all_folders', $plugin_public, 'get_all_folders_frontend' );
+		$this->loader->add_action( 'wp_ajax_linknacional_frontend_search', $plugin_public, 'search_files_frontend' );
+		$this->loader->add_action( 'wp_ajax_nopriv_linknacional_frontend_search', $plugin_public, 'search_files_frontend' );
+		$this->loader->add_action( 'wp_ajax_linknacional_frontend_get_folder_files', $plugin_public, 'get_folder_files_frontend' );
+		$this->loader->add_action( 'wp_ajax_nopriv_linknacional_frontend_get_folder_files', $plugin_public, 'get_folder_files_frontend' );
+		$this->loader->add_action( 'wp_ajax_nopriv_linknacional_get_public_nonce', $plugin_public, 'linknacional_get_public_nonce');
+		$this->loader->add_action( 'wp_ajax_linknacional_get_public_nonce', $plugin_public, 'linknacional_get_public_nonce');
 	}
 
 	public function run() {
