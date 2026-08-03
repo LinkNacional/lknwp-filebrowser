@@ -41,6 +41,7 @@ jobs:
           mkdir -p build/${{ env.PLUGIN_NAME }}
           cp -r ./admin ./assets ./includes ./public ./languages ./vendor ./build/${{ env.PLUGIN_NAME }}
           cp ./*.php ./LICENSE.txt ./*.txt ./composer.json ./composer.lock ./build/${{ env.PLUGIN_NAME }}/
+          rm -rf ./build/${{ env.PLUGIN_NAME }}/includes/assets/wordpressAssets
           find ./build -type f -exec chmod 0644 {} +
           find ./build -type d -exec chmod 0755 {} +
 
@@ -51,5 +52,5 @@ jobs:
           SLUG: linknacional-file-browser
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          ASSETS_DIR: build/${{ env.PLUGIN_NAME }}/includes/assets/wordpressAssets
+          ASSETS_DIR: includes/assets/wordpressAssets
           BUILD_DIR: build/${{ env.PLUGIN_NAME }}
