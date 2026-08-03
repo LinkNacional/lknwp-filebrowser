@@ -3,7 +3,7 @@ Contributors: linknacional
 Tags: file manager, documents, upload, folders, download
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,7 +93,10 @@ Yes! The plugin is built with responsive design and automatically adapts to tabl
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.1 - 2026-08-03 =
+* Bug: Font Awesome script loading.
+
+= 1.0.0 - 2026-07-27 =
 * Initial release
 * Complete hierarchical folder system
 * Multiple file uploads
@@ -128,5 +131,5 @@ This plugin is licensed under GPL v2 or later.
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 1.0.0 - 2026-07-27 =
 * Documentation update and WordPress coding standards compliance. No breaking changes.

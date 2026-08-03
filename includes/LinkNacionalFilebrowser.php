@@ -16,7 +16,7 @@ class LinkNacionalFilebrowser {
 		if ( defined( 'LINKNACIONAL_FILEBROWSER_VERSION' ) ) {
 			$this->version = LINKNACIONAL_FILEBROWSER_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.0.1';
 		}
 		$this->plugin_name = 'linknacional-file-browser';
 

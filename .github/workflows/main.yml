@@ -8,7 +8,7 @@ on:
 env:
   PLUGIN_NAME: linknacional-file-browser
   PHP_VERSION: "8.2"
-  PLUGIN_VERSION: '1.0.0'
+  PLUGIN_VERSION: '1.0.1'
 
 jobs:
   release-build:
@@ -46,6 +46,7 @@ jobs:
         mkdir -p build/${{ env.PLUGIN_NAME }}
         cp -r ./admin ./assets ./includes ./public ./languages ./vendor ./build/${{ env.PLUGIN_NAME }}
         cp ./*.php ./LICENSE.txt ./*.txt ./composer.json ./composer.lock ./build/${{ env.PLUGIN_NAME }}/
+        rm -rf ./build/${{ env.PLUGIN_NAME }}/includes/assets/wordpressAssets
         find ./build -type f -exec chmod 0644 {} +
         find ./build -type d -exec chmod 0755 {} +
 
