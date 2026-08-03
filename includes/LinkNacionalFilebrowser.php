@@ -64,6 +64,9 @@ class LinkNacionalFilebrowser {
 		$this->loader->add_action( 'wp_ajax_nopriv_linknacional_frontend_get_folder_files', $plugin_public, 'get_folder_files_frontend' );
 		$this->loader->add_action( 'wp_ajax_nopriv_linknacional_get_public_nonce', $plugin_public, 'linknacional_get_public_nonce');
 		$this->loader->add_action( 'wp_ajax_linknacional_get_public_nonce', $plugin_public, 'linknacional_get_public_nonce');
+
+		// Prevent LiteSpeed Cache from combining/minifying FontAwesome bundle
+		$this->loader->add_filter( 'script_loader_tag', $this, 'add_no_optimize_attr', 10, 3 );
 	}
 
 	public function run() {
@@ -80,5 +83,12 @@ class LinkNacionalFilebrowser {
 
 	public function get_version() {
 		return $this->version;
+	}
+
+	public function add_no_optimize_attr( $tag, $handle, $src ) {
+		if ( 'linknacional-filebrowser-fontawesome' === $handle ) {
+			$tag = str_replace( '<script ', '<script data-no-optimize="1" data-no-defer="1" ', $tag );
+		}
+		return $tag;
 	}
 }
