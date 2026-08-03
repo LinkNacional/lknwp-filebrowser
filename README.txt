@@ -93,6 +93,9 @@ Yes! The plugin is built with responsive design and automatically adapts to tabl
 
 == Changelog ==
 
+= 1.0.2 - 2026-08-03 =
+* Bug: LiteSpeed adaptation loading.
+
 = 1.0.1 - 2026-08-03 =
 * Bug: Font Awesome script loading.
 
