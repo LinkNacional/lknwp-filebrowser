@@ -93,7 +93,10 @@ Yes! The plugin is built with responsive design and automatically adapts to tabl
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.1 - 2026-08-03 =
+* Bug: Font Awesome script loading.
+
+= 1.0.0 - 2026-07-27 =
 * Initial release
 * Complete hierarchical folder system
 * Multiple file uploads
@@ -128,5 +131,5 @@ This plugin is licensed under GPL v2 or later.
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 1.0.0 - 2026-07-27 =
 * Documentation update and WordPress coding standards compliance. No breaking changes.
