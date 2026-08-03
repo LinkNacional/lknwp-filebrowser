@@ -50,6 +50,6 @@ class LinkNacionalFilebrowserActivator {
 			wp_mkdir_p( $filebrowser_dir );
 		}
 
-		\add_option( 'linknacional_filebrowser_db_version', '1.0.1' );
+		\add_option( 'linknacional_filebrowser_db_version', '1.0.2' );
 	}
 }
