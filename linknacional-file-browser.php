@@ -11,7 +11,7 @@
  * Plugin Name:       Link Nacional File Browser
  * Plugin URI:        https://www.linknacional.com.br
  * Description:       Create your folder structure and display it on the frontend.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Requires at least: 6.0
  * Requires PHP:      8.2
  * Author:            Link Nacional
@@ -30,7 +30,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'LINKNACIONAL_FILEBROWSER_VERSION', '1.0.1' );
+define( 'LINKNACIONAL_FILEBROWSER_VERSION', '1.0.2' );
 define( 'LINKNACIONAL_FILEBROWSER_PLUGIN_NAME', 'linknacional-file-browser' );
 
 /**
