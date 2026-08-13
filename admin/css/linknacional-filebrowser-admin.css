@@ -225,6 +225,7 @@
 .folder-item-content {
     display: flex;
     align-items: center;
+    word-break: break-all;
     flex: 1;
 }
 
@@ -281,6 +282,7 @@
 .file-item-content-tree {
     display: flex;
     align-items: center;
+    word-break: break-all;
     flex: 1;
 }
 
